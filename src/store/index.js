@@ -23,7 +23,7 @@ import thunk from 'redux-thunk'
 
 // Dependencies for MELD
 import { registerTraversal, traverse, setTraversalObjectives, checkTraversalObjectives } from 'meld-clients-core/lib/actions/index'
-import { prefix as pref } from 'meld-clients-core/lib/library/prefixes'
+import { prefix as pref } from './../meld/prefixes'//'meld-clients-core/lib/library/prefixes'
 import { fetchGraph } from 'meld-clients-core/lib/actions/index'
 import GraphReducer from 'meld-clients-core/lib/reducers/reducer_graph'
 import TraversalPoolReducer from 'meld-clients-core/lib/reducers/reducer_traversalPool'
@@ -43,6 +43,8 @@ import { graphURI, params, traversalObjectives, MAX_TRAVERSERS } from './../../t
 // SolidPOD authentication library
 import auth from 'solid-auth-client'
 
+import { testData } from './../../public/rdf/BitHCollection.js'
+
 /*******************************************/
 /* BEGIN REDUX SETUP FOR MELD-CLIENTS-CORE */
 const rootReducer = combineReducers({
@@ -57,15 +59,19 @@ console.log("MELD: Initial State", meldStore.getState());
 
 Vue.use(Vuex)
 
-/* BEGIN SOLIDPOD AUTHENTICATION */
+/* BEGIN SOLIDPOD SETUP */
 
 // map SolidPOD fetch to regular fetch method
 const { fetch } = auth.fetch
 
+const $rdf = require('rdflib')
+const rdfStore = $rdf.graph();
+const rdfFetcher =new $rdf.Fetcher(rdfStore)
 
 
+/* END SOLIDPOD SETUP */
 
-/* END SOLIDPOD AUTHENTICATION */
+
 
 const graphComponentDidUpdate = (props, prevProps) => {
   // Boiler plate traversal code (should move to m-c-c)
@@ -128,7 +134,8 @@ export default new Vuex.Store({
     worklist: [],
     views: [],
     perspective: 'landingPage',
-    solidSession: null
+    solidSession: null,
+    solidUser: null
   },
   mutations: {
     SET_GRAPH (state, graph) {
@@ -148,6 +155,9 @@ export default new Vuex.Store({
     },
     SET_SOLID_SESSION (state, session) {
       state.solidSession = session
+    },
+    SET_SOLID_USERNAME (state, username) {
+      state.solidUser = username
     }
   },
   actions: {
@@ -195,6 +205,54 @@ export default new Vuex.Store({
     },
     setSolidSession({ commit }, session) {
       commit('SET_SOLID_SESSION', session)
+
+      try {
+        const webId = session.webId
+        const me = rdfStore.sym(webId)
+        const profile = me.doc()
+        const foaf = new $rdf.Namespace(pref.foaf)
+        rdfFetcher.load(profile).then(response => {
+          let name = rdfStore.any(me, foaf('name'))
+          commit('SET_SOLID_USERNAME', name.value)
+        }, err => {
+          // console.log('Load failed ' +  err)
+        })
+      } catch(err) {
+        // console.log('ERROR retrieving username')
+      }
+
+      // other approach:
+      /*
+      auth.fetch(session.webId, { mode: 'cors', headers: {
+        'Content-Type': 'application/json'
+      }})
+        .then(res => res.text())
+        .then(data => {
+          console.log('\n\n----me here!!!')
+          console.log(data)
+        })
+        */
+    },
+    uploadTest({ commit }) {
+      console.log('\nHALLO 1')
+      console.log(testData)
+
+      auth.fetch('https://kepper.solidcommunity.net/settings/Folder/id1645403113255/BithCollection.jsonld', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/jsonld',
+        },
+        credentials: 'include',
+        mode: 'no-cors',
+        body: JSON.stringify(testData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     }
   },
   modules: {
@@ -221,8 +279,18 @@ export default new Vuex.Store({
     showWorkbench: state => {
       return state.perspective === 'workbench'
     },
-    getSolidSession: state => {
+    solidSession: state => {
       return state.solidSession
+    },
+    solidUser: state => {
+      if (state.solidSession === null) {
+        return 'not logged in'
+      } else {
+        return state.solidUser
+      }
+    },
+    isLoggedIn: state => {
+      return state.solidSession !== null
     }
   }
 })

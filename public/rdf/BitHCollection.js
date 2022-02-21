@@ -1,0 +1,25 @@
+export const testData = {
+	"@context": {
+		"workset": "https://meld.linkedmusic.org/worksets/",
+		"annotation": "https://meld.linkedmusic.org/annotations/",
+		"meldterm": "https://meld.linkedmusic.org/terms/",
+		"compVocab": "https://meld.linkedmusic.org/companion/vocab/",
+		"mei": "https://meld.linkedmusic.org/mei/",
+		"oa": "http://www.w3.org/ns/oa#",
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"ldp": "http://www.w3.org/ns/ldp#"
+	},
+	"@graph": {
+		"@id": "workset:StarShiningBrightly",
+		"@type": [
+			"meldterm:workset",
+			"ldp:Container"
+		],
+		"ldp:contains": [
+			{"@id": "http://localhost:8081/rdf/pittman.nq"} ,
+			{"@id": "http://localhost:8081/rdf/silcherGesang.nq"} ,
+			{"@id": "http://localhost:8081/rdf/silcherNachtgesang.nq"},
+			{"@id": "http://localhost:8081/rdf/hanslingerTrio93.nq"}
+		]
+	}
+}

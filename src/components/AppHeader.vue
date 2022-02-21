@@ -1,12 +1,17 @@
 <template>
   <header>
+    <UserManagement/>
     <h1>Beethoven in the House – Annotator</h1>
   </header>
 </template>
 
 <script>
+import UserManagement from './AppHeader/UserManagement.vue'
 export default {
-  name: 'AppHeader'
+  name: 'AppHeader',
+  components: {
+    UserManagement
+  }
 }
 </script>
 
@@ -15,9 +20,12 @@ export default {
 header {
   background-color: #e5e5e5;
   border-bottom: .5px solid #999999;
+  padding: .2rem 1rem;
 
   h1 {
-    margin-top: 0;
+    text-align: left;
+    margin: 0;
+    font-size: 1.2rem;
   }
 }
 </style>

@@ -27,5 +27,6 @@ export const prefix = {
   dce: 'http://purl.org/dc/elements/1.1/',
   dbpedia: 'https://dbpedia.org/ontology/',
   rdau: 'http://rdaregistry.info/Elements/u/',
-  wdt: 'https://www.wikidata.org/prop/direct/'
+  wdt: 'https://www.wikidata.org/prop/direct/',
+  foaf: 'http://xmlns.com/foaf/0.1/'
 }

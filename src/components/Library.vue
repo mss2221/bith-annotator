@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>Library</h1>
     <Library_Work v-for="work in worklist" v-bind:id="work['@id']"/>
+    
   </div>
 </template>
 

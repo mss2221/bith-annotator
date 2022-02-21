@@ -14,10 +14,6 @@ import Library from './components/Library.vue'
 import Workbench from './components/Workbench.vue'
 //import { Splitpanes, Pane } from 'splitpanes'
 
-// SolidPOD authentication library
-import auth from 'solid-auth-client'
-
-
 export default {
   name: 'App',
   components: {
@@ -27,29 +23,6 @@ export default {
     Workbench
     //Splitpanes,
     //Pane
-  },
-  created: function () {
-    // check for session
-    auth.trackSession(session => {
-      if (!session) {
-        console.info('The user is not logged in')
-        async function popupLogin() {
-          let session = await auth.currentSession()
-          let popupUri = 'http://localhost:8080/auth-popup.html'
-          if (!session) {
-            session = await auth.popupLogin({ popupUri })
-          }
-          this.$store.dispatch('setSolidSession', session)
-
-          console.log('Logged in as ' + session.webId)
-        }
-        popupLogin();
-      }
-      else {
-        console.info('The user is ' + session.webId)
-        this.$store.dispatch('setSolidSession', session)
-      }
-    })
   },
   computed: {
     showLandingPage: function() {
