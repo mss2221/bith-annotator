@@ -89,14 +89,14 @@ const graphComponentDidUpdate = (props, prevProps) => {
   if (prevPool.running === 1 && thisPool.running === 0){
     // check our traversal objectives if the graph has updated
     console.error('checkTraversalObjectives()', props.graph.graph, props.graph.objectives)
-    checkTraversalObjectives(props.graph.graph, props.graph.objectives);
+    meldStore.dispatch(checkTraversalObjectives(props.graph.graph, props.graph.objectives));
     updated = true;
   } else if ( Object.keys(thisPool.pool).length && thisPool.running < MAX_TRAVERSERS) {
     // Initiate next traverser in pool...
     let arr = Object.keys(thisPool.pool)
     let uri = arr[arr.length - 1]
     console.warn('next traverse()', uri, thisPool.pool[uri])
-    traverse(uri, thisPool.pool[uri])
+    meldStore.dispatch(traverse(uri, thisPool.pool[uri]));
     // console.log('\n__traversing next')
     console.log('yodeyay – has was:' + prevProps.graph.outcomesHash + ', is now: ' + props.graph.outcomesHash)
     if (prevProps.graph.outcomesHash !== props.graph.outcomesHash) {
@@ -203,8 +203,8 @@ export default new Vuex.Store({
       // this initiates MELD traversal from within Vue. Called once…
       console.log('starting traverseGraph()')
       meldStore.dispatch(registerTraversal(graphURI, params))
-      const params = meldStore.getState().traversalPool.pool[graphURI]
-      meldStore.dispatch(traverse(graphURI, params))
+      const newParams = meldStore.getState().traversalPool.pool[graphURI]
+      meldStore.dispatch(traverse(graphURI, newParams))
     },
     setPerspective({ commit }, perspective) {
       commit('SET_PERSPECTIVE', perspective)

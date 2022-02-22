@@ -18,7 +18,7 @@ export const transformArrangement = (vivoScore) => {
 }
 
 export const addWork = (worklist, arrangement) => {
-	if(!arrangement.work || !'@id' in arrangement.work) return workList;
+	if(!arrangement.work || !'@id' in arrangement.work) return worklist;
 	const wID = arrangement.work['@id'];
 	if(worklist.find(x => x['@id']===wID)){
 		return worklist;
