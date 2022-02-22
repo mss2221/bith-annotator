@@ -315,6 +315,10 @@ export default new Vuex.Store({
       // todo
       return staticWorklist // state.worklist
     },
+    work: (state) => (id) => {
+      // todo
+      return staticWorklist.find(work => work['@id'] === id)
+    },
     showLandingPage: state => {
       return state.perspective === 'landingPage'
     },
