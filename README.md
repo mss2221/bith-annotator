@@ -1,5 +1,18 @@
 # bith-annotator
 
+This tool is a proof of concept for writing editorial annotations
+as Linked Open Data, bringing together MELD and Edirom.
+
+This app is written with Vue.js / Vuex, whereas MELD is based on
+React / Redux. The bridging between these two technology stacks
+happens in the Vuex store, which is described in more detail in the */src/store/index.js* file.
+
+Authentication to SolidPODs, which are used for data storage, is
+initiated in the */src/components/AppHeader/UserManagement.vue*
+component, but also affects the Vuex store in */src/store/index.js*.
+
+This prototype is work in progress and may change anytime.
+
 ## Project setup
 ```
 npm install

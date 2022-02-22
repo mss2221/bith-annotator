@@ -16,7 +16,7 @@
         <p>
           <button class="btn btn-primary" v-on:click="showLibrary">Library</button>
         </p>
-        <p>
+        <p v-if="isLoggedIn">
           <button class="btn" v-on:click="uploadTest">uploadTest</button>
         </p>
       </div>
@@ -27,6 +27,11 @@
 <script>
 export default {
   name: 'LandingPage',
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn
+    }
+  },
   methods: {
     showLibrary: function () {
       this.$store.dispatch('setPerspective','library')

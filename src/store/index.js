@@ -41,9 +41,22 @@ import { staticWorklist, staticArrangements } from './fakedata.js'
 import { graphURI, params, traversalObjectives, MAX_TRAVERSERS } from './../../traversal.config.js'
 
 // SolidPOD authentication library
-import auth from 'solid-auth-client'
+import {
+  login,
+  handleIncomingRedirect,
+  getDefaultSession,
+  fetch
+} from "@inrupt/solid-client-authn-browser";
 
-import { testData } from './../../public/rdf/BitHCollection.js'
+// Import from "@inrupt/solid-client"
+import {
+  getSolidDataset,
+  saveSolidDatasetAt,
+  getThing,
+  getStringNoLocale,
+  getUrlAll
+} from "@inrupt/solid-client";
+
 
 /*******************************************/
 /* BEGIN REDUX SETUP FOR MELD-CLIENTS-CORE */
@@ -61,12 +74,6 @@ Vue.use(Vuex)
 
 /* BEGIN SOLIDPOD SETUP */
 
-// map SolidPOD fetch to regular fetch method
-const { fetch } = auth.fetch
-
-const $rdf = require('rdflib')
-const rdfStore = $rdf.graph();
-const rdfFetcher =new $rdf.Fetcher(rdfStore)
 
 
 /* END SOLIDPOD SETUP */
@@ -172,9 +179,9 @@ export default new Vuex.Store({
       // listen to changes within MELD Redux
       const unsubscribe = meldStore.subscribe(() => {
         // get old graph from Vuex store
-        let prevGraph = state.graph
+        const prevGraph = state.graph
         // get new graph from Redux store
-        let graph = meldStore.getState()
+        const graph = meldStore.getState()
 
         // copy new graph to Vuex store
         commit('SET_GRAPH', graph)
@@ -207,7 +214,30 @@ export default new Vuex.Store({
       commit('SET_SOLID_SESSION', session)
 
       try {
-        const webId = session.webId
+        const webId = session.info.webId
+        const authFetch = session.fetch
+
+        async function getUserName() {
+          const userCard = await getSolidDataset(
+            webId, {
+            fetch: authFetch
+          })
+
+          const profile = getThing(
+            userCard,
+            webId
+          )
+
+          const name = getStringNoLocale(
+            profile,
+            pref.foaf + 'name'
+          )
+
+          commit('SET_SOLID_USERNAME', name)
+        }
+        getUserName()
+
+        /*
         const me = rdfStore.sym(webId)
         const profile = me.doc()
         const foaf = new $rdf.Namespace(pref.foaf)
@@ -217,42 +247,55 @@ export default new Vuex.Store({
         }, err => {
           // console.log('Load failed ' +  err)
         })
+        */
       } catch(err) {
-        // console.log('ERROR retrieving username')
+        console.log('ERROR retrieving username: ' + err)
       }
 
       // other approach:
-      /*
-      auth.fetch(session.webId, { mode: 'cors', headers: {
-        'Content-Type': 'application/json'
-      }})
+
+      /*console.log('hello')
+      auth.fetch(session.webId, {
+        //mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
         .then(res => res.text())
         .then(data => {
           console.log('\n\n----me here!!!')
           console.log(data)
         })
-        */
+      console.log('hello 2')
+      */
     },
-    uploadTest({ commit }) {
-      console.log('\nHALLO 1')
-      console.log(testData)
+    uploadTest({ commit, state }) {
+      const session = state.solidSession
+      const webId = session.info.webId
+      const authFetch = session.fetch
 
-      auth.fetch('https://kepper.solidcommunity.net/settings/Folder/id1645403113255/BithCollection.jsonld', {
-        method: 'POST', // or 'PUT'
-        headers: {
-          'Content-Type': 'application/jsonld',
-        },
-        credentials: 'include',
-        mode: 'no-cors',
-        body: JSON.stringify(testData)
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+      if (session.info.isLoggedIn) {
+
+        async function uploadData() {
+          // get some random data…
+          const userCard = await getSolidDataset(
+            webId, {
+            fetch: authFetch
+          })
+
+          // For example, the user must be someone with Write access to the specified URL.
+          const savedSolidDataset = await saveSolidDatasetAt(
+            "https://pod.inrupt.com/kepper/private/hello.ttl",
+            userCard, {
+            fetch: authFetch
+          });
+
+          console.log('success', savedSolidDataset)
+        }
+        uploadData()
+
+      }
+
     }
   },
   modules: {
@@ -265,9 +308,11 @@ export default new Vuex.Store({
       return meldStore
     },
     arrangements: state => {
+      // todo
       return staticArrangements // state.arrangements
     },
     worklist: state => {
+      // todo
       return staticWorklist // state.worklist
     },
     showLandingPage: state => {

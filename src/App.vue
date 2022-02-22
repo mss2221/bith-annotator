@@ -34,6 +34,9 @@ export default {
     showWorkbench: function() {
       return this.$store.getters.showWorkbench
     }
+  },
+  created: function () {
+    //this.$store.dispatch('initMeld')
   }
 }
 </script>
