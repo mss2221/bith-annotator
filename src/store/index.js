@@ -175,7 +175,6 @@ export default new Vuex.Store({
       console.log('initMeld()')
       // initialize Vuex store with initial Redux graph
       commit('SET_GRAPH', meldStore.getState())
-
       // listen to changes within MELD Redux
       const unsubscribe = meldStore.subscribe(() => {
         // get old graph from Vuex store
@@ -285,7 +284,7 @@ export default new Vuex.Store({
 
           // For example, the user must be someone with Write access to the specified URL.
           const savedSolidDataset = await saveSolidDatasetAt(
-            "https://pod.inrupt.com/kepper/private/hello.ttl",
+            "https://pod.inrupt.com/markannot/private/hello2.ttl",
             userCard, {
             fetch: authFetch
           });
@@ -318,6 +317,17 @@ export default new Vuex.Store({
     work: (state) => (id) => {
       // todo
       return staticWorklist.find(work => work['@id'] === id)
+    },
+    arrangementsForWork: (state) => (workId) => {
+      return staticArrangements.filter(object => {
+        let fits = false
+        try {
+          fits = object.work['@id'] === workId
+        } catch(err) {
+          console.log('ERROR retrieving arrangements for work ' + workId + ': ' + err)
+        }
+        return fits
+      })
     },
     showLandingPage: state => {
       return state.perspective === 'landingPage'

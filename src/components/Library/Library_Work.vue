@@ -5,13 +5,33 @@
     <div class="published">{{ published }}</div>
     <div class="opus">{{ opus }}</div>
     <!--<span class="id">{{ id }}</span>-->
+    <div class="arrangements">
+      <div class="heading">{{ arrangements.length }}</div>
+      <table>
+        <thead>
+          <tr>
+            <td class="shortTitle">Title</td>
+            <td class="arranger">Arranger</td>
+            <td class="publisherDate">Publisher / Date</td>
+            <td class="catNumber">Catalog Number</td>
+          </tr>
+        </thead>
+        <tbody>
+          <Library_Arrangement v-for="arr in arrangements" v-bind:arr="arr" v-bind:work="work"/>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
 import { prefix as pref } from './../../meld/prefixes'
+import Library_Arrangement from './Library_Arrangement.vue'
 export default {
   name: 'Library_Work',
+  components: {
+    Library_Arrangement
+  },
   props: {
     id: String,
     work: Object
@@ -31,6 +51,9 @@ export default {
     },
     opus: function() {
       return this.work[pref.gndo + 'opusNumericDesignationOfMusicalWork']
+    },
+    arrangements: function() {
+      return this.$store.getters.arrangementsForWork(this.id)
     }
 
     /*,
@@ -95,6 +118,28 @@ export default {
     margin: 0;
     &:before {
       content: 'Opus: '
+    }
+  }
+
+  .arrangements {
+    background-color: #ffffff;
+    border: .5px solid #999999;
+    border-radius: .3rem;
+    padding: .5rem 1rem;
+
+    .heading {
+      font-weight: bold;
+      &:before {
+        content: 'Arrangements: '
+      }
+    }
+
+    table {
+      width: calc(100% - 2rem);
+      border-collapse: collapse;
+      thead {
+        font-weight: 500;
+      }
     }
   }
 

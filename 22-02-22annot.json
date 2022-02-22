@@ -1,0 +1,21 @@
+{
+  "@context": "http://www.w3.org/ns/anno.jsonld",
+  "target": [
+    {
+      "id": "mahler.mei#measure-0000000195822432"
+    }
+  ],
+  "type": "Annotation",
+  "body": [
+    {
+      "id": "6cb7c162-5607-4e4a-a28e-3f842d79b918",
+      "type": "TextualBody",
+      "value": "Recht gemächlich"
+    }
+  ],
+  "motivation": "describing",
+  "created": "2022-02-22T09:38:25.487Z",
+  "creator": "https://annotator1.inrupt.net/profile/card#me",
+  "generator": "SelectableScore AnnotationSubmitter",
+  "@id": "https://annotator1.inrupt.net/public/ce8b4285-2085-4330-90af-ff6fadf4f4c1.jsonld"
+}

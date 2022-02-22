@@ -45,7 +45,7 @@ export default {
     },
     webId: function() {
       if (this.$store.getters.solidSession !== null) {
-        return this.$store.getters.solidSession.webId
+        return this.$store.getters.solidSession.info.webId
       } else {
         return '#'
       }
