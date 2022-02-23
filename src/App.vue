@@ -36,9 +36,9 @@ export default {
     }
   },
   created: function () {
-    //this.$store.dispatch('initMeld')
-    //this.$store.dispatch('setTraversalObjectives')
-    //this.$store.dispatch('traverseGraph')
+    this.$store.dispatch('initMeld')
+    this.$store.dispatch('setTraversalObjectives')
+    this.$store.dispatch('traverseGraph')
   }
 }
 </script>
