@@ -204,7 +204,8 @@ export default new Vuex.Store({
       console.log('starting traverseGraph()')
       meldStore.dispatch(registerTraversal(graphURI, params))
       const newParams = meldStore.getState().traversalPool.pool[graphURI]
-      meldStore.dispatch(traverse(graphURI, newParams))
+      if(newParams) meldStore.dispatch(traverse(graphURI, newParams))
+			else meldStore.dispatch(traverse(graphURI, params));
     },
     setPerspective({ commit }, perspective) {
       commit('SET_PERSPECTIVE', perspective)

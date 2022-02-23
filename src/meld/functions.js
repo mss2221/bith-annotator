@@ -1,4 +1,4 @@
-import { prefix as pref } from 'meld-clients-core/lib/library/prefixes'
+import { prefix as pref } from './prefixes'
 
 export const transformArrangement = (vivoScore) => {
   // Take graph of arrangement and make more intuitive local object

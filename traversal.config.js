@@ -18,7 +18,8 @@ export const params = {
     pref.rdau+"P60163",
     pref.rdau+"O60242",
     pref.wdt+"P217",
-    pref.rdfs+"label"
+    pref.rdfs+"label",
+		"http://www.w3.org/ns/ldp#contains"
  ],
  ignoreObjectPrefix: ["http://d-nb.info/gnd/", "http://rdaregistry.info/"]
 }
