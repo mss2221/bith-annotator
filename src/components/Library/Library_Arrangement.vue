@@ -5,7 +5,7 @@
     <td class="publisherDate">{{ publisher }}: {{ date }}</td>
     <td class="catNumber">{{ catNumber}}</td>
     <td class="buttons">
-      <button v-on:click="selectText" class="btn btn-sm textBtn">Text</button>
+      <button v-on:click="selectRendering" class="btn btn-sm textBtn">Render</button>
       <button v-on:click="selectFacs" class="btn btn-sm facsBtn">Facsimile</button>
     </td>
   </tr>
@@ -19,6 +19,7 @@ export default {
     work: Object,
     arr: Object
   },
+
   computed: {
     shortTitle: function() {
       return this.arr.shortTitle
@@ -37,7 +38,7 @@ export default {
     }
   },
   methods: {
-    selectText: function () {
+    selectRendering: function () {
       console.log('Selecting the Verovio view, which means pulling MEI from ' + this.arr.MEI)
     },
     selectFacs: function () {
@@ -51,6 +52,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .arrangement {
+  color:red;
   .facsBtn {
     margin-left: .5rem;
   }

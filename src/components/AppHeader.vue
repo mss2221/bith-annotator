@@ -1,7 +1,7 @@
 <template>
   <header>
     <UserManagement/>
-    <h1>Beethoven in the House – Annotator (<button v-on:click="goHome" class="btn btn-sm">Home</button>)</h1>
+    <h1>Beethoven in the House – Annotator <button v-on:click="goHome" class="btn btn-sm">Home</button></h1>
   </header>
 </template>
 
