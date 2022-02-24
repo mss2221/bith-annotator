@@ -6,21 +6,14 @@
       </pane>
       <pane size="30">
         <splitpanes horizontal style="height: 600px" class="default-theme">
-          <pane size="8">
+          <pane style="height: 40px">
             <span class="title">SIDEBAR</span>
               <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">to Workbench</button>
               <button v-on:click="goHome" class="btn btn-sm" style="float: right">Home</button>
           </pane>
-          <pane size="46" v-for="(view, index) in views">
+          <pane v-for="(view, index) in views">
             <ArrangementMetadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
-          <!-- <pane size="46">
-            <p>PREVIEW: upper pane</p>
-              <ArrangementMetadata/>
-          </pane>
-          <pane size="46">
-            <p>PREVIEW: lower pane</p>
-          </pane> -->
         </splitpanes>
       </pane>
     </splitpanes>
@@ -63,7 +56,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .title {
-  font-size: large;
   font-weight: bold;
 }
 
