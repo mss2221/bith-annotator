@@ -1,7 +1,10 @@
 <template>
   <header>
     <UserManagement/>
-    <h1>Beethoven in the House – Annotator <button v-on:click="goHome" class="btn btn-sm">Home</button></h1>
+    <h1>Beethoven in the House – Annotator
+      <button v-on:click="goHome" class="btn btn-sm">Home</button>
+      <button v-on:click="showWorkbench" class="btn btn-sm">to Workbench</button>
+    </h1>
   </header>
 </template>
 
@@ -15,7 +18,10 @@ export default {
   methods: {
     goHome: function () {
       this.$store.dispatch('setPerspective','landingPage')
-    }
+    },
+    showWorkbench: function () {
+      this.$store.dispatch('setPerspective', 'workbench')
+    },
   }
 }
 </script>

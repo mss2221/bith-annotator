@@ -12,8 +12,9 @@
           <tr>
             <td class="shortTitle">Title</td>
             <td class="arranger">Arranger</td>
-            <td class="publisherDate">Publisher / Date</td>
-            <td class="catNumber">Catalog Number</td>
+            <td class="publisher">Publisher</td>
+            <td class="date">Date</td>
+            <!-- <td class="catNumber">Catalog Number</td> -->
           </tr>
         </thead>
         <tbody>

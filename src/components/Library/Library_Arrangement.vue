@@ -2,8 +2,9 @@
   <tr class="arrangement">
     <td class="shortTitle">{{ shortTitle }}</td>
     <td class="arranger">{{ arranger }}</td>
-    <td class="publisherDate">{{ publisher }}: {{ date }}</td>
-    <td class="catNumber">{{ catNumber}}</td>
+    <td class="publisher">{{ publisher }}</td>
+    <td class="date">{{ date }}</date>
+    <!-- <td class="catNumber">{{ catNumber}}</td> -->
     <td class="buttons">
       <button v-on:click="selectRendering" class="btn btn-sm textBtn">Render</button>
       <button v-on:click="selectFacs" class="btn btn-sm facsBtn">Facsimile</button>
@@ -39,7 +40,12 @@ export default {
   },
   methods: {
     selectRendering: function () {
-      console.log('Selecting the Verovio view, which means pulling MEI from ' + this.arr.MEI)
+      const obj= {
+        "perspective":"render",
+        "arrangement":this.arr
+      }
+      console.log('Selecting the Verovio view, which means pulling MEI from ' + this.arr.MEI, obj)
+      this.$store.dispatch('addView', obj)
     },
     selectFacs: function () {
       console.log('Selecting the Facsimile.')

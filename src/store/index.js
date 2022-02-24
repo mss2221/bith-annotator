@@ -145,6 +145,11 @@ export default new Vuex.Store({
     solidUser: null
   },
   mutations: {
+    ADD_VIEW (state, view) {
+    //todo: think about how to deal with more than 2 views
+      state.views = state.views.concat([view])
+    console.log("added new view:", view)
+    },
     SET_GRAPH (state, graph) {
       state.graph = graph
     },
@@ -168,6 +173,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    addView ({ commit }, view) {
+      commit('ADD_VIEW', view)
+    },
     setGraph ({ commit }, graph) {
       commit('SET_GRAPH', graph)
     },
@@ -301,6 +309,9 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
+    views: state => {
+      return state.views
+    },
     graph: state => {
       return state.graph
     },
