@@ -30,12 +30,25 @@
 
               <div>Annotation type:
                 <div>
-                  <button>describing</button>
-                  <button>commenting</button>
+                  <input type="radio"  name="annotationType" value="describing">
+                  <label for="describing">Describing</label>
+                </div>
+                <div>
+                  <input type="radio"  name="annotationType" value="commenting">
+                  <label for="commenting">Commenting</label>
                 </div>
               </div>
           </div>
           </pane>
+
+          <div>
+            <input type="radio"  name="annotationType" value="describing">
+            <label for="describing">Describing</label>
+          </div>
+          <div>
+            <input type="radio"  name="annotationType" value="commenting">
+            <label for="commenting">Commenting</label>
+          </div>
 
           <pane size="63">
 
