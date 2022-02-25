@@ -24,16 +24,16 @@
             <div class="controls">
             <div class="title">Control Panel</div>
                 <div>
-                  <button>Make Selection</button>
-                  <button>Define Parallel Passage</button>
+                  <button class="btn">Selection</button>
+                  <button class="btn">Define Parallel Passage</button>
                 </div>
 
-              <div>Annotation type:
+              <div>
+                <div class="title">Annotation type:</div>
                 <div>
                   <input type="radio"  name="annotationType" value="describing">
                   <label for="describing">Describing</label>
-                </div>
-                <div>
+
                   <input type="radio"  name="annotationType" value="commenting">
                   <label for="commenting">Commenting</label>
                 </div>
@@ -87,5 +87,14 @@ export default {
 }
 .textBox {
   background-color: #ebd999;
+}
+.btn {
+  font-size: small;
+  font-weight: bold;
+  margin: 0.3rem 0.5rem;
+}
+[type=radio] {
+    margin-right: 0.25rem;
+    margin-left: 1rem;
 }
 </style>

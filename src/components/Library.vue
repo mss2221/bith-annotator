@@ -6,10 +6,9 @@
       </pane>
       <pane size="30">
         <splitpanes horizontal style="height: 600px" class="default-theme">
-          <pane style="height: 40px">
+          <pane type="sidebar"style="height: 40px">
             <span class="title">SIDEBAR</span>
-              <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">to Workbench</button>
-              <button v-on:click="goHome" class="btn btn-sm" style="float: right">Home</button>
+              <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">Load Arrangements</button>
           </pane>
           <pane v-for="(view, index) in views">
             <ArrangementMetadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
@@ -58,5 +57,15 @@ export default {
 .title {
   font-weight: bold;
 }
+button {
+  margin: 0.3rem 0.5rem;
+  font-weight: bold;
+}
+.sidebar {
+  margin: 0.3rem 0.5rem;
+  font-weight: bold;
+  background-color: #e0b81f;
+}
+
 
 </style>

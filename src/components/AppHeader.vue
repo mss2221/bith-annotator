@@ -3,7 +3,8 @@
     <UserManagement/>
     <h1>Beethoven in the House – Annotator
       <button v-on:click="goHome" class="btn btn-sm">Home</button>
-      <button v-on:click="showWorkbench" class="btn btn-sm">to Workbench</button>
+      <button v-on:click="showWorkbench" class="btn btn-sm">Workbench</button>
+      <button v-on:click="showLibrary" class="btn btn-sm">Library</button>
     </h1>
   </header>
 </template>
@@ -22,6 +23,9 @@ export default {
     showWorkbench: function () {
       this.$store.dispatch('setPerspective', 'workbench')
     },
+    showLibrary: function () {
+      this.$store.dispatch('setPerspective', 'library')
+    },
   }
 }
 </script>
@@ -37,6 +41,9 @@ header {
     text-align: left;
     margin: 0;
     font-size: 1.2rem;
+  }
+  button {
+    margin: 0rem 0.5rem;
   }
 }
 </style>

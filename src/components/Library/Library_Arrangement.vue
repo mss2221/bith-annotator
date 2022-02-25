@@ -58,7 +58,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .arrangement {
-  color:red;
+  color:#d60036;
   .facsBtn {
     margin-left: .5rem;
   }
