@@ -4,15 +4,10 @@
 
       <pane>
         <splitpanes horizontal class="default-theme">
-          <pane >
-            <Display_Pane/>
-            <h4>Upper Pane Selection [0]</h4>
+          <pane v-for="(view, index) in views">
+            <Display_Pane v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
 
-          <pane>
-            <Display_Pane/>
-            <h4>Lower Pane Selection [1]</h4>
-          </pane>
         </splitpanes>
       </pane>
 
@@ -22,10 +17,14 @@
             <h3 class="title">Workbench</h3>
           </pane>
           <pane size="6">selection 1 info
-            <button v-on:click="replaceArrangement" class="btn btn-sm">Replace</button>
+            <button
+              v-on:click="replaceArrangement"
+              class="btn btn-sm">Replace</button>
           </pane>
           <pane size="6">selection 2 info
-            <button v-on:click="replaceArrangement" class="btn btn-sm">Replace</button>
+            <button
+              v-on:click="replaceArrangement"
+              class="btn btn-sm">Replace</button>
           </pane>
           <pane size="20">
             <div class="controls">
@@ -71,15 +70,20 @@ export default {
     Pane
   },
   methods: {
+    replaceArrangement: function() {
 
+}
 },
   computed: {
     views: function() {
       return this.$store.getters.views
-    }
+
+    },
   }
 }
 console.log('Workbench.vue')
+console.log()
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

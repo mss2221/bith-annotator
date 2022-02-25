@@ -1,5 +1,13 @@
 <template>
-<h2>Display Pane {{ index }}</h2>
+  <div class="root">
+    <div v-if="perspective==='facsimile'">
+      IIIF {{ shortTitle }}
+    </div>
+    <div v-if="perspective==='render'">
+      Verovio {{ arr.MEI }}
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -7,13 +15,17 @@ import { prefix as pref } from './../../meld/prefixes'
 export default {
   name: 'Display_Pane',
   props: {
-    arr: Object
+    arr: Object,
+    index: Number,
+    perspective: String
   },
   computed: {
-    views: function() {
-      return this.$store.getters.views
-      console.log(this.$store.getters.views)
+    shortTitle: function() {
+      return this.arr.shortTitle
     }
+  },
+  panePosition: function() {
+    return this.index + " index number"
   }
 }
 
