@@ -7,11 +7,10 @@
       <pane size="30">
         <splitpanes horizontal style="height: 600px" class="default-theme">
           <pane type="sidebar"style="height: 40px">
-            <span class="title">SIDEBAR</span>
-              <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">Load Arrangements</button>
+              <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">Load Arrangements into Workbench</button>
           </pane>
           <pane v-for="(view, index) in views">
-            <ArrangementMetadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
+            <Arrangement_Metadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
         </splitpanes>
       </pane>
@@ -21,7 +20,7 @@
 
 <script>
 import Library_Work from './Library/Library_Work.vue'
-import ArrangementMetadata from './Library/ArrangementMetadata'
+import Arrangement_Metadata from './Library/Arrangement_Metadata'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css';
 
@@ -29,7 +28,7 @@ export default {
   name: 'Library',
   components: {
     Library_Work,
-    ArrangementMetadata,
+    Arrangement_Metadata,
     Splitpanes,
     Pane
   },

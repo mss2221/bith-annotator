@@ -146,7 +146,7 @@ export default new Vuex.Store({
   },
   mutations: {
     ADD_VIEW (state, view) {
-    //todo: think about how to deal with more than 2 views
+    //TODO: think about how to deal with more than 2 views
       state.views = state.views.concat([view])
     console.log("added new view:", view)
     },

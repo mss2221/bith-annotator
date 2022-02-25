@@ -20,11 +20,11 @@ export default {
     goHome: function () {
       this.$store.dispatch('setPerspective','landingPage')
     },
-    showWorkbench: function () {
-      this.$store.dispatch('setPerspective', 'workbench')
-    },
     showLibrary: function () {
       this.$store.dispatch('setPerspective', 'library')
+    },
+    showWorkbench: function () {
+      this.$store.dispatch('setPerspective', 'workbench')
     },
   }
 }

@@ -5,9 +5,11 @@
       <pane >
         <splitpanes horizontal class="default-theme">
             <pane >
+              <Display_Pane/>
               <h4>Upper Pane Selection [0]</h4>
             </pane>
             <pane>
+              <Display_Pane/>
               <h4>Lower Pane Selection [1]</h4>
             </pane>
           </splitpanes>
@@ -24,7 +26,7 @@
             <div class="controls">
             <div class="title">Control Panel</div>
                 <div>
-                  <button class="btn">Selection</button>
+                  <button class="btn">Select Extract</button>
                   <button class="btn">Define Parallel Passage</button>
                 </div>
 
@@ -66,11 +68,13 @@
 </template>
 
 <script>
+import Display_Pane from './Workbench/Display_Pane.vue'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css';
 export default {
   name: 'Workbench',
   components: {
+    Display_Pane,
     Splitpanes,
     Pane
   }

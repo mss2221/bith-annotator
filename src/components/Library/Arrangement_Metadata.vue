@@ -13,7 +13,7 @@
 <script>
 import { prefix as pref } from './../../meld/prefixes'
 export default {
-  name: 'ArrangementMetadata',
+  name: 'Arrangement_Metadata',
   props: {
     perspective: String,
     arr: Object,
@@ -42,7 +42,7 @@ export default {
   methods: {
     selectRendering: function () {
       console.log('Selecting the Verovio view, which means pulling MEI from ' + this.arr.MEI)
-    },
+  },
     selectFacs: function () {
       console.log('Selecting the Facsimile.')
     }
