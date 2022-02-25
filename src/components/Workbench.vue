@@ -2,26 +2,31 @@
   <div class="hello">
     <splitpanes vertical style="height:700px" class="default-theme">
 
-      <pane >
+      <pane>
         <splitpanes horizontal class="default-theme">
-            <pane >
-              <Display_Pane/>
-              <h4>Upper Pane Selection [0]</h4>
-            </pane>
-            <pane>
-              <Display_Pane/>
-              <h4>Lower Pane Selection [1]</h4>
-            </pane>
-          </splitpanes>
+          <pane >
+            <Display_Pane/>
+            <h4>Upper Pane Selection [0]</h4>
           </pane>
 
-          <pane size="30">
-            <splitpanes horizontal>
-              <pane size="5">
+          <pane>
+            <Display_Pane/>
+            <h4>Lower Pane Selection [1]</h4>
+          </pane>
+        </splitpanes>
+      </pane>
+
+      <pane size="30">
+        <splitpanes horizontal>
+          <pane size="5">
             <h3 class="title">Workbench</h3>
-              </pane>
-          <pane size="6">selection 1 info</pane>
-          <pane size="6">selection 2 info</pane>
+          </pane>
+          <pane size="6">selection 1 info
+            <button v-on:click="replaceArrangement" class="btn btn-sm">Replace</button>
+          </pane>
+          <pane size="6">selection 2 info
+            <button v-on:click="replaceArrangement" class="btn btn-sm">Replace</button>
+          </pane>
           <pane size="20">
             <div class="controls">
             <div class="title">Control Panel</div>
@@ -29,7 +34,6 @@
                   <button class="btn">Select Extract</button>
                   <button class="btn">Define Parallel Passage</button>
                 </div>
-
               <div>
                 <div class="title">Annotation type:</div>
                 <div>
@@ -40,31 +44,19 @@
                   <label for="commenting">Commenting</label>
                 </div>
               </div>
-          </div>
+            </div>
           </pane>
 
-          <div>
-            <input type="radio"  name="annotationType" value="describing">
-            <label for="describing">Describing</label>
-          </div>
-          <div>
-            <input type="radio"  name="annotationType" value="commenting">
-            <label for="commenting">Commenting</label>
-          </div>
-
           <pane size="63">
-
             <div class="textBox">
               <h2 class="title">Text Box</h2>
             </div>
-
           </pane>
-
-            </splitpanes>
-          </pane>
-        </pane>
         </splitpanes>
-    </div>
+      </pane>
+    </pane>
+  </splitpanes>
+</div>
 </template>
 
 <script>
@@ -77,8 +69,17 @@ export default {
     Display_Pane,
     Splitpanes,
     Pane
+  },
+  methods: {
+
+},
+  computed: {
+    views: function() {
+      return this.$store.getters.views
+    }
   }
 }
+console.log('Workbench.vue')
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

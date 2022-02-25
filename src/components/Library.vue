@@ -20,7 +20,7 @@
 
 <script>
 import Library_Work from './Library/Library_Work.vue'
-import Arrangement_Metadata from './Library/Arrangement_Metadata'
+import Arrangement_Metadata from './Library/Arrangement_Metadata.vue'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css';
 
