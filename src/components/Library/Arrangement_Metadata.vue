@@ -1,13 +1,13 @@
 <template>
 <div align="left">
-<div v-if="this.index===1" class="title">Lower pane selection</div>
-  <div v-else  class="title">Upper pane selection</div>
+<!-- <div v-if="this.index===1" class="title">Lower pane selection</div> -->
+  <!-- <div v-else  class="title">Pane number {{ selectionNumber }}</div> -->
+    <div class="title">Pane number {{ selectionNumber }}</div>
     <div>Title: {{ this.shortTitle }}</div>
     <div>Arranger: {{ this.arranger }}</div>
     <div>Publisher: {{ this.publisher }}</div>
     <div>Date: {{ this.date }}</div>
     <div>Catalog Number: {{ this.catNumber }}</div>
-    <div>Index: {{ index }}</div>
 </div>
 </template>
 
@@ -38,7 +38,10 @@ export default {
     },
     panePosition: function() {
       return this.index + " index number"
-}
+    },
+    selectionNumber: function() {
+      return this.index + 1
+    }
   },
   methods: {
     selectRendering: function () {

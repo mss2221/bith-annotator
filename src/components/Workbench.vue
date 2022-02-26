@@ -16,16 +16,14 @@
           <pane size="5">
             <h3 class="title">Workbench</h3>
           </pane>
-          <pane size="6">selection 1 info
-            <button
-              v-on:click="replaceArrangement"
-              class="btn btn-sm">Replace</button>
+          <pane size="6" v-for="(view, index) in views" >
+            Selection: {{ selectionNumber }}
+            <button v-on:click="replaceArrangement" class="btn btn-sm">
+              <i class="icon icon-delete"></i>
+              </button>
           </pane>
-          <pane size="6">selection 2 info
-            <button
-              v-on:click="replaceArrangement"
-              class="btn btn-sm">Replace</button>
-          </pane>
+
+
           <pane size="20">
             <div class="controls">
             <div class="title">Control Panel</div>
@@ -58,6 +56,18 @@
 </div>
 </template>
 
+<!-- <pane size="6">selection 1 info
+        <button v-on:click="replaceArrangement" class="btn btn-sm">
+          <i class="icon icon-delete"></i>
+          </button>
+      </pane>
+
+      <pane size="6">selection 2 info
+        <button v-on:click="replaceArrangement" class="btn btn-sm">
+          <i class="icon icon-delete"></i>
+          </button>
+      </pane> -->
+
 <script>
 import Display_Pane from './Workbench/Display_Pane.vue'
 import { Splitpanes, Pane } from 'splitpanes'
@@ -77,8 +87,10 @@ export default {
   computed: {
     views: function() {
       return this.$store.getters.views
-
     },
+    selectionNumber: function() {
+      return this.index + 1
+    }
   }
 }
 console.log('Workbench.vue')
