@@ -2,12 +2,14 @@
 <div align="left">
 <!-- <div v-if="this.index===1" class="title">Lower pane selection</div> -->
   <!-- <div v-else  class="title">Pane number {{ selectionNumber }}</div> -->
-    <div class="title">Pane number {{ selectionNumber }}</div>
-    <div>Title: {{ this.shortTitle }}</div>
-    <div>Arranger: {{ this.arranger }}</div>
-    <div>Publisher: {{ this.publisher }}</div>
-    <div>Date: {{ this.date }}</div>
-    <div>Catalog Number: {{ this.catNumber }}</div>
+    <!-- <div class="title" style="font-weight:bold">Pane number {{ selectionNumber }}</div> -->
+
+    <div><label class="title">Title:</label> {{ this.shortTitle }}</div>
+    <div><label class="title">Arranger:</label> {{ this.arranger }}</div>
+    <div><label class="title">Publisher:</label> {{ this.publisher }}</div>
+    <div><label class="title">Date:</label> {{ this.date }}</div>
+    <div><label class="title">Catalog Number:</label> {{ this.catNumber }}</div>
+
 </div>
 </template>
 
@@ -64,6 +66,10 @@ export default {
   color:red;
   .facsBtn {
     margin-left: .5rem;
+  }
+  label {
+    font-weight: bold;
+    color: red;
   }
 
 }

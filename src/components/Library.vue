@@ -4,12 +4,16 @@
       <pane>
         <Library_Work v-for="work in worklist" v-bind:id="work['@id']" v-bind:work="work"/>
       </pane>
-      <pane size="30">
-        <splitpanes horizontal style="height: 600px" class="default-theme">
-          <pane type="sidebar"style="height: 40px">
+
+<!-- Sidebar -->
+
+      <pane class="sidebar" size="30">
+        <splitpanes horizontal style="height: 600px">
+          <pane style="height: 40px">
               <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">Load Arrangements into Workbench</button>
           </pane>
-          <pane v-for="(view, index) in views">
+          <pane v-for="(view, index) in views" class="preview">
+                                    Selection {{ index + 1 }}
             <Arrangement_Metadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
         </splitpanes>
@@ -61,10 +65,13 @@ button {
   margin: 0.3rem 0.5rem;
   font-weight: bold;
 }
-.sidebar {
+.preview {
   margin: 0.3rem 0.5rem;
-  font-weight: bold;
   background-color: #e0b81f;
+  text-align: left;
+}
+.label {
+  font-weight: bold;
 }
 
 

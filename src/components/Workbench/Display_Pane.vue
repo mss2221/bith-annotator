@@ -4,6 +4,7 @@
       IIIF {{ shortTitle }}
     </div>
     <div v-if="perspective==='render'">
+      <div class="title">{{ shortTitle}}</div>
       Verovio {{ arr.MEI }}
     </div>
 
@@ -32,4 +33,8 @@ export default {
 </script>
 
 
-<style></style>
+<style>
+.title {
+  font-weight: bold;
+  }
+</style>

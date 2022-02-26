@@ -5,19 +5,26 @@
       <pane>
         <splitpanes horizontal class="default-theme">
           <pane v-for="(view, index) in views">
+            <div class="label">Pane {{ index + 1 }} </div>
             <Display_Pane v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
-
         </splitpanes>
       </pane>
 
-      <pane size="30">
-        <splitpanes horizontal>
+<!-- Sidebar -->
+
+      <pane class="sidebar" size="30">
+        <splitpanes horizontal class="default-theme">
           <pane size="5">
             <h3 class="title">Workbench</h3>
           </pane>
-          <pane size="6" v-for="(view, index) in views" >
-            Selection: {{ selectionNumber }}
+          <pane size="8" v-for="(view, index) in views" style="text-align:left">
+          Selection {{ index + 1 }}
+          <span style="float:right"><button v-on:click="replaceArrangement" class="btn btn-sm">
+            <i class="icon icon-delete"></i>
+          </button>
+          </span>
+              <Arrangement_Metadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
             <button v-on:click="replaceArrangement" class="btn btn-sm">
               <i class="icon icon-delete"></i>
               </button>
@@ -70,27 +77,26 @@
 
 <script>
 import Display_Pane from './Workbench/Display_Pane.vue'
+import Arrangement_Metadata from './Library/Arrangement_Metadata.vue'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css';
+
 export default {
   name: 'Workbench',
   components: {
     Display_Pane,
+    Arrangement_Metadata,
     Splitpanes,
     Pane
   },
   methods: {
     replaceArrangement: function() {
-
-}
+    },
 },
   computed: {
     views: function() {
       return this.$store.getters.views
     },
-    selectionNumber: function() {
-      return this.index + 1
-    }
   }
 }
 console.log('Workbench.vue')
@@ -108,6 +114,12 @@ console.log()
 }
 .textBox {
   background-color: #ebd999;
+}
+.label {
+  font-size: 0.7rem;
+  display: block;
+  text-align: left;
+  padding-left: 1rem;
 }
 .btn {
   font-size: small;
