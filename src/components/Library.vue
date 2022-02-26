@@ -6,14 +6,23 @@
       </pane>
 
 <!-- Sidebar -->
-
+<!-- <span style="float:right; padding-right:1rem">
+  <button v-on:click="replaceArrangement" class="btn btn-sm">
+    <i class="icon icon-delete"></i>
+  </button>
+</span> -->
       <pane class="sidebar" size="30">
         <splitpanes horizontal style="height: 600px">
           <pane style="height: 40px">
               <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">Load Arrangements into Workbench</button>
           </pane>
           <pane v-for="(view, index) in views" class="preview">
-                                    Selection {{ index + 1 }}
+              <span>Selection {{ index + 1 }}</span>
+              <span style="float:right; padding-right:1rem">
+                <button v-on:click="replaceArrangement" class="btn btn-sm">
+                  <i class="icon icon-delete"></i>
+                </button>
+              </span>
             <Arrangement_Metadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
         </splitpanes>
@@ -42,6 +51,8 @@ export default {
     },
     goHome: function () {
       this.$store.dispatch('setPerspective','landingPage')
+    },
+    replaceArrangement: function() {
     }
   },
   computed: {

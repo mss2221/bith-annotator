@@ -25,9 +25,6 @@
           </button>
           </span>
               <Arrangement_Metadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
-            <button v-on:click="replaceArrangement" class="btn btn-sm">
-              <i class="icon icon-delete"></i>
-              </button>
           </pane>
 
 
