@@ -150,6 +150,15 @@ export default new Vuex.Store({
       state.views = state.views.concat([view])
     console.log("added new view:", view)
     },
+
+    REMOVE_VIEW (state, index) {
+      Vue.set(state, 'index', )
+      state.views = state.views.splice(index,0)
+
+    },
+    REMOVE_ALL (state) {
+
+    },
     SET_GRAPH (state, graph) {
       state.graph = graph
     },
@@ -174,7 +183,11 @@ export default new Vuex.Store({
   },
   actions: {
     addView ({ commit }, view) {
+
       commit('ADD_VIEW', view)
+    },
+    removeView ({ commit }, index) {
+      commit('REMOVE_VIEW', index)
     },
     setGraph ({ commit }, graph) {
       commit('SET_GRAPH', graph)

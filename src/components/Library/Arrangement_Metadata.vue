@@ -3,7 +3,15 @@
 <!-- <div v-if="this.index===1" class="title">Lower pane selection</div> -->
   <!-- <div v-else  class="title">Pane number {{ selectionNumber }}</div> -->
     <!-- <div class="title" style="font-weight:bold">Pane number {{ selectionNumber }}</div> -->
-
+    <div>
+      <span>Selection {{ index +1 }}
+      </span>
+      <span style="float:right; padding-right:1rem; padding-top:.5rem">
+        <button v-on:click="removeView" class="btn btn-sm">
+          <i class="icon icon-delete"></i>
+        </button>
+      </span>
+    </div>
     <div><label class="title">Title:</label> {{ this.shortTitle }}</div>
     <div><label class="title">Arranger:</label> {{ this.arranger }}</div>
     <div><label class="title">Publisher:</label> {{ this.publisher }}</div>
@@ -49,6 +57,9 @@ export default {
     selectRendering: function () {
       console.log('Selecting the Verovio view, which means pulling MEI from ' + this.arr.MEI)
   },
+    removeView: function () {
+      this.$store.dispatch('removeView', this.index)
+  },
     selectFacs: function () {
       console.log('Selecting the Facsimile.')
     }
@@ -67,11 +78,13 @@ export default {
   .facsBtn {
     margin-left: .5rem;
   }
+.button {
+  padding: 50px;
+}
   label {
     font-weight: bold;
     color: red;
   }
-
 }
 
 </style>

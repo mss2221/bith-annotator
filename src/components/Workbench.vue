@@ -5,7 +5,6 @@
       <pane>
         <splitpanes horizontal class="default-theme">
           <pane v-for="(view, index) in views">
-            <div class="label">Pane {{ index + 1 }} </div>
             <Display_Pane v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
         </splitpanes>
@@ -19,11 +18,7 @@
             <h3 class="title">Workbench</h3>
           </pane>
           <pane size="8" v-for="(view, index) in views" style="text-align:left">
-          Selection {{ index + 1 }}
-          <span style="float:right"><button v-on:click="replaceArrangement" class="btn btn-sm">
-            <i class="icon icon-delete"></i>
-          </button>
-          </span>
+
               <Arrangement_Metadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
 
@@ -88,7 +83,8 @@ export default {
   },
   methods: {
     replaceArrangement: function() {
-    },
+    console.log('replaceArrangement')
+},
 },
   computed: {
     views: function() {
