@@ -10,12 +10,14 @@ export const vrvPresets = {
     mnumInterval: 5
   },
   preview: {
-    scale: 10,
+    scale: 20,
     breaks: 'auto',
     openControlEvents: true,
     svgBoundingBoxes: true,
     svgRemoveXlink: true,
     header: 'none',
-    footer: 'none'
+    footer: 'none',
+    pageWidth: 1600,
+    pageHeight: 600
   }
 }

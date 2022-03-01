@@ -5,7 +5,7 @@
     </div>
     <div v-if="perspective==='render'">
       <div class="title">{{ shortTitle}}</div>
-      Verovio {{ arr.MEI }}
+      <Verovio :idSeed="'pane_' + index" :uri="arr.MEI" settings="fullScore"/>
     </div>
 
   </div>
@@ -13,8 +13,13 @@
 
 <script>
 import { prefix as pref } from './../../meld/prefixes'
+import Verovio from './Verovio.vue'
+
 export default {
   name: 'Display_Pane',
+  components: {
+    Verovio
+  },
   props: {
     arr: Object,
     index: Number,

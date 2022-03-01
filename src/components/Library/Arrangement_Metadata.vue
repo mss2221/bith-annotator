@@ -17,14 +17,19 @@
     <div><label class="title">Publisher:</label> {{ this.publisher }}</div>
     <div><label class="title">Date:</label> {{ this.date }}</div>
     <div><label class="title">Catalog Number:</label> {{ this.catNumber }}</div>
-
+    <Verovio :idSeed="'preview_' + index" :uri="arr.MEI" settings="preview"/>
 </div>
 </template>
 
 <script>
 import { prefix as pref } from './../../meld/prefixes'
+import Verovio from './../Workbench/Verovio.vue'
+
 export default {
   name: 'Arrangement_Metadata',
+  components: {
+    Verovio
+  },
   props: {
     perspective: String,
     arr: Object,

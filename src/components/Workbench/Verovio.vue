@@ -8,6 +8,7 @@
 <script>
 import verovio from 'verovio'
 import svgDragSelect from "svg-drag-select"
+import { vrvPresets } from './../../../config/verovio.config.js'
 
 const verovioOptions = {
   scale: 30,
@@ -33,7 +34,8 @@ export default {
   name: 'Verovio',
   props: {
     uri: String,
-    idSeed: String
+    idSeed: String,
+    settings: String
   },
   computed: {
 
@@ -43,21 +45,33 @@ export default {
   },
   mounted: function () {
 
-    verovio.module.onRuntimeInitialized = () => {
-      const vrvToolkit = new verovio.toolkit()
-      vrvToolkit.setOptions(verovioOptions)
-      fetch(this.uri)
-        .then(res => {
-          document.querySelector('#activity_' + this.idSeed).innerHTML = 'Processing'
-          return res.text()
-        })
-        .then(mei => {
-          vrvToolkit.loadData(mei)
-          const svg = vrvToolkit.renderToSVG(1, {})
-          document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
+    console.log('before me here…')
+    console.log(this.uri, this.idSeed, this.settings)
 
+
+    const vrvToolkit = new verovio.toolkit()
+    console.log(1)
+
+    const options = (typeof vrvPresets[this.settings] === 'object') ? vrvPresets[this.settings] : vrvPresets.fullScore
+    console.log(2)
+    console.log(options)
+
+    vrvToolkit.setOptions(options)
+
+    fetch(this.uri)
+      .then(res => {
+        document.querySelector('#activity_' + this.idSeed).innerHTML = 'Processing'
+        return res.text()
+      })
+      .then(mei => {
+        console.log(3)
+        vrvToolkit.loadData(mei)
+        const svg = vrvToolkit.renderToSVG(1, {})
+        console.log(4)
+        document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
+        console.log(5)
           // document.querySelectorAll('#meiContainer_ .staff > .staff.bounding-box > rect').forEach(bbox => addListener(bbox))
-
+          /*
           const mei_svg = document.querySelector('#meiContainer_' + this.idSeed + ' > svg')
           console.log('found svg: ', mei_svg)
 
@@ -84,7 +98,7 @@ export default {
               return true
             }
             // check if there is at least one enclosed point in the path.
-            for (let i = 0, len = element.getTotalLength(); i <= len; i += 4 /* arbitrary */) {
+            for (let i = 0, len = element.getTotalLength(); i <= len; i += 4 ) {
               const { x, y } = element.getPointAtLength(i)
               if (
                   dragAreaInSvgCoordinate.x <= x && x <= dragAreaInSvgCoordinate.x + dragAreaInSvgCoordinate.width &&
@@ -122,17 +136,13 @@ export default {
               // for example: toggle "data-selected" attribute
               newlyDeselectedElements.forEach(element => element.removeAttribute('data-selected'))
               newlySelectedElements.forEach(element => element.setAttribute('data-selected', ''))
-            }*/
+            }* /
           })
+          */
 
-          console.log('setup presumably correct')
-          console.log(cancel)
+      })
 
 
-
-        })
-
-    }
   }
 }
 </script>

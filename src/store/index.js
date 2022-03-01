@@ -83,6 +83,7 @@ Vue.use(Vuex)
 
 let vrvToolkit
 verovio.module.onRuntimeInitialized = () => {
+  // eslint-disable-next-line new-cap
   vrvToolkit = new verovio.toolkit()
 }
 
@@ -153,15 +154,14 @@ export default new Vuex.Store({
   },
   mutations: {
     ADD_VIEW (state, view) {
-    //TODO: think about how to deal with more than 2 views
+    // TODO: think about how to deal with more than 2 views
       state.views = state.views.concat([view])
-    console.log("added new view:", view)
+      console.log('added new view:', view)
     },
 
     REMOVE_VIEW (state, index) {
-      Vue.set(state, 'index', )
-      state.views = state.views.splice(index,0)
-
+      Vue.set(state, 'index')
+      state.views = state.views.splice(index, 0)
     },
     REMOVE_ALL (state) {
 
@@ -197,7 +197,6 @@ export default new Vuex.Store({
   },
   actions: {
     addView ({ commit }, view) {
-
       commit('ADD_VIEW', view)
     },
     removeView ({ commit }, index) {
@@ -373,14 +372,29 @@ export default new Vuex.Store({
     showWorkbench: state => {
       return state.perspective === 'workbench'
     },
-    rendering: state => ({uri, settings}) => {
+    //rendering: state => async ({ uri, settings }) => {
       // vrvToolkit.setOptions(vrvPresets.fullScore)
 
-      console.log('calling uri: ' + uri)
+      /*console.log('calling uri: ' + uri)
       console.log(settings)
       console.log('version: ' + vrvToolkit.getVersion())
+      console.log(vrvPresets)
 
-      /*console.log('me here! 1')
+      console.log(vrvPresets[settings])
+
+      const options = (typeof vrvPresets[settings] === 'object') ? vrvPresets[settings] : vrvPresets.fullScore
+      let svg
+      vrvToolkit.setOptions(options)
+      await fetch(uri)
+        .then(res => res.text())
+        .then(mei => {
+          vrvToolkit.loadData(mei)
+          svg = vrvToolkit.renderToSVG(1, {})
+        })
+
+      return svg*/
+
+      /* console.log('me here! 1')
       let worker = new Worker('./../workers/verovio-worker.js');
       console.log('me here! 2')
       console.log(worker)
@@ -393,9 +407,8 @@ export default new Vuex.Store({
       }
       console.log('me here! 4')
       testWorker2()
-      console.log('me here! 5')*/
-
-    },
+      console.log('me here! 5') */
+    //},
     solidSession: state => {
       return state.solidSession
     },
