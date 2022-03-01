@@ -152,6 +152,20 @@ export default new Vuex.Store({
     solidUser: null
   },
   mutations: {
+    ADD_VIEW (state, view) {
+    //TODO: think about how to deal with more than 2 views
+      state.views = state.views.concat([view])
+    console.log("added new view:", view)
+    },
+
+    REMOVE_VIEW (state, index) {
+      Vue.set(state, 'index', )
+      state.views = state.views.splice(index,0)
+
+    },
+    REMOVE_ALL (state) {
+
+    },
     SET_GRAPH (state, graph) {
       state.graph = graph
     },
@@ -182,6 +196,13 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    addView ({ commit }, view) {
+
+      commit('ADD_VIEW', view)
+    },
+    removeView ({ commit }, index) {
+      commit('REMOVE_VIEW', index)
+    },
     setGraph ({ commit }, graph) {
       commit('SET_GRAPH', graph)
     },
@@ -311,6 +332,9 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
+    views: state => {
+      return state.views
+    },
     graph: state => {
       return state.graph
     },

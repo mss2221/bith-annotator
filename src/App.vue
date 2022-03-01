@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <AppHeader/>
-    <LandingPage v-if="showLandingPage"/>
-    <Library v-if="showLibrary"/>
-    <Workbench v-if="showWorkbench"/>
+          <LandingPage v-if="showLandingPage"/>
+          <Library v-if="showLibrary"/>
+          <Workbench v-if="showWorkbench"/>
   </div>
 </template>
 
@@ -12,7 +12,6 @@ import AppHeader from './components/AppHeader.vue'
 import LandingPage from './components/LandingPage.vue'
 import Library from './components/Library.vue'
 import Workbench from './components/Workbench.vue'
-//import { Splitpanes, Pane } from 'splitpanes'
 
 export default {
   name: 'App',
@@ -20,9 +19,7 @@ export default {
     AppHeader,
     Library,
     LandingPage,
-    Workbench
-    //Splitpanes,
-    //Pane
+    Workbench,
   },
   computed: {
     showLandingPage: function() {
@@ -36,9 +33,9 @@ export default {
     }
   },
   created: function () {
-    this.$store.dispatch('initMeld')
-    this.$store.dispatch('setTraversalObjectives')
-    this.$store.dispatch('traverseGraph')
+    // this.$store.dispatch('initMeld')
+    // this.$store.dispatch('setTraversalObjectives')
+    // this.$store.dispatch('traverseGraph')
   }
 }
 </script>
@@ -54,5 +51,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.splitpanes {
+
+
 }
 </style>
