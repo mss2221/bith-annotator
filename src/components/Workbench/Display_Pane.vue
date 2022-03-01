@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <div v-if="perspective==='facsimile'">
-      IIIF {{ shortTitle }}
+      <Facsimile :idSeed="'facs_' + index" :manifest="arr.MEI"/>
     </div>
     <div v-if="perspective==='render'">
       <div class="title">{{ shortTitle}}</div>
@@ -14,11 +14,13 @@
 <script>
 import { prefix as pref } from './../../meld/prefixes'
 import Verovio from './Verovio.vue'
+import Facsimile from './Facsimile.vue'
 
 export default {
   name: 'Display_Pane',
   components: {
-    Verovio
+    Verovio,
+    Facsimile
   },
   props: {
     arr: Object,

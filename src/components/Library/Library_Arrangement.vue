@@ -48,7 +48,12 @@ export default {
       this.$store.dispatch('addView', obj)
     },
     selectFacs: function () {
+      const obj= {
+        "perspective":"facsimile",
+        "arrangement":this.arr
+      }
       console.log('Selecting the Facsimile.')
+      this.$store.dispatch('addView', obj)
     }
   }
 }
