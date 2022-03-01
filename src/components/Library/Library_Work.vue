@@ -7,13 +7,14 @@
     <!--<span class="id">{{ id }}</span>-->
     <div class="arrangements">
       <div class="heading">{{ arrangements.length }}</div>
-      <table>
+      <table class="table table-striped">
         <thead>
           <tr>
-            <td class="shortTitle">Title</td>
-            <td class="arranger">Arranger</td>
-            <td class="publisherDate">Publisher / Date</td>
-            <td class="catNumber">Catalog Number</td>
+            <th class="shortTitle">Title</th>
+            <th class="arranger">Arranger</th>
+            <th class="publisherDate">Publisher / Date</th>
+            <th class="catNumber">Catalog Number</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,15 @@ export default {
   props: {
     id: String,
     work: Object
+  },
+  data: {
+    arrangementsVisible: false
+  },
+  methods: {
+    toggleArrangements: function() {
+      this.arrangementsVisible != this.arrangementsVisible
+      console.log('visible: ' + this.arrangementsVisible)
+    }
   },
   computed: {
     /*worklist: function() {
@@ -137,8 +147,9 @@ export default {
     table {
       width: calc(100% - 2rem);
       border-collapse: collapse;
-      thead {
-        font-weight: 500;
+
+      .table td, .table th {
+        padding: .2rem .4rem;
       }
     }
   }

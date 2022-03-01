@@ -54,6 +54,10 @@ export default {
   .facsBtn {
     margin-left: .5rem;
   }
+
+  td {
+    padding: .2rem .4rem;
+  }
 }
 
 </style>

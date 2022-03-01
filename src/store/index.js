@@ -23,13 +23,13 @@ import thunk from 'redux-thunk'
 
 // Dependencies for MELD
 import { registerTraversal, traverse, setTraversalObjectives, checkTraversalObjectives } from 'meld-clients-core/lib/actions/index'
-import { prefix as pref } from './../meld/prefixes'//'meld-clients-core/lib/library/prefixes'
-import { fetchGraph } from 'meld-clients-core/lib/actions/index'
+import { prefix as pref } from './../meld/prefixes'// 'meld-clients-core/lib/library/prefixes'
+// import { fetchGraph } from 'meld-clients-core/lib/actions/index'
 import GraphReducer from 'meld-clients-core/lib/reducers/reducer_graph'
 import TraversalPoolReducer from 'meld-clients-core/lib/reducers/reducer_traversalPool'
 
 // Some Constants separated out from MELD (too lazy to import all of those individually)
-import constants from '../meld/constants.js'
+// import constants from '../meld/constants.js'
 
 // Helper functions for MELD, which were part of the local StarBrightlyShining code
 import { transformArrangement, addWork } from '../meld/functions.js'
@@ -38,95 +38,102 @@ import { transformArrangement, addWork } from '../meld/functions.js'
 import { staticWorklist, staticArrangements } from './fakedata.js'
 
 // setup for the graph to be traversed in this app
-import { graphURI, params, traversalObjectives, MAX_TRAVERSERS } from './../../traversal.config.js'
+import { graphURI, params, traversalObjectives, MAX_TRAVERSERS } from './../../config/traversal.config.js'
 
 // SolidPOD authentication library
-import {
+/* import {
   login,
   handleIncomingRedirect,
   getDefaultSession,
   fetch
-} from "@inrupt/solid-client-authn-browser";
+} from '@inrupt/solid-client-authn-browser' */
 
 // Import from "@inrupt/solid-client"
 import {
   getSolidDataset,
   saveSolidDatasetAt,
   getThing,
-  getStringNoLocale,
-  getUrlAll
-} from "@inrupt/solid-client";
+  getStringNoLocale //,
+  // getUrlAll
+} from '@inrupt/solid-client'
 
+// Import Verovio
+import verovio from 'verovio'
+import { vrvPresets } from './../../config/verovio.config.js'
 
 /*******************************************/
 /* BEGIN REDUX SETUP FOR MELD-CLIENTS-CORE */
 const rootReducer = combineReducers({
   graph: GraphReducer,
   traversalPool: TraversalPoolReducer
-});
+})
 
 // creating MELD Redux Store
-const meldStore = createStore(rootReducer, applyMiddleware(thunk));
-console.log("MELD: Initial State", meldStore.getState());
+const meldStore = createStore(rootReducer, applyMiddleware(thunk))
+console.log('MELD: Initial State', meldStore.getState())
 /* END REDUX SETUP FOR MELD-CLIENTS-CORE */
 
 Vue.use(Vuex)
 
 /* BEGIN SOLIDPOD SETUP */
 
-
-
 /* END SOLIDPOD SETUP */
 
+/* BEGIN VEROVIO SETUP */
 
+let vrvToolkit
+verovio.module.onRuntimeInitialized = () => {
+  vrvToolkit = new verovio.toolkit()
+}
+
+/* END VEROVIO SETUP */
 
 const graphComponentDidUpdate = (props, prevProps) => {
   // Boiler plate traversal code (should move to m-c-c)
   // Check whether the graph has updated and trigger further traversal as necessary.
-  let prevPool = prevProps.traversalPool;
-  let thisPool = props.traversalPool;
-  let updated  = false;
-  if (prevPool.running === 1 && thisPool.running === 0){
+  const prevPool = prevProps.traversalPool
+  const thisPool = props.traversalPool
+  let updated = false
+  if (prevPool.running === 1 && thisPool.running === 0) {
     // check our traversal objectives if the graph has updated
-    console.error('checkTraversalObjectives()', props.graph.graph, props.graph.objectives)
-    meldStore.dispatch(checkTraversalObjectives(props.graph.graph, props.graph.objectives));
-    updated = true;
-  } else if ( Object.keys(thisPool.pool).length && thisPool.running < MAX_TRAVERSERS) {
+    // console.error('checkTraversalObjectives()', props.graph.graph, props.graph.objectives)
+    meldStore.dispatch(checkTraversalObjectives(props.graph.graph, props.graph.objectives))
+    updated = true
+  } else if (Object.keys(thisPool.pool).length && thisPool.running < MAX_TRAVERSERS) {
     // Initiate next traverser in pool...
-    let arr = Object.keys(thisPool.pool)
-    let uri = arr[arr.length - 1]
-    console.warn('next traverse()', uri, thisPool.pool[uri])
-    meldStore.dispatch(traverse(uri, thisPool.pool[uri]));
+    const arr = Object.keys(thisPool.pool)
+    const uri = arr[arr.length - 1]
+    // console.warn('next traverse()', uri, thisPool.pool[uri])
+    meldStore.dispatch(traverse(uri, thisPool.pool[uri]))
     // console.log('\n__traversing next')
-    console.log('yodeyay – has was:' + prevProps.graph.outcomesHash + ', is now: ' + props.graph.outcomesHash)
+    // console.log('yodeyay – has was:' + prevProps.graph.outcomesHash + ', is now: ' + props.graph.outcomesHash)
     if (prevProps.graph.outcomesHash !== props.graph.outcomesHash) {
-      updated = true;
+      updated = true
     }
-  } else if ( props.traversalPool.running===0 ) {
-    if(prevProps.graph.outcomesHash !== props.graph.outcomesHash) {
-      updated = true;
+  } else if (props.traversalPool.running === 0) {
+    if (prevProps.graph.outcomesHash !== props.graph.outcomesHash) {
+      updated = true
     }
   }
-  return updated;
+  return updated
 }
 
 const graphHasChanged = (graph, commit) => {
-  let arrangements = [];
-  let worklist = [];
+  let arrangements = []
+  let worklist = []
 
   console.log('graphHasChanged', graph)
 
   // 0. Get arrangements
-  if(graph.graph && graph.graph.outcomes
-     && graph.graph.outcomes[0]
-     && graph.graph.outcomes[0]['@graph']
-     && graph.graph.outcomes[0]['@graph'].length){
-
-       // TODO: This isn't working
-       console.log('\n-->in here, should work now!')
-    arrangements = graph.graph.outcomes[0]['@graph'].map(transformArrangement);
+  if (graph.graph && graph.graph.outcomes &&
+     graph.graph.outcomes[0] &&
+     graph.graph.outcomes[0]['@graph'] &&
+     graph.graph.outcomes[0]['@graph'].length) {
+    // TODO: This isn't working
+    console.log('\n-->in here, should work now!')
+    arrangements = graph.graph.outcomes[0]['@graph'].map(transformArrangement)
     // Extract all unique works from the arrangements list
-    worklist = arrangements.reduce(addWork, []);
+    worklist = arrangements.reduce(addWork, [])
   }
   // 1. convert this.graph.outcomes[0] into this.state.worklist
 
@@ -150,13 +157,20 @@ export default new Vuex.Store({
     },
     SET_ARRANGEMENTS (state, arrangements) {
       state.arrangements = arrangements
+
+      console.log('hallo test')
+      const meiLinks = []
+      arrangements.forEach(arr => {
+        meiLinks.push(arr.MEI)
+      })
+      console.log(meiLinks)
     },
     SET_WORKLIST (state, worklist) {
       state.worklist = worklist
     },
     SET_PERSPECTIVE (state, perspective) {
-      const perspectives = ['landingPage','library','workbench']
-      if(perspectives.indexOf(perspective) !== -1) {
+      const perspectives = ['landingPage', 'library', 'workbench']
+      if (perspectives.indexOf(perspective) !== -1) {
         state.perspective = perspective
       }
     },
@@ -171,12 +185,12 @@ export default new Vuex.Store({
     setGraph ({ commit }, graph) {
       commit('SET_GRAPH', graph)
     },
-    initMeld({ commit, state }) {
+    initMeld ({ commit, state }) {
       console.log('initMeld()')
       // initialize Vuex store with initial Redux graph
       commit('SET_GRAPH', meldStore.getState())
       // listen to changes within MELD Redux
-      const unsubscribe = meldStore.subscribe(() => {
+      /* const unsubscribe = */meldStore.subscribe(() => {
         // get old graph from Vuex store
         const prevGraph = state.graph
         // get new graph from Redux store
@@ -186,42 +200,41 @@ export default new Vuex.Store({
         commit('SET_GRAPH', graph)
 
         // check if additional traversal jobs are necessary
-        if(graphComponentDidUpdate(graph, prevGraph)) {
+        if (graphComponentDidUpdate(graph, prevGraph)) {
           // error level just to highlight between other console.messages
-          console.error('passed')
+          // console.error('passed')
           graphHasChanged(graph, commit)
         } else {
-          console.log('not passed')
+          // console.log('not passed')
         }
       })
     },
-    setTraversalObjectives({ commit }) {
+    setTraversalObjectives ({ commit }) {
       console.log('setTraversalObjectives()')
       meldStore.dispatch(setTraversalObjectives(traversalObjectives))
     },
-    traverseGraph({ commit, state }) {
+    traverseGraph ({ commit, state }) {
       // this initiates MELD traversal from within Vue. Called once…
       console.log('starting traverseGraph()')
       meldStore.dispatch(registerTraversal(graphURI, params))
       const newParams = meldStore.getState().traversalPool.pool[graphURI]
-      if(newParams) meldStore.dispatch(traverse(graphURI, newParams))
-			else meldStore.dispatch(traverse(graphURI, params));
+      meldStore.dispatch(traverse(graphURI, newParams))
     },
-    setPerspective({ commit }, perspective) {
+    setPerspective ({ commit }, perspective) {
       commit('SET_PERSPECTIVE', perspective)
     },
-    setSolidSession({ commit }, session) {
+    setSolidSession ({ commit }, session) {
       commit('SET_SOLID_SESSION', session)
 
       try {
         const webId = session.info.webId
         const authFetch = session.fetch
 
-        async function getUserName() {
+        async function getUserName () {
           const userCard = await getSolidDataset(
             webId, {
-            fetch: authFetch
-          })
+              fetch: authFetch
+            })
 
           const profile = getThing(
             userCard,
@@ -248,13 +261,13 @@ export default new Vuex.Store({
           // console.log('Load failed ' +  err)
         })
         */
-      } catch(err) {
+      } catch (err) {
         console.log('ERROR retrieving username: ' + err)
       }
 
       // other approach:
 
-      /*console.log('hello')
+      /* console.log('hello')
       auth.fetch(session.webId, {
         //mode: 'cors',
         headers: {
@@ -269,33 +282,30 @@ export default new Vuex.Store({
       console.log('hello 2')
       */
     },
-    uploadTest({ commit, state }) {
+    uploadTest ({ commit, state }) {
       const session = state.solidSession
       const webId = session.info.webId
       const authFetch = session.fetch
 
       if (session.info.isLoggedIn) {
-
-        async function uploadData() {
+        async function uploadData () {
           // get some random data…
           const userCard = await getSolidDataset(
             webId, {
-            fetch: authFetch
-          })
+              fetch: authFetch
+            })
 
           // For example, the user must be someone with Write access to the specified URL.
           const savedSolidDataset = await saveSolidDatasetAt(
-            "https://pod.inrupt.com/markannot/private/hello2.ttl",
+            'https://pod.inrupt.com/markannot/private/hello2.ttl',
             userCard, {
-            fetch: authFetch
-          });
+              fetch: authFetch
+            })
 
           console.log('success', savedSolidDataset)
         }
         uploadData()
-
       }
-
     }
   },
   modules: {
@@ -324,7 +334,7 @@ export default new Vuex.Store({
         let fits = false
         try {
           fits = object.work['@id'] === workId
-        } catch(err) {
+        } catch (err) {
           console.log('ERROR retrieving arrangements for work ' + workId + ': ' + err)
         }
         return fits
@@ -338,6 +348,29 @@ export default new Vuex.Store({
     },
     showWorkbench: state => {
       return state.perspective === 'workbench'
+    },
+    rendering: state => ({uri, settings}) => {
+      // vrvToolkit.setOptions(vrvPresets.fullScore)
+
+      console.log('calling uri: ' + uri)
+      console.log(settings)
+      console.log('version: ' + vrvToolkit.getVersion())
+
+      /*console.log('me here! 1')
+      let worker = new Worker('./../workers/verovio-worker.js');
+      console.log('me here! 2')
+      console.log(worker)
+      worker.onmessage = function(event) {
+        console.log(event.data);
+      };
+      console.log('me here! 3')
+      const testWorker2 = () => {
+        worker.postMessage( ["getVersion", 0, {}] );
+      }
+      console.log('me here! 4')
+      testWorker2()
+      console.log('me here! 5')*/
+
     },
     solidSession: state => {
       return state.solidSession
