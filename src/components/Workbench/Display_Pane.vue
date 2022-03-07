@@ -1,12 +1,12 @@
 <template>
   <div class="root">
-    <div v-if="perspective==='facsimile'">
+    <template v-if="perspective==='facsimile'">
       <Facsimile :idSeed="'facs_' + index" :manifest="arr.MEI"/>
-    </div>
-    <div v-if="perspective==='render'">
+    </template>
+    <template v-if="perspective==='render'">
       <div class="title">{{ shortTitle}}</div>
       <Verovio :idSeed="'pane_' + index" :uri="arr.MEI" settings="fullScore"/>
-    </div>
+    </template>
 
   </div>
 </template>
@@ -41,6 +41,11 @@ export default {
 
 
 <style>
+
+.root {
+  width: 100%;
+  height: 100%;
+}
 .title {
   font-weight: bold;
   }

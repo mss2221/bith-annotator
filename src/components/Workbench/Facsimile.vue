@@ -1,13 +1,27 @@
 <template>
-  <div v-bind:id="'iiifContainer_' + idSeed" class="iiifContainer">
+  <div class="facsimileBox">
+    <div class="buttonBox">
+      <div class="userButtons buttonRow">
+        <div class="facsButton zoomOut" :id="'zoomOut_' + idSeed"><i class="icon icon-minus"></i></div>
+        <div class="facsButton zoomIn" :id="'zoomIn_' + idSeed"><i class="icon icon-plus"></i></div>
+        <div class="facsButton prevPage" :id="'prevPage_' + idSeed"><i class="icon icon-arrow-left"></i></div>
+        <div class="facsButton nextPage" :id="'nextPage_' + idSeed"><i class="icon icon-arrow-right"></i></div>
+      </div>
+      <div v-if="isLoggedIn" class="extraButtons buttonRow" :id="'toolbar_' + idSeed"></div>
+    </div>
 
+    <div v-bind:id="'iiifContainer_' + idSeed" class="iiifContainer">
+
+    </div>
   </div>
+
 </template>
 
 <script>
 //import verovio from 'verovio'
 import OpenSeadragon from 'openseadragon'
 import * as Annotorious from '@recogito/annotorious-openseadragon'
+import Toolbar from '@recogito/annotorious-toolbar'
 
 import '@recogito/annotorious-openseadragon/dist/annotorious.min.css'
 
@@ -20,7 +34,15 @@ export default {
     idSeed: String
   },
   computed: {
-
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn
+    },
+    userId: function() {
+      return this.$store.getters.solidId
+    },
+    userName: function() {
+      return this.$store.getters.solidUser
+    }
   },
   methods: {
 
@@ -44,9 +66,11 @@ export default {
       // initialize the viewer
       let viewer = OpenSeadragon({
         id: id,
-        prefixUrl: "openseadragon/images/",
-        zoomInButton: "in",
-        zoomOutButton: "out",
+        prefixUrl: 'openseadragon/images/',
+        zoomInButton: 'zoomIn_' + this.idSeed,
+        zoomOutButton: 'zoomOut_' + this.idSeed,
+        previousButton: 'prevPage_' + this.idSeed,
+        nextButton: 'nextPage_' + this.idSeed,
         sequenceMode: true,
         //debugMode: true,
         defaultZoomLevel:	1,
@@ -73,12 +97,21 @@ export default {
       // set configuration for annotorious
       const annotConfig = {
         locale: 'auto',
-        allowEmpty: true
+        allowEmpty: true,
+        widgets: [
+          'COMMENT'
+        ]
       }; // Optional plugin config options
 
-      /*let anno = OpenSeadragon.Annotorious(viewer, annotConfig)
-      console.log('anno:')
-      console.log(anno)
+
+      let anno = Annotorious(viewer, annotConfig)
+      console.log('trying to set user: ' + this.userId)
+      anno.setAuthInfo({
+        id: this.userId,
+        displayName: this.userName
+      });
+
+      //let anno = OpenSeadragon.Annotorious(viewer, annotConfig)
 
       let sampleAnnotation = {
         "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -97,17 +130,20 @@ export default {
         }
       }
 
-      Annotorious.Toolbar(anno, document.getElementById('toolbar'));
+      Toolbar(anno, document.getElementById('toolbar_' + this.idSeed));
+
+
 
       // anno.addAnnotation(sampleAnnotation);
 
       // anno.loadAnnotations('http://localhost:8080/annotations.w3c.json');
 
-      anno.on('createAnnotation', function(a) {
+      anno.on('createAnnotation', (a) => {
         console.log('created a new annotation')
         console.log(a)
 
         let xywh = a.target.selector.value.substr(11).split(',')
+
         let x = Math.round(xywh[0])
         let y = Math.round(xywh[1])
         let w = Math.round(xywh[2])
@@ -115,7 +151,7 @@ export default {
         console.log('x: ' + x + ', y: ' + y + ', w: ' + w + ', h: ' + h)
       })
 
-      anno.on('updateAnnotation', function(a) {
+      anno.on('updateAnnotation', (a) => {
         console.log('updated existing annotation')
         console.log(a)
 
@@ -126,7 +162,13 @@ export default {
         let h = Math.round(xywh[3])
         console.log('x: ' + x + ', y: ' + y + ', w: ' + w + ', h: ' + h)
       })
-      */
+
+      anno.on('selectAnnotation', (annotation, element) => {
+        console.log('selected annotation:')
+        console.log(annotation)
+        console.log(element)
+      });
+
       //return the viewer for later reference / use
       return viewer
     }
@@ -267,8 +309,8 @@ export default {
     }
 
     // create empty variables for first viewer – array with image details, and viewer
-    let facsimileInfo1
-    let viewer1
+    let facsimileInfo
+    let viewer
 
     // retrieve IIIF manifest and translate to JSON
     fetch('https://api.beethovens-werkstatt.de/iiif/document/r7cb7bbab-5d48-40be-a56f-b77402ee3fb9/manifest.json')
@@ -277,9 +319,9 @@ export default {
       .then(manifest => {
 
         // parse IIIF manifest with parseManifest() function, store results in facsimileInfo1
-        facsimileInfo1 = parseManifest(manifest)
-        // set up first viewer
-        viewer1 = createViewer('iiifContainer_' + this.idSeed, facsimileInfo1)
+        facsimileInfo = parseManifest(manifest)
+        // set up viewer
+        viewer = createViewer('iiifContainer_' + this.idSeed, facsimileInfo)
 
       })
 
@@ -289,9 +331,52 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.iiifContainer {
-  width: 100%;
-  height: 400px;
+.facsimileBox {
   position: relative;
+  width: 100%;
+  height: 100%;
+
+  .buttonBox {
+    position: absolute;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2rem;
+    text-align: left;
+
+    .buttonRow {
+      display: inline-block;
+      background-color: rgba(255,255,255,.8);
+      backdrop-filter: blur(5px);
+
+      &.userButtons {
+        position: relative;
+        top: -6px;
+      }
+
+      .facsButton {
+        display: inline-block;
+        margin: .2rem;
+        padding: .2rem .4rem;
+
+        &:hover {
+          background-color: rgba(0,0,0,0.06);
+        }
+      }
+
+      .a9s-toolbar-btn {
+        height: 39px;
+        margin: 0;
+      }
+    }
+  }
+
+  .iiifContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
 }
+
 </style>

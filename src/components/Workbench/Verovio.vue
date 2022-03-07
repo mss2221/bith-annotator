@@ -45,16 +45,8 @@ export default {
   },
   mounted: function () {
 
-    console.log('before me here…')
-    console.log(this.uri, this.idSeed, this.settings)
-
-
     const vrvToolkit = new verovio.toolkit()
-    console.log(1)
-
     const options = (typeof vrvPresets[this.settings] === 'object') ? vrvPresets[this.settings] : vrvPresets.fullScore
-    console.log(2)
-    console.log(options)
 
     vrvToolkit.setOptions(options)
 
@@ -64,12 +56,9 @@ export default {
         return res.text()
       })
       .then(mei => {
-        console.log(3)
         vrvToolkit.loadData(mei)
         const svg = vrvToolkit.renderToSVG(1, {})
-        console.log(4)
         document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
-        console.log(5)
           // document.querySelectorAll('#meiContainer_ .staff > .staff.bounding-box > rect').forEach(bbox => addListener(bbox))
           /*
           const mei_svg = document.querySelector('#meiContainer_' + this.idSeed + ' > svg')

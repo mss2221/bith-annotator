@@ -419,6 +419,9 @@ export default new Vuex.Store({
         return state.solidUser
       }
     },
+    solidId: state => {
+      return state.solidSession.info.webId
+    },
     isLoggedIn: state => {
       return state.solidSession !== null
     }
