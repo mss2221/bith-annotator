@@ -1,0 +1,16 @@
+{
+  "@context": "http://www.w3.org/ns/anno.jsonld",
+  "@id": "https://bithUsr.inrupt.net/public/annotations/b2a9bfdd-0158-41fd-bafa-cc774ec9f6d9.jsonld",
+  "http://purl.org/dc/terms/created": "2022-02-02T11:31:43.714Z",
+  "http://purl.org/dc/terms/creator": "https://bithUsr.inrupt.net/profile/card#me",
+  "type": "Annotation",
+  "motivation": "describing",
+  "body": {
+    "type": "TextualBody",
+    "value": "These are the first 4 measures"
+  },
+  "target": {
+    "type": "oa:MusicalMaterial",
+    "id": "https://bithUsr.inrupt.net/public/objects/8bf70834-117e-4eae-a2c0-169c02951eb9.jsonld"
+    }
+}

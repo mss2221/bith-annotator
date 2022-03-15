@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <AppHeader/>
-          <LandingPage v-if="showLandingPage"/>
-          <Library v-if="showLibrary"/>
-          <Workbench v-if="showWorkbench"/>
+    <LandingPage v-if="showLandingPage"/>
+    <Library v-if="showLibrary"/>
+    <Workbench v-if="showWorkbench"/>
+    <DebugOverlay v-if="showDebugOverlay"/>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import AppHeader from './components/AppHeader.vue'
 import LandingPage from './components/LandingPage.vue'
 import Library from './components/Library.vue'
 import Workbench from './components/Workbench.vue'
+import DebugOverlay from './components/DebugOverlay.vue'
 
 export default {
   name: 'App',
@@ -20,6 +22,7 @@ export default {
     Library,
     LandingPage,
     Workbench,
+    DebugOverlay
   },
   computed: {
     showLandingPage: function() {
@@ -30,6 +33,9 @@ export default {
     },
     showWorkbench: function() {
       return this.$store.getters.showWorkbench
+    },
+    showDebugOverlay: function() {
+      return this.$store.getters.debugOverlayVisible
     }
   },
   created: function () {

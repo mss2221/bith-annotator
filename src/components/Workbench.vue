@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <splitpanes vertical style="height:700px" class="default-theme">
 
       <pane>
@@ -12,10 +12,15 @@
 
 <!-- Sidebar -->
 
-      <pane class="sidebar" size="30">
-        <splitpanes horizontal class="default-theme">
+      <pane size="30">
+        <div class="sidebar">
+          <h1>Workbench</h1>
+          <Arrangement_Metadata_Preview v-for="(view, index) in views" v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
+          <AnnotatorTool/>
+        </div>
+        <!--<splitpanes horizontal class="default-theme">
           <pane size="5">
-            <h3 class="title">Workbench</h3>
+
           </pane>
           <pane size="8" v-for="(view, index) in views" style="text-align:left">
 
@@ -48,7 +53,7 @@
               <h2 class="title">Text Box</h2>
             </div>
           </pane>
-        </splitpanes>
+        </splitpanes>-->
       </pane>
     </pane>
   </splitpanes>
@@ -69,7 +74,8 @@
 
 <script>
 import Display_Pane from './Workbench/Display_Pane.vue'
-import Arrangement_Metadata from './Library/Arrangement_Metadata.vue'
+import Arrangement_Metadata_Preview from './Library/Arrangement_Metadata_Preview.vue'
+import AnnotatorTool from './Workbench/AnnotatorTool.vue'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css';
 
@@ -77,7 +83,8 @@ export default {
   name: 'Workbench',
   components: {
     Display_Pane,
-    Arrangement_Metadata,
+    Arrangement_Metadata_Preview,
+    AnnotatorTool,
     Splitpanes,
     Pane
   },
@@ -89,7 +96,7 @@ export default {
   computed: {
     views: function() {
       return this.$store.getters.views
-    },
+    }
   }
 }
 console.log('Workbench.vue')
@@ -99,9 +106,21 @@ console.log()
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.title {
+h1 {
+  text-align: left;
+  margin: 0 0 .2rem;
+  font-size: 1.2rem;
   font-weight: bold;
+  padding: .2rem;
 }
+
+.level {
+  min-height: 5rem;
+  border: .5px solid #999999;
+  margin: .3rem;
+  padding: .5rem;
+}
+
 .controls {
   background-color: #9fc2b2;
 }
@@ -122,5 +141,15 @@ console.log()
 [type=radio] {
     margin-right: 0.25rem;
     margin-left: 1rem;
+}
+
+.sidebar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #ffffff;
+  padding: .3rem;
+  border-left: .5px solid #dddddd;
 }
 </style>

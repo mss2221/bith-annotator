@@ -1,5 +1,5 @@
 <template>
-<div align="left">
+<div class="arrMetaPreview">
 <!-- <div v-if="this.index===1" class="title">Lower pane selection</div> -->
   <!-- <div v-else  class="title">Pane number {{ selectionNumber }}</div> -->
     <!-- <div class="title" style="font-weight:bold">Pane number {{ selectionNumber }}</div> -->
@@ -13,10 +13,9 @@
     </div>
     <div><label class="title">Title:</label> {{ this.shortTitle }}</div>
     <div><label class="title">Arranger:</label> {{ this.arranger }}</div>
-    <div><label class="title">Publisher:</label> {{ this.publisher }}</div>
+    <!--<div><label class="title">Publisher:</label> {{ this.publisher }}</div>
     <div><label class="title">Date:</label> {{ this.date }}</div>
-    <div><label class="title">Catalog Number:</label> {{ this.catNumber }}</div>
-    <Verovio v-if="perspective === 'render'" :idSeed="'preview_' + index" :uri="arr.MEI" settings="preview"/>
+    <div><label class="title">Catalog Number:</label> {{ this.catNumber }}</div>-->
 </div>
 </template>
 
@@ -74,6 +73,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
+.arrMetaPreview {
+  margin: 0 .3rem .2rem;
+  border: .5px solid #999999;
+  border-radius: .2rem;
+  padding: .1rem .3rem;
+  background-color: #ffffff;
+  text-align: left;
+}
+
 .title {
   font-weight: bold;
   }

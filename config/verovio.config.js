@@ -5,6 +5,7 @@ export const vrvPresets = {
     openControlEvents: true,
     svgBoundingBoxes: true,
     svgRemoveXlink: true,
+    svgHtml5: true,
     header: 'none',
     footer: 'none',
     mnumInterval: 5
@@ -21,3 +22,19 @@ export const vrvPresets = {
     pageHeight: 600
   }
 }
+
+export const vrvSelectables = [
+  'note',
+  'chord',
+  'syl',
+  'rest',
+  'beam',
+  'artic',
+  'accid',
+  'clef',
+  'slur',
+  'dynam',
+  'dir',
+  'staff',
+  'measure'
+]

@@ -8,7 +8,7 @@
 <script>
 import verovio from 'verovio'
 import svgDragSelect from "svg-drag-select"
-import { vrvPresets } from './../../../config/verovio.config.js'
+import { vrvPresets, vrvSelectables } from './../../../config/verovio.config.js'
 
 const verovioOptions = {
   scale: 30,
@@ -59,6 +59,37 @@ export default {
         vrvToolkit.loadData(mei)
         const svg = vrvToolkit.renderToSVG(1, {})
         document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
+
+        if(this.settings === 'fullScore') {
+          const renderedSvg = document.querySelector('#meiContainer_' + this.idSeed + ' svg')
+
+          let selectables = []
+          vrvSelectables.forEach(elem => {
+            selectables.push('*[data-class="' + elem + '"]')
+          })
+          selectables = selectables.join(', ')
+          console.log('selectables:', selectables)
+          const clickListener = (e) => {
+            e.stopPropagation();
+            //console.log('clicked on score')
+            //console.log(e)
+            //console.log('e.originalTarget:')
+            const target = e.target
+            const closest = target.closest(selectables)
+
+            closest.classList.toggle('selected')
+            console.log(closest)
+            console.log('make target: ' + this.uri + '#' + closest.getAttribute('data-id'))
+            //console.log('e')
+            //console.log(e)
+          }
+
+          //renderedSvg.addEventListener('click', clickListener)
+          renderedSvg.querySelectorAll(selectables).forEach(elem => {
+            elem.addEventListener('click', clickListener)
+          })
+        }
+
           // document.querySelectorAll('#meiContainer_ .staff > .staff.bounding-box > rect').forEach(bbox => addListener(bbox))
           /*
           const mei_svg = document.querySelector('#meiContainer_' + this.idSeed + ' > svg')
@@ -141,6 +172,7 @@ export default {
 
 .meiContainer {
   overflow: auto;
+  background-color: #ffffff;
 
   svg {
     .marked.staff > .staff.bounding-box > rect {
@@ -149,6 +181,15 @@ export default {
 
     .active.marked.staff > .staff.bounding-box > rect {
       fill: rgba(0,100,0,0.6)
+    }
+
+    .selected {
+      fill: rgba(255,0,0,1);
+      stroke: rgba(255,0,0,1);
+
+      &.bounding-box.staff rect {
+        fill: rgba(255,0,0,.2) !important;
+      }
     }
   }
 

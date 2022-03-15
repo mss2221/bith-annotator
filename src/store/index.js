@@ -21,6 +21,9 @@ import Vuex from 'vuex'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 
+// generic tool
+import { v4 as uuidv4 } from 'uuid'
+
 // Dependencies for MELD
 import { registerTraversal, traverse, setTraversalObjectives, checkTraversalObjectives } from 'meld-clients-core/lib/actions/index'
 import { prefix as pref } from './../meld/prefixes'// 'meld-clients-core/lib/library/prefixes'
@@ -142,6 +145,57 @@ const graphHasChanged = (graph, commit) => {
   commit('SET_WORKLIST', worklist)
 }
 
+// creates an annotation stub
+const getAnnotStub = (state) => {
+
+  const user = state.solidSession.info.webId
+  const d = new Date()
+  const date = d.toISOString()
+  // https://pod.inrupt.com/kepper/profile/card#me
+  // https://pod.inrupt.com/kepper/public/
+  const plainId = uuidv4()
+  const id = user.split('/profile/')[0] + '/public/bith/annotations/' + plainId + '.jsonld'
+
+  const anno = {
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "@id": id,
+    "http://purl.org/dc/terms/created": date,
+    "http://purl.org/dc/terms/creator": user,
+    "type": "Annotation",
+    "motivation": "describing",
+    "body": {
+      "type": "TextualBody",
+      "value": ""
+    },
+    "target": null
+  }
+  return anno
+}
+
+// creates a musicalMaterial stub
+const getMusMatStub = (state) => {
+  console.log('HERE')
+  console.log(state)
+  console.log(state.solidSession)
+  console.log(state.solidSession.info)
+  console.log(state.solidSession.info.webId)
+  const user = state.solidSession.info.webId
+  const d = new Date()
+  const date = d.toISOString()
+  const plainId = uuidv4()
+  const id = user.split('/profile/')[0] + '/public/bith/musicalMaterials/' + plainId + '.jsonld'
+
+  const musMat = {
+    "@type": "https://example.com/Terms/MusicalMaterial",
+    "@id": id,
+    "http://purl.org/dc/terms/created": date,
+    "http://purl.org/dc/terms/creator": user,
+    "https://www.w3.org/2000/01/rdf-schema#label": "",
+    "http://purl.org/vocab/frbr/core#embodiment": []
+  }
+  return musMat
+}
+
 export default new Vuex.Store({
   state: {
     graph: {},
@@ -150,7 +204,22 @@ export default new Vuex.Store({
     views: [],
     perspective: 'landingPage',
     solidSession: null,
-    solidUser: null
+    solidUser: null,
+    annotStore: {
+      observation: {},
+      musicalMaterial: {},
+      extract: {},
+      selection: {}
+    },
+    currentAnnot: {
+      observation: {},
+      musicalMaterial: {},
+      extract: {},
+      selection: {}
+    },
+    editing: null,
+    selectable: false,
+    showDebugOverlay: false
   },
   mutations: {
     ADD_VIEW (state, view) {
@@ -193,6 +262,69 @@ export default new Vuex.Store({
     },
     SET_SOLID_USERNAME (state, username) {
       state.solidUser = username
+    },
+    ADD_TO_ANNOTSTORE (state, payload) {
+      const type = payload.type
+      const obj = payload.object
+
+      if(type in state.annotStore) {
+        Vue.set(state.annotStore[type], obj['@id'], obj)
+      }
+    },
+    REMOVE_FROM_ANNOTSTORE (state, payload) {
+      const type = payload.type
+      const obj = payload.object
+
+      if(type in state.annotStore) {
+        Vue.delete(state.annotStore[type], obj['@id'])
+      }
+    },
+    ADD_TO_CURRENT_ANNOT (state, payload) {
+      const type = payload.type
+      const obj = payload.object
+
+      if(type in state.currentAnnot) {
+        Vue.set(state.currentAnnot[type], obj['@id'], obj)
+      }
+    },
+    REMOVE_FROM_CURRENT_ANNOT (state, payload) {
+      const type = payload.type
+      const obj = payload.object
+
+      if(type in state.currentAnnot) {
+        Vue.delete(state.currentAnnot[type], obj['@id'])
+      }
+    },
+    TOGGLE_DEBUG_OVERLAY (state) {
+      state.showDebugOverlay = !state.showDebugOverlay
+    },
+    SET_EDITING (state, mode) {
+      if([null,'parallelPassage','observation'].indexOf(mode) !== -1) {
+        if(state.editing !== mode) {
+
+          let obs = {}
+          let musMat = {}
+          if(mode === 'parallelPassage') {
+            const stub = getMusMatStub(state)
+            musMat[stub['@id']] = stub
+          }
+          if(mode === 'observation') {
+            const stub = getAnnotStub(state)
+            obs[stub['@id']] = stub
+          }
+
+          Vue.set(state, 'currentAnnot', {
+            observation: obs,
+            musicalMaterial: musMat,
+            extract: {},
+            selection: {}
+          })
+          state.editing = mode
+        }
+      }
+    },
+    SET_SELECTABLE (state, bool) {
+      state.selectable = bool
     }
   },
   actions: {
@@ -236,9 +368,15 @@ export default new Vuex.Store({
     traverseGraph ({ commit, state }) {
       // this initiates MELD traversal from within Vue. Called once…
       console.log('starting traverseGraph()')
+      console.log(0)
+      console.log(graphURI)
+      console.log(params)
       meldStore.dispatch(registerTraversal(graphURI, params))
+      console.log(1)
       const newParams = meldStore.getState().traversalPool.pool[graphURI]
+      console.log(2)
       meldStore.dispatch(traverse(graphURI, newParams))
+      console.log(3)
     },
     setPerspective ({ commit }, perspective) {
       commit('SET_PERSPECTIVE', perspective)
@@ -326,7 +464,53 @@ export default new Vuex.Store({
         }
         uploadData()
       }
+    },
+    toggleDebugOverlay ({ commit, state }) {
+      commit('TOGGLE_DEBUG_OVERLAY')
+    },
+    createDataObject ({ commit, state }, payload) {
+      if(payload.type in state.annotStore && payload.object) {
+
+        //upload to SolidPod, if successful store in Vuex
+        commit('ADD_TO_ANNOTSTORE', payload)
+      }
+    },
+    changeDataObject ({ commit, state }, payload) {
+      if(payload.type in state.annotStore && payload.object) {
+
+        //upload to SolidPod, if successful store in Vuex
+        commit('ADD_TO_ANNOTSTORE', payload)
+      }
+    },
+    removeDataObject ({ commit, state }, payload) {
+      if(payload.type in state.annotStore && payload.object) {
+
+        //delete from SolidPod, if successful store in Vuex
+        commit('REMOVE_FROM_ANNOTSTORE', payload)
+      }
+    },
+    addCurrentDataObject ({ commit, state }, payload) {
+      if(payload.type in state.currentAnnot && payload.object) {
+        commit('ADD_TO_CURRENT_ANNOT', payload)
+      }
+    },
+    changeCurrentDataObject ({ commit, state }, payload) {
+      if(payload.type in state.currentAnnot && payload.object) {
+        commit('ADD_TO_CURRENT_ANNOT', payload)
+      }
+    },
+    removeCurrentDataObject ({ commit, state }, payload) {
+      if(payload.type in state.currentAnnot && payload.object) {
+        commit('REMOVE_FROM_CURRENT_ANNOT', payload)
+      }
+    },
+    setEditing ({ commit }, mode) {
+      commit('SET_EDITING', mode)
+    },
+    setSelectable ({ commit }, bool) {
+      commit('SET_SELECTABLE', bool)
     }
+
   },
   modules: {
   },
@@ -424,6 +608,46 @@ export default new Vuex.Store({
     },
     isLoggedIn: state => {
       return state.solidSession !== null
+    },
+    debugOverlayVisible: state => {
+      return state.showDebugOverlay
+    },
+    observations: state => {
+      return Object.values(state.annotStore.observation)
+    },
+    musicalMaterials: state => {
+      return Object.values(state.annotStore.musicalMaterial)
+    },
+    extracts: state => {
+      return Object.values(state.annotStore.extract)
+    },
+    selections: state => {
+      return Object.values(state.annotStore.selection)
+    },
+    currentAnnot: state => {
+      return state.currentAnnot
+    },
+    currentObservations: state => {
+      return Object.values(state.currentAnnot.observation)
+    },
+    currentMusicalMaterials: state => {
+      return Object.values(state.currentAnnot.musicalMaterial)
+    },
+    currentExtracts: state => {
+      return Object.values(state.currentAnnot.extract)
+    },
+    currentSelections: state => {
+      return Object.values(state.currentAnnot.selection)
+    },
+    isEditing: state => {
+      return state.editing !== null
+    },
+    editMode: state => {
+      return state.editing
+    },
+    selectionModeActive: state => {
+      return state.selectable
     }
+
   }
 })

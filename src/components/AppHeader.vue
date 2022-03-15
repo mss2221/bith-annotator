@@ -5,6 +5,7 @@
       <button v-on:click="goHome" class="btn btn-sm">Home</button>
       <button v-on:click="showWorkbench" class="btn btn-sm">Workbench</button>
       <button v-on:click="showLibrary" class="btn btn-sm">Library</button>
+      <button v-on:click="toggleDebugOverlay" class="btn btn-sm">Debug</button>
     </h1>
   </header>
 </template>
@@ -26,6 +27,9 @@ export default {
     showWorkbench: function () {
       this.$store.dispatch('setPerspective', 'workbench')
     },
+    toggleDebugOverlay: function () {
+      this.$store.dispatch('toggleDebugOverlay')
+    }
   }
 }
 </script>
