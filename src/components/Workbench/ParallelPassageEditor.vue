@@ -4,20 +4,14 @@
     <div class="id">New @id: {{ musMatId }}</div>
 
     <div class="form-group">
-      <label class="form-label" for="ppEditLabel">Label</label>
-      <textarea class="form-input" id="ppEditLabel" v-model.trim="parallelLabel" placeholder="Label for Passage(s)" rows="1"></textarea>
+      <label class="form-label" for="ppEditLabel">Label for Parallel Passage</label>
+      <textarea class="form-input" id="ppEditLabel" v-model.trim="parallelLabel" placeholder="Label for Parallel Passage" rows="1"></textarea>
     </div>
 
     <div class="selectionList">
       <label for="linkedPassages">Linked Passages</label>
-      <table id="linkedPassages" class="table">
-        <tbody>
-          <tr v-for="e in currentExtracts">
-            <td>Label</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="numberWarning" v-if="currentExtracts.length < 2">You need at least two passages to save a parallel passage.</div>
+      <div class="numberWarning" v-if="currentExtracts.length < 2">You need at least two passages to save a <em>parallel passage</em>.</div>
+      <ExtractListItem v-for="e in currentExtracts" v-bind:extract="e" v-bind:typeLabel="'single Passage'"/>
       <button class="btn btn-link" v-on:click="startSelectionMode">Add Passage</button>
     </div>
 
@@ -29,11 +23,12 @@
 </template>
 
 <script>
+import ExtractListItem from './ExtractListItem.vue'
 
 export default {
   name: 'ParallelPassageEditor',
   components: {
-
+    ExtractListItem
   },
   props: {
 
@@ -46,7 +41,7 @@ export default {
       return this.$store.getters.currentMusicalMaterials[0]['@id']
     },
     isReadyToSave: function() {
-      return this.$store.getters.currentSelections.length > 1 && this.$store.getters.currentExtracts.length > 1
+      return this.$store.getters.currentExtracts.length > 1 && this.$store.getters.currentSelections.length > 1
     },
     currentExtracts: function() {
       return this.$store.getters.currentExtracts
@@ -59,7 +54,7 @@ export default {
         return this.$store.getters.currentMusicalMaterials[0]['https://www.w3.org/2000/01/rdf-schema#label']
       },
       set (val) {
-        console.log('setting to ' + val)
+        // console.log('setting to ' + val)
         let object = this.$store.getters.currentMusicalMaterials[0]
         object['https://www.w3.org/2000/01/rdf-schema#label'] = val
         this.$store.dispatch('changeCurrentDataObject', { type: 'musicalMaterial', object })
@@ -71,11 +66,13 @@ export default {
       this.$store.dispatch('setEditing', null)
     },
     save: function() {
-      console.log('ready to save: ' + this.isReadyToSave)
-      console.log('need to trigger an action that pushes the currentAnnot stuff into the regular annotStore')
+      if(this.isReadyToSave) {
+        this.$store.dispatch('saveCurrentAnnot')
+      }
     },
     startSelectionMode: function() {
-      this.$store.dispatch('setSelectable', true)
+      this.$store.dispatch('setSelectionModeActive', true)
+      this.$store.dispatch('addPassage')
     }
   }
 }

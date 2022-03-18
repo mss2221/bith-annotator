@@ -16,7 +16,7 @@
             <table class="table narrow">
               <tbody>
                 <tr v-for="m in musicalMaterials">
-                  <td>{{ m['https://www.w3.org/2000/01/rdf-schema#label'] }}</td>
+                  <td><MusMatListItem v-bind:musmat="m"/></td>
                 </tr>
                 <tr>
                   <td>
@@ -45,11 +45,13 @@
 <script>
 
 import ParallelPassageEditor from './ParallelPassageEditor.vue'
+import MusMatListItem from './MusMatListItem.vue'
 
 export default {
   name: 'AnnotatorTool',
   components: {
-    ParallelPassageEditor
+    ParallelPassageEditor,
+    MusMatListItem
   },
   methods: {
     setTab: function(which) {

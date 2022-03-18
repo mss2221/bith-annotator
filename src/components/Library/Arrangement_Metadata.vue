@@ -60,10 +60,10 @@ export default {
   methods: {
     selectRendering: function () {
       console.log('Selecting the Verovio view, which means pulling MEI from ' + this.arr.MEI)
-  },
+    },
     removeView: function () {
       this.$store.dispatch('removeView', this.index)
-  },
+    },
     selectFacs: function () {
       console.log('Selecting the Facsimile.')
     }

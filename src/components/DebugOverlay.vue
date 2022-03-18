@@ -140,12 +140,12 @@ export default {
        ]
     }
 
-    this.$store.dispatch('createDataObject',{type: 'musicalMaterial', object: musMat})
-    this.$store.dispatch('createDataObject',{type: 'extract', object: ex1})
-    this.$store.dispatch('createDataObject',{type: 'extract', object: ex2})
-    this.$store.dispatch('createDataObject',{type: 'selection', object: sel1})
-    this.$store.dispatch('createDataObject',{type: 'selection', object: sel2})
-    this.$store.dispatch('createDataObject',{type: 'selection', object: sel3})
+    // this.$store.dispatch('createDataObject',{type: 'musicalMaterial', object: musMat})
+    // this.$store.dispatch('createDataObject',{type: 'extract', object: ex1})
+    // this.$store.dispatch('createDataObject',{type: 'extract', object: ex2})
+    // this.$store.dispatch('createDataObject',{type: 'selection', object: sel1})
+    // this.$store.dispatch('createDataObject',{type: 'selection', object: sel2})
+    // this.$store.dispatch('createDataObject',{type: 'selection', object: sel3})
     console.log('added stuff')
   }
 }

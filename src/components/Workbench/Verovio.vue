@@ -38,7 +38,15 @@ export default {
     settings: String
   },
   computed: {
-
+    selectionModeActive: function() {
+      return this.$store.getters.selectionModeActive
+    },
+    currentSelection: function() {
+      return this.$store.getters.activeSelection
+    },
+    currentExtract: function() {
+      return this.$store.getters.activeExtract
+    }
   },
   methods: {
 
@@ -64,6 +72,7 @@ export default {
           const renderedSvg = document.querySelector('#meiContainer_' + this.idSeed + ' svg')
 
           let selectables = []
+          let selNoBBox = []
           vrvSelectables.forEach(elem => {
             selectables.push('*[data-class="' + elem + '"]')
           })
@@ -71,23 +80,145 @@ export default {
           console.log('selectables:', selectables)
           const clickListener = (e) => {
             e.stopPropagation();
-            //console.log('clicked on score')
-            //console.log(e)
-            //console.log('e.originalTarget:')
+            if(!this.selectionModeActive) {
+              return false
+            }
             const target = e.target
             const closest = target.closest(selectables)
+            console.log('clicked ', target, closest)
+            this.$store.dispatch('selectionToggle', this.uri + '#' + closest.getAttribute('data-id'))
 
-            closest.classList.toggle('selected')
-            console.log(closest)
-            console.log('make target: ' + this.uri + '#' + closest.getAttribute('data-id'))
-            //console.log('e')
-            //console.log(e)
+            // todo: this needs to be coming from the store…
+            // closest.classList.toggle('selected')
           }
 
           //renderedSvg.addEventListener('click', clickListener)
           renderedSvg.querySelectorAll(selectables).forEach(elem => {
             elem.addEventListener('click', clickListener)
           })
+
+
+          let unwatchers = []
+          const watchFuncCurrent = () => {
+            return this.$store.getters.currentSelectionsForUri(this.uri)
+          }
+          unwatchers.push(this.$store.watch(watchFuncCurrent, (newArr, oldArr) => {
+            let addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
+            let removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
+
+            addedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.add('current')
+              } catch(err) {}
+            })
+
+            removedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.remove('current')
+              } catch(err) {}
+            })
+          }))
+
+          const watchFuncAll = () => {
+            return this.$store.getters.allSelectionsForUri(this.uri)
+          }
+          unwatchers.push(this.$store.watch(watchFuncAll, (newArr, oldArr) => {
+            let addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
+            let removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
+
+            addedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.add('selected')
+              } catch(err) {}
+            })
+
+            removedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.remove('selected')
+              } catch(err) {}
+            })
+          }))
+
+          const watchFuncCurrentMusMat = () => {
+            return this.$store.getters.allSelectionsForCurrentMusMat(this.uri)
+          }
+          unwatchers.push(this.$store.watch(watchFuncCurrentMusMat, (newArr, oldArr) => {
+            let addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
+            let removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
+
+            addedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.add('currentMusmat')
+              } catch(err) {}
+            })
+
+            removedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.remove('currentMusmat')
+              } catch(err) {}
+            })
+          }))
+
+          const watchFuncCurrentExtract = () => {
+            return this.$store.getters.allSelectionsForCurrentExtract(this.uri)
+          }
+          unwatchers.push(this.$store.watch(watchFuncCurrentExtract, (newArr, oldArr) => {
+            let addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
+            let removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
+
+            addedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.add('currentExtract')
+              } catch(err) {}
+            })
+
+            removedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.remove('currentExtract')
+              } catch(err) {}
+            })
+          }))
+
+          const watchFuncCurrentSelection = () => {
+            return this.$store.getters.allSelectionsForCurrentSelection(this.uri)
+          }
+          unwatchers.push(this.$store.watch(watchFuncCurrentSelection, (newArr, oldArr) => {
+            let addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
+            let removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
+
+            newArr.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.add('currentSelection')
+              } catch(err) {}
+            })
+
+            removedVals.forEach(val => {
+              const id = val.split('#')[1]
+              try {
+                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id +']')
+                elem.classList.remove('currentSelection')
+              } catch(err) {}
+            })
+          }))
+
         }
 
           // document.querySelectorAll('#meiContainer_ .staff > .staff.bounding-box > rect').forEach(bbox => addListener(bbox))
@@ -183,12 +314,30 @@ export default {
       fill: rgba(0,100,0,0.6)
     }
 
-    .selected {
-      fill: rgba(255,0,0,1);
-      stroke: rgba(255,0,0,1);
+    .selected, .current {
+      fill: rgba(150,0,0,1);
+      stroke: rgba(150,0,0,1);
 
       &.bounding-box.staff rect {
-        fill: rgba(255,0,0,.2) !important;
+        fill: rgba(255,0,0,.15);
+      }
+
+      &.currentSelection {
+        fill: rgba(255,0,0,1);
+        stroke: rgba(255,0,0,1);
+
+        &.bounding-box.staff rect {
+          fill: rgba(255,0,0,.3);
+        }
+      }
+
+      &.currentExtract {
+        fill: rgba(255,0,255,1);
+        stroke: rgba(255,0,255,1);
+
+        &.bounding-box.staff rect {
+          fill: rgba(255,0,255,.3);
+        }
       }
     }
   }

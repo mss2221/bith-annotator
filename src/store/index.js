@@ -174,11 +174,6 @@ const getAnnotStub = (state) => {
 
 // creates a musicalMaterial stub
 const getMusMatStub = (state) => {
-  console.log('HERE')
-  console.log(state)
-  console.log(state.solidSession)
-  console.log(state.solidSession.info)
-  console.log(state.solidSession.info.webId)
   const user = state.solidSession.info.webId
   const d = new Date()
   const date = d.toISOString()
@@ -194,6 +189,44 @@ const getMusMatStub = (state) => {
     "http://purl.org/vocab/frbr/core#embodiment": []
   }
   return musMat
+}
+
+const getExtractStub = (state) => {
+  const user = state.solidSession.info.webId
+  const d = new Date()
+  const date = d.toISOString()
+  const plainId = uuidv4()
+  const id = user.split('/profile/')[0] + '/public/bith/extracts/' + plainId + '.jsonld'
+
+  const extract = {
+    "@type": "https://example.com/Terms/Extract",
+    "@id": id,
+    "http://purl.org/dc/terms/created": date,
+    "http://purl.org/dc/terms/creator": user,
+    "https://www.w3.org/2000/01/rdf-schema#label": "",
+    "http://purl.org/vocab/frbr/core#member": []
+  }
+
+  return extract
+}
+
+const getSelectionStub = (state) => {
+  const user = state.solidSession.info.webId
+  const d = new Date()
+  const date = d.toISOString()
+  const plainId = uuidv4()
+  const id = user.split('/profile/')[0] + '/public/bith/selections/' + plainId + '.jsonld'
+
+  const selection = {
+    "@type": "https://example.com/Terms/Selection",
+    "@id": id,
+    "http://purl.org/dc/terms/created": date,
+    "http://purl.org/dc/terms/creator": user,
+    "https://www.w3.org/2000/01/rdf-schema#label": "–",
+    "http://purl.org/vocab/frbr/core#part": []
+  }
+
+  return selection
 }
 
 export default new Vuex.Store({
@@ -217,8 +250,11 @@ export default new Vuex.Store({
       extract: {},
       selection: {}
     },
+    currentMusMat: null,
+    currentExtract: null,
+    currentSelection: null,
     editing: null,
-    selectable: false,
+    selectionModeActive: false,
     showDebugOverlay: false
   },
   mutations: {
@@ -299,7 +335,94 @@ export default new Vuex.Store({
       state.showDebugOverlay = !state.showDebugOverlay
     },
     SET_EDITING (state, mode) {
-      if([null,'parallelPassage','observation'].indexOf(mode) !== -1) {
+
+      // already there
+      if(state.editing === mode) {
+        return true
+      }
+
+      if(mode === null) {
+
+        Vue.set(state, 'currentAnnot', {
+          observation: {},
+          musicalMaterial: {},
+          extract: {},
+          selection: {}
+        })
+        state.editing = mode
+        state.selectionModeActive = false
+        state.currentMusMat = null
+        state.currentExtract = null
+        state.currentSelection = null
+
+      } else if(mode === 'parallelPassage') {
+
+        // starting new parallel passage
+        if(state.currentMusMat === null) {
+
+          const stub = getMusMatStub(state)
+          let musMat = {}
+          musMat[stub['@id']] = stub
+
+          Vue.set(state, 'currentAnnot', {
+            observation: {},
+            musicalMaterial: musMat,
+            extract: {},
+            selection: {}
+          })
+          state.editing = mode
+          state.selectionModeActive = false
+          state.currentMusMat = stub['@id']
+          state.currentExtract = null
+          state.currentSelection = null
+        } else {
+          // opening existing parallel passage
+
+          console.log('x2')
+
+          const musMat = state.annotStore.musicalMaterial[state.currentMusMat]
+          let mm = {}
+          let ex = {}
+          let sel = {}
+
+          console.log('x3')
+
+          const extracts = musMat['http://purl.org/vocab/frbr/core#embodiment']
+          mm[musMat['@id']] = musMat
+          extracts.forEach(extractId => {
+            const extract = state.annotStore.extract[extractId]
+
+            ex[extractId] = extract
+            console.log('extract, looking for member')
+            console.log(extract)
+            const selections = extract['http://purl.org/vocab/frbr/core#member']
+            selections.forEach(selectionId => {
+              const selection = state.annotStore.selection[selectionId]
+              sel[selectionId] = selection
+            })
+          })
+
+          console.log('x4')
+
+          Vue.set(state, 'currentAnnot', {
+            observation: {},
+            musicalMaterial: mm,
+            extract: ex,
+            selection: sel
+          })
+
+          state.editing = mode
+          state.selectionModeActive = false
+          state.currentExtract = null
+          state.currentSelection = null
+
+        }
+
+      } else if(mode === 'observation') {
+        console.log('todo: how to enter observation editing mode?')
+      }
+
+      /*if([null,'parallelPassage','observation'].indexOf(mode) !== -1) {
         if(state.editing !== mode) {
 
           let obs = {}
@@ -320,11 +443,62 @@ export default new Vuex.Store({
             selection: {}
           })
           state.editing = mode
+          state.selectionModeActive = false
+          state.currentExtract = null
+          state.currentSelection = null
         }
+      }*/
+    },
+    SET_SELECTION_MODE_ACTIVE (state, bool) {
+      state.selectionModeActive = bool
+      if(!bool) {
+        state.currentSelection = null
       }
     },
-    SET_SELECTABLE (state, bool) {
-      state.selectable = bool
+    ADD_PASSAGE (state) {
+
+      const extractStub = getExtractStub(state)
+
+      state.currentExtract = extractStub['@id']
+
+      Vue.set(state.currentAnnot.extract, extractStub['@id'], extractStub)
+
+      const musMat = Object.values(state.currentAnnot.musicalMaterial)[0]
+      const musMatId = musMat['@id']
+
+      state.currentAnnot.musicalMaterial[musMatId]['http://purl.org/vocab/frbr/core#embodiment'].push(extractStub['@id'])
+      state.currentSelection = null
+
+    },
+    SET_ACTIVE_MUSMAT (state, id) {
+      state.currentMusMat = id
+    },
+    ACTIVATE_PASSAGE (state, id) {
+      state.currentExtract = id
+      state.currentSelection = null
+    },
+    ACTIVATE_SELECTION (state, id) {
+      state.currentSelection = id
+    },
+    ADD_NEW_SELECTION_TO_CURRENT_EXTRACT (state) {
+      const selectionStub = getSelectionStub(state)
+
+      state.currentSelection = selectionStub['@id']
+
+      Vue.set(state.currentAnnot.selection, selectionStub['@id'], selectionStub)
+
+      state.currentAnnot.extract[state.currentExtract]['http://purl.org/vocab/frbr/core#member'].push(selectionStub['@id'])
+    },
+    TOGGLE_SELECTION (state, id) {
+      const arr = state.currentAnnot.selection[state.currentSelection]['http://purl.org/vocab/frbr/core#part']
+
+      const index = arr.indexOf(id)
+
+      if(index === -1) {
+        arr.push(id)
+      } else {
+        arr.splice(index,1)
+      }
     }
   },
   actions: {
@@ -507,8 +681,52 @@ export default new Vuex.Store({
     setEditing ({ commit }, mode) {
       commit('SET_EDITING', mode)
     },
-    setSelectable ({ commit }, bool) {
-      commit('SET_SELECTABLE', bool)
+    addPassage ({ commit }) {
+      commit('ADD_PASSAGE')
+    },
+    setActiveMusMat({ commit }, id) {
+      commit('SET_ACTIVE_MUSMAT', id)
+    },
+    setActivePassage ({ commit, state, dispatch }, id) {
+      commit('ACTIVATE_PASSAGE', id)
+      commit('SET_SELECTION_MODE_ACTIVE', true)
+    },
+    setSelectionModeActive ({ commit }, bool) {
+      commit('SET_SELECTION_MODE_ACTIVE', bool)
+    },
+    selectionToggle ({ commit, state }, id) {
+
+      if(state.currentSelection === null) {
+        const ex = state.currentAnnot.extract[state.currentExtract]
+        if(ex['http://purl.org/vocab/frbr/core#member'].length > 0) {
+          commit('ACTIVATE_SELECTION', ex['http://purl.org/vocab/frbr/core#member'][0])
+        } else {
+          commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT')
+        }
+      }
+
+      commit('TOGGLE_SELECTION', id)
+
+      // console.log('selectionToggle for ' + id)
+    },
+    saveCurrentAnnot ({ commit, state, dispatch }) {
+
+      const musMats = Object.values(state.currentAnnot.musicalMaterial)
+      musMats.forEach(musMat => {
+        dispatch('createDataObject',{ type: 'musicalMaterial', object: musMat})
+      })
+
+      const extracts = Object.values(state.currentAnnot.extract)
+      extracts.forEach(extract => {
+        dispatch('createDataObject',{ type: 'extract', object: extract})
+      })
+
+      const selections = Object.values(state.currentAnnot.selection)
+      selections.forEach(selection => {
+        dispatch('createDataObject',{ type: 'selection', object: selection})
+      })
+
+      commit('SET_EDITING', null)
     }
 
   },
@@ -636,6 +854,21 @@ export default new Vuex.Store({
     currentExtracts: state => {
       return Object.values(state.currentAnnot.extract)
     },
+    activeMusMat: state => {
+      return state.currentMusMat
+    },
+    activeExtract: state => {
+      return state.currentExtract
+    },
+    activeSelection: state => {
+      return state.currentSelection
+    },
+    activeExtractObject: state => {
+      return state.currentAnnot.extract[state.currentExtract]
+    },
+    workingExtract: (state) => (extractId) => {
+      return state.currentAnnot.extract[extractId]
+    },
     currentSelections: state => {
       return Object.values(state.currentAnnot.selection)
     },
@@ -646,8 +879,85 @@ export default new Vuex.Store({
       return state.editing
     },
     selectionModeActive: state => {
-      return state.selectable
-    }
+      return state.selectionModeActive
+    },
 
+    // getters for highlighting stuff
+    allSelectionsForUri: (state) => (uri) => {
+      let arr = []
+      Object.values(state.annotStore.selection).forEach(sel => {
+        sel['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+          if(idRef.startsWith(uri)) {
+            arr.push(idRef)
+          }
+        })
+      })
+      return arr
+    },
+    currentSelectionsForUri: (state) => (uri) => {
+      let arr = []
+      Object.values(state.currentAnnot.selection).forEach(sel => {
+        sel['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+          if(idRef.startsWith(uri)) {
+            arr.push(idRef)
+          }
+        })
+      })
+      return arr
+    },
+    allSelectionsForCurrentMusMat: (state) => (uri) => {
+      if(state.currentMusMat === null) {
+        return []
+      }
+      let arr = []
+      try {
+        const musMat = state.currentAnnot.musicalMaterial[state.currentMusMat]
+        musMat['http://purl.org/vocab/frbr/core#embodiment'].forEach(extractId => {
+          state.currentAnnot.extract[extractId]['http://purl.org/vocab/frbr/core#member'].forEach(selectionId => {
+            state.currentAnnot.selection[selectionId]['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+              if(idRef.startsWith(uri)) {
+                arr.push(idRef)
+              }
+            })
+          })
+        })
+      } catch(err) {}
+
+      return arr
+    },
+    allSelectionsForCurrentExtract: (state) => (uri) => {
+      if(state.currentExtract === null) {
+        return []
+      }
+      let arr = []
+      try {
+        const extract = state.currentAnnot.extract[state.currentExtract]
+        extract['http://purl.org/vocab/frbr/core#member'].forEach(selectionId => {
+          state.currentAnnot.selection[selectionId]['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+            if(idRef.startsWith(uri)) {
+              arr.push(idRef)
+            }
+          })
+        })
+      } catch(err) {}
+
+      return arr
+    },
+    allSelectionsForCurrentSelection: (state) => (uri) => {
+      if(state.currentSelection === null) {
+        return []
+      }
+      let arr = []
+      try {
+        const sel = state.currentAnnot.selection[state.currentSelection]
+        sel['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+          if(idRef.startsWith(uri)) {
+            arr.push(idRef)
+          }
+        })
+      } catch(err) {}
+
+      return arr
+    }
   }
 })
