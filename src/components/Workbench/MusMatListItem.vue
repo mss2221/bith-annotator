@@ -1,7 +1,7 @@
 <template>
   <div class="musmat" v-on:click="activateMusmat">
-    <div class="musmatId" v-bind:title="'@id:\n' + musmat['@id']">@id</div>
-    <div class="musmatLabel">{{musmat['https://www.w3.org/2000/01/rdf-schema#label']}}</div>
+    <div class="musmatId" v-bind:title="'@id:\n' + musMatId">@id</div>
+    <div class="musmatLabel">{{ label }}</div>
   </div>
 </template>
 
@@ -13,21 +13,20 @@ export default {
 
   },
   props: {
-    musmat: Object
+    musMatId: String
   },
   computed: {
+    label: function() {
+      return this.$store.getters.musicalMaterialLabel(this.musMatId)
+    }
     /*currentAnnot: function() {
       return this.$store.getters.currentAnnot
     },*/
   },
   methods: {
     activateMusmat: function() {
-      console.log('hello')
-      console.log(this.musmat['@id'])
-      this.$store.dispatch('setActiveMusMat', this.musmat['@id'])
-      console.log(2)
+      this.$store.dispatch('setActiveMusMat', this.musMatId)
       this.$store.dispatch('setEditing','parallelPassage')
-      console.log(3)
     }
     /*cancel: function() {
       this.$store.dispatch('setEditing', null)

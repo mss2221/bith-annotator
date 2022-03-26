@@ -54,11 +54,26 @@ import { graphURI, params, traversalObjectives, MAX_TRAVERSERS } from './../../c
 // Import from "@inrupt/solid-client"
 import {
   getSolidDataset,
+  createSolidDataset,
   saveSolidDatasetAt,
+  createThing,
+  buildThing,
+  setThing,
   getThing,
-  getStringNoLocale //,
-  // getUrlAll
+  getThingAll,
+  getFile,
+  isRawData,
+  getContentType,
+  getSourceUrl,
+  overwriteFile,
+  getStringNoLocale,
+  getUrlAll,
+  addUrl,
+  addStringNoLocale,
+  setStringNoLocale
 } from '@inrupt/solid-client'
+
+import * as jsonld from 'jsonld'
 
 // Import Verovio
 import verovio from 'verovio'
@@ -146,17 +161,31 @@ const graphHasChanged = (graph, commit) => {
 }
 
 // creates an annotation stub
-const getAnnotStub = (state) => {
+const getAnnotDS = (state) => {
 
   const user = state.solidSession.info.webId
-  const d = new Date()
-  const date = d.toISOString()
-  // https://pod.inrupt.com/kepper/profile/card#me
-  // https://pod.inrupt.com/kepper/public/
+  const date = new Date()
+  //const date = d.toISOString()
   const plainId = uuidv4()
-  const id = user.split('/profile/')[0] + '/public/bith/annotations/' + plainId + '.jsonld'
+  const id = user.split('/profile/')[0] + '/public/bith/annotations/' + plainId + '.ttl'
 
-  const anno = {
+  let ds = createSolidDataset()
+
+  const thing = buildThing(createThing({ name: id }))
+    .addStringNoLocale('type', 'Annotation')
+    .addDate(pref.dct + 'created', date)
+    .addStringNoLocale(pref.dct + 'creator', user)
+    .addStringNoLocale('motivation', 'describing')
+
+    //.addUrl(pref.frbr + 'embodiment','http://test1.com/ads')
+    //.addUrl(pref.frbr + 'embodiment','http://test2.com/sad')
+    .build()
+
+  ds = setThing(ds, thing)
+
+  return ds
+
+  /*const anno = {
     "@context": "http://www.w3.org/ns/anno.jsonld",
     "@id": id,
     "http://purl.org/dc/terms/created": date,
@@ -168,65 +197,109 @@ const getAnnotStub = (state) => {
       "value": ""
     },
     "target": null
-  }
-  return anno
+  }*/
 }
 
 // creates a musicalMaterial stub
-const getMusMatStub = (state) => {
+const getMusMatDS = (state) => {
   const user = state.solidSession.info.webId
-  const d = new Date()
-  const date = d.toISOString()
+  const date = new Date()
+  //const date = d.toISOString()
   const plainId = uuidv4()
-  const id = user.split('/profile/')[0] + '/public/bith/musicalMaterials/' + plainId + '.jsonld'
+  const id = user.split('/profile/')[0] + '/public/bith/musicalMaterials/' + plainId + '.ttl'
 
-  const musMat = {
-    "@type": "https://example.com/Terms/MusicalMaterial",
-    "@id": id,
-    "http://purl.org/dc/terms/created": date,
-    "http://purl.org/dc/terms/creator": user,
-    "https://www.w3.org/2000/01/rdf-schema#label": "",
-    "http://purl.org/vocab/frbr/core#embodiment": []
-  }
-  return musMat
+  let ds = createSolidDataset()
+
+  const thing = buildThing(createThing({ name: id }))
+    .addUrl(pref.rdf + 'type', 'https://example.com/Terms/MusicalMaterial')
+    .addDate(pref.dct + 'created', date)
+    .addStringNoLocale(pref.dct + 'creator', user)
+    .addStringNoLocale(pref.rdfs + 'label', '')
+    //.addUrl(pref.frbr + 'embodiment','http://test1.com/ads')
+    //.addUrl(pref.frbr + 'embodiment','http://test2.com/sad')
+    .build()
+
+  ds = setThing(ds, thing)
+
+  return ds
 }
 
-const getExtractStub = (state) => {
+const getExtractDS = (state) => {
   const user = state.solidSession.info.webId
-  const d = new Date()
-  const date = d.toISOString()
+  const date = new Date()
+  //const date = d.toISOString()
   const plainId = uuidv4()
-  const id = user.split('/profile/')[0] + '/public/bith/extracts/' + plainId + '.jsonld'
+  const id = user.split('/profile/')[0] + '/public/bith/extracts/' + plainId + '.ttl'
 
-  const extract = {
+  let ds = createSolidDataset()
+
+  const thing = buildThing(createThing({ name: id }))
+    .addUrl(pref.rdf + 'type', 'https://example.com/Terms/Extract')
+    .addDate(pref.dct + 'created', new Date())
+    .addStringNoLocale(pref.dct + 'creator', user)
+    .addStringNoLocale(pref.rdfs + 'label', '')
+    //.addUrl(pref.frbr + 'member','http://test1.com/ads')
+    //.addUrl(pref.frbr + 'member','http://test2.com/sad')
+    .build()
+
+  ds = setThing(ds, thing)
+
+  return ds
+
+  /*const extract = {
     "@type": "https://example.com/Terms/Extract",
     "@id": id,
     "http://purl.org/dc/terms/created": date,
     "http://purl.org/dc/terms/creator": user,
     "https://www.w3.org/2000/01/rdf-schema#label": "",
     "http://purl.org/vocab/frbr/core#member": []
-  }
-
-  return extract
+  }*/
 }
 
-const getSelectionStub = (state) => {
+const getSelectionDS = (state) => {
   const user = state.solidSession.info.webId
-  const d = new Date()
-  const date = d.toISOString()
+  const date = new Date()
+  //const date = d.toISOString()
   const plainId = uuidv4()
-  const id = user.split('/profile/')[0] + '/public/bith/selections/' + plainId + '.jsonld'
+  const id = user.split('/profile/')[0] + '/public/bith/selections/' + plainId + '.ttl'
 
-  const selection = {
+  let ds = createSolidDataset()
+
+  const thing = buildThing(createThing({ name: id }))
+    .addUrl(pref.rdf + 'type', 'https://example.com/Terms/Selection')
+    .addDate(pref.dct + 'created', new Date())
+    .addStringNoLocale(pref.dct + 'creator', user)
+    .addStringNoLocale(pref.rdfs + 'label', '')
+    //.addUrl(pref.frbr + 'part','http://test1.com/ads')
+    //.addUrl(pref.frbr + 'part','http://test2.com/sad')
+    .build()
+
+  ds = setThing(ds, thing)
+
+  return ds
+
+  /*const selection = {
     "@type": "https://example.com/Terms/Selection",
     "@id": id,
     "http://purl.org/dc/terms/created": date,
     "http://purl.org/dc/terms/creator": user,
     "https://www.w3.org/2000/01/rdf-schema#label": "–",
     "http://purl.org/vocab/frbr/core#part": []
-  }
+  }*/
+}
 
-  return selection
+/**
+ * [getPublicIdFromDataStructure description]
+ * @param  {[type]} ds               [description]
+ * @return {[type]}    [description]
+ */
+const getPublicIdFromDataStructure = (ds) => {
+  const url = getThingAll(ds)[0].url
+  if(url.indexOf('.well-known/sdk-local-node/') !== -1) {
+    return url.split('.well-known/sdk-local-node/')[1]
+  } else {
+    return url
+  }
 }
 
 export default new Vuex.Store({
@@ -238,6 +311,8 @@ export default new Vuex.Store({
     perspective: 'landingPage',
     solidSession: null,
     solidUser: null,
+    solidFileListing: null,
+    solidFileListingPath: null,
     annotStore: {
       observation: {},
       musicalMaterial: {},
@@ -299,29 +374,85 @@ export default new Vuex.Store({
     SET_SOLID_USERNAME (state, username) {
       state.solidUser = username
     },
+    SET_SOLID_FILE_LISTING (state, listing) {
+      state.solidFileListing = listing
+    },
+    SET_SOLID_LISTING_PATH (state, listingPath) {
+      state.solidFileListingPath = listingPath
+    },
+    ADD_FILE_TO_SOLID_FILE_LISTING (state, uri) {
+      console.log('trying to add ' + uri)
+      const existingIndex = state.solidFileListing['http://www.w3.org/ns/ldp#contains'].findIndex(item => {
+        return item['@id'] === uri
+      })
+      console.log('index is ' + existingIndex)
+      if (existingIndex === -1) {
+        let obj = {}
+        obj['@id'] = uri
+        state.solidFileListing['http://www.w3.org/ns/ldp#contains'].push(obj)
+      }
+      console.log(state.solidFileListing)
+    },
+    REMOVE_FILE_FROM_SOLID_FILE_LISTING (state, uri) {
+      const existingIndex = state.solidFileListing['http://www.w3.org/ns/ldp#contains'].findIndex(item => {
+        return item['@id'] === uri
+      })
+      if (existingIndex !== -1) {
+        state.solidFileListing['http://www.w3.org/ns/ldp#contains'].splice(existingIndex,1)
+      }
+    },
     ADD_TO_ANNOTSTORE (state, payload) {
       const type = payload.type
       const obj = payload.object
+      const id = getPublicIdFromDataStructure(obj)
 
       if(type in state.annotStore) {
-        Vue.set(state.annotStore[type], obj['@id'], obj)
+        Vue.set(state.annotStore[type], id, obj)
       }
     },
     REMOVE_FROM_ANNOTSTORE (state, payload) {
       const type = payload.type
       const obj = payload.object
+      const id = getPublicIdFromDataStructure(obj)
 
       if(type in state.annotStore) {
-        Vue.delete(state.annotStore[type], obj['@id'])
+        Vue.delete(state.annotStore[type], id)
       }
     },
     ADD_TO_CURRENT_ANNOT (state, payload) {
       const type = payload.type
-      const obj = payload.object
+      const id = payload.id
+      const prop = payload.prop
+      const method = payload.method
+      const val = payload.val
 
-      if(type in state.currentAnnot) {
-        Vue.set(state.currentAnnot[type], obj['@id'], obj)
+      let ds = state.currentAnnot[type][id]
+      let thing = getThingAll(ds)[0]
+
+      if(method === 'addStringNoLocale') {
+        thing = buildThing(thing)
+          .addStringNoLocale(prop, val)
+          .build()
+      } else if(method === 'setStringNoLocale') {
+        thing = buildThing(thing)
+          .setStringNoLocale(prop, val)
+          .build()
+      } else if(method === 'addUrl') {
+        thing = buildThing(thing)
+          .addUrl(prop, val)
+          .build()
       }
+      else if(method === 'addDate') {
+        thing = buildThing(thing)
+          .addDate(prop, val)
+          .build()
+      } else {
+        console.error('Unknown operation: ' + method)
+      }
+
+      ds = setThing(ds, thing)
+
+      Vue.set(state.currentAnnot[type], id, ds)
     },
     REMOVE_FROM_CURRENT_ANNOT (state, payload) {
       const type = payload.type
@@ -360,9 +491,21 @@ export default new Vuex.Store({
         // starting new parallel passage
         if(state.currentMusMat === null) {
 
-          const stub = getMusMatStub(state)
-          let musMat = {}
-          musMat[stub['@id']] = stub
+          const ds = getMusMatDS(state)
+          const id = getPublicIdFromDataStructure(ds)
+
+          /*saveSolidDatasetAt(
+            stub['@id'],
+            musMatDataset,
+            {
+              fetch: state.solidSession.fetch
+            }
+          ).then(res => {
+            console.log('sucessfully stored? at ' + stub['@id'], res)
+          })*/
+
+          const musMat = {}
+          musMat[id] = ds
 
           Vue.set(state, 'currentAnnot', {
             observation: {},
@@ -372,37 +515,37 @@ export default new Vuex.Store({
           })
           state.editing = mode
           state.selectionModeActive = false
-          state.currentMusMat = stub['@id']
+          state.currentMusMat = id
           state.currentExtract = null
           state.currentSelection = null
         } else {
           // opening existing parallel passage
 
-          console.log('x2')
-
-          const musMat = state.annotStore.musicalMaterial[state.currentMusMat]
           let mm = {}
           let ex = {}
           let sel = {}
 
-          console.log('x3')
+          const id = state.currentMusMat
+          const ds = state.annotStore.musicalMaterial[id]
 
-          const extracts = musMat['http://purl.org/vocab/frbr/core#embodiment']
-          mm[musMat['@id']] = musMat
+          mm[id] = ds
+
+          const thing = getThingAll(ds)[0]
+          const extracts = getUrlAll(thing, pref.frbr + 'embodiment')
+
           extracts.forEach(extractId => {
             const extract = state.annotStore.extract[extractId]
 
             ex[extractId] = extract
-            console.log('extract, looking for member')
-            console.log(extract)
-            const selections = extract['http://purl.org/vocab/frbr/core#member']
+
+            const exThing = getThingAll(extract)[0]
+            const selections = getUrlAll(exThing, pref.frbr + 'member')
+
             selections.forEach(selectionId => {
               const selection = state.annotStore.selection[selectionId]
               sel[selectionId] = selection
             })
           })
-
-          console.log('x4')
 
           Vue.set(state, 'currentAnnot', {
             observation: {},
@@ -457,16 +600,25 @@ export default new Vuex.Store({
     },
     ADD_PASSAGE (state) {
 
-      const extractStub = getExtractStub(state)
+      const extract = getExtractDS(state)
+      const extractId = getPublicIdFromDataStructure(extract)
 
-      state.currentExtract = extractStub['@id']
+      state.currentExtract = extractId
 
-      Vue.set(state.currentAnnot.extract, extractStub['@id'], extractStub)
+      Vue.set(state.currentAnnot.extract, extractId, extract)
 
-      const musMat = Object.values(state.currentAnnot.musicalMaterial)[0]
-      const musMatId = musMat['@id']
+      let musMat = Object.values(state.currentAnnot.musicalMaterial)[0]
+      const musMatId = getPublicIdFromDataStructure(musMat)
 
-      state.currentAnnot.musicalMaterial[musMatId]['http://purl.org/vocab/frbr/core#embodiment'].push(extractStub['@id'])
+      let thing = getThingAll(musMat)[0]
+
+      thing = buildThing(thing)
+        .addUrl(pref.frbr + 'embodiment', extractId)
+        .build()
+
+      musMat = setThing(musMat, thing)
+
+      Vue.set(state.currentAnnot.musicalMaterial, musMatId, musMat)
       state.currentSelection = null
 
     },
@@ -481,24 +633,43 @@ export default new Vuex.Store({
       state.currentSelection = id
     },
     ADD_NEW_SELECTION_TO_CURRENT_EXTRACT (state) {
-      const selectionStub = getSelectionStub(state)
+      const selection = getSelectionDS(state)
+      const selectionId = getPublicIdFromDataStructure(selection)
 
-      state.currentSelection = selectionStub['@id']
+      state.currentSelection = selectionId
 
-      Vue.set(state.currentAnnot.selection, selectionStub['@id'], selectionStub)
+      Vue.set(state.currentAnnot.selection, selectionId, selection)
 
-      state.currentAnnot.extract[state.currentExtract]['http://purl.org/vocab/frbr/core#member'].push(selectionStub['@id'])
+      let extractDS = state.currentAnnot.extract[state.currentExtract]
+      const extractId = getPublicIdFromDataStructure(extractDS)
+      let thing = getThingAll(extractDS)[0]
+
+      thing = buildThing(thing)
+        .addUrl(pref.frbr + 'member', selectionId)
+        .build()
+
+      extractDS = setThing(extractDS, thing)
+      Vue.set(state.currentAnnot.extract, extractId, extractDS)
     },
     TOGGLE_SELECTION (state, id) {
-      const arr = state.currentAnnot.selection[state.currentSelection]['http://purl.org/vocab/frbr/core#part']
+      let selectionDS = state.currentAnnot.selection[state.currentSelection]
+      const selectionId = getPublicIdFromDataStructure(selectionDS)
+      let thing = getThingAll(selectionDS)[0]
 
-      const index = arr.indexOf(id)
+      let urls = getUrlAll(thing,pref.frbr + 'part')
 
-      if(index === -1) {
-        arr.push(id)
+      if(urls.indexOf(id) === -1) {
+        thing = buildThing(thing)
+          .addUrl(pref.frbr + 'part', id)
+          .build()
       } else {
-        arr.splice(index,1)
+        thing = buildThing(thing)
+          .removeUrl(pref.frbr + 'part', id)
+          .build()
       }
+
+      selectionDS = setThing(selectionDS, thing)
+      Vue.set(state.currentAnnot.selection, selectionId, selectionDS)
     }
   },
   actions: {
@@ -579,6 +750,48 @@ export default new Vuex.Store({
           )
 
           commit('SET_SOLID_USERNAME', name)
+
+          const listingPath = webId.split('/profile/card')[0] + '/public/bith/listing.ttl'
+          commit('SET_SOLID_LISTING_PATH', listingPath)
+
+          let listing
+
+          try {
+            listing = await getSolidDataset(
+              listingPath,               // File in Pod to Read
+              { fetch: authFetch }       // fetch from authenticated session
+            )
+            commit('SET_SOLID_FILE_LISTING',listing)
+            const thing = getThingAll(listing)[0]
+            const uris = getUrlAll(thing, pref.ldp + 'contains')
+            console.log('Listing at ' + listingPath + ' exists. \nNeed to retrieve the following URIs:', uris)
+
+            //uris.forEach()
+
+
+          } catch(err) {
+            console.log('No listing available at ' + listingPath + '. Creating a new one. \nMessage: ' + err)
+
+            let ds = createSolidDataset()
+
+            const thing = buildThing(createThing({ name: listingPath }))
+              .addUrl(pref.rdf + 'type', pref.ldp + 'Container')
+              .build()
+
+            ds = setThing(ds, thing)
+
+            saveSolidDatasetAt(
+              listingPath,
+              ds,
+              {
+                fetch: authFetch
+              }
+            ).then(res => {
+              console.log('Initialized file listing at ' + listingPath, res)
+              commit('SET_SOLID_FILE_LISTING',ds)
+            })
+
+          }
         }
         getUserName()
 
@@ -645,8 +858,48 @@ export default new Vuex.Store({
     createDataObject ({ commit, state }, payload) {
       if(payload.type in state.annotStore && payload.object) {
 
-        //upload to SolidPod, if successful store in Vuex
-        commit('ADD_TO_ANNOTSTORE', payload)
+        const authFetch = state.solidSession.fetch
+        const ds = payload.object
+        const uri = getPublicIdFromDataStructure(ds)
+
+        // console.log('trying to create object: ', payload.object)
+        try {
+          saveSolidDatasetAt(
+            uri,
+            ds,
+            {
+              fetch: authFetch
+            }
+          ).then(res => {
+            console.log('successfully uploaded to ' + uri, res)
+            //after upload to SolidPod store in Vuex
+            commit('ADD_TO_ANNOTSTORE', payload)
+
+            /*
+            let selectionDS = state.currentAnnot.selection[state.currentSelection]
+            const selectionId = getPublicIdFromDataStructure(selectionDS)
+            let thing = getThingAll(selectionDS)[0]
+
+            let urls = getUrlAll(thing,pref.frbr + 'part')
+
+            if(urls.indexOf(id) === -1) {
+              thing = buildThing(thing)
+                .addUrl(pref.frbr + 'part', id)
+                .build()
+            } else {
+              thing = buildThing(thing)
+                .removeUrl(pref.frbr + 'part', id)
+                .build()
+            }
+
+            selectionDS = setThing(selectionDS, thing)
+            Vue.set(state.currentAnnot.selection, selectionId, selectionDS)
+            */
+          })
+
+        } catch(err) {
+          console.error('could not upload to ' + uri, err)
+        }
       }
     },
     changeDataObject ({ commit, state }, payload) {
@@ -669,7 +922,7 @@ export default new Vuex.Store({
       }
     },
     changeCurrentDataObject ({ commit, state }, payload) {
-      if(payload.type in state.currentAnnot && payload.object) {
+      if(payload.type in state.currentAnnot && payload.id && payload.prop && payload.method && payload.val) {
         commit('ADD_TO_CURRENT_ANNOT', payload)
       }
     },
@@ -697,9 +950,14 @@ export default new Vuex.Store({
     selectionToggle ({ commit, state }, id) {
 
       if(state.currentSelection === null) {
-        const ex = state.currentAnnot.extract[state.currentExtract]
-        if(ex['http://purl.org/vocab/frbr/core#member'].length > 0) {
-          commit('ACTIVATE_SELECTION', ex['http://purl.org/vocab/frbr/core#member'][0])
+        const extractDS = state.currentAnnot.extract[state.currentExtract]
+        const thing = getThingAll(extractDS)[0]
+
+        const urls = getUrlAll(thing, pref.frbr + 'member')
+
+        if(urls.length > 0) {
+          console.log('trying to activate selection. following thing should be an ID / uri: ', urls[0])
+          commit('ACTIVATE_SELECTION', urls[0])
         } else {
           commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT')
         }
@@ -711,22 +969,88 @@ export default new Vuex.Store({
     },
     saveCurrentAnnot ({ commit, state, dispatch }) {
 
+      const uris = []
       const musMats = Object.values(state.currentAnnot.musicalMaterial)
       musMats.forEach(musMat => {
+        uris.push(getPublicIdFromDataStructure(musMat))
         dispatch('createDataObject',{ type: 'musicalMaterial', object: musMat})
       })
 
       const extracts = Object.values(state.currentAnnot.extract)
       extracts.forEach(extract => {
+        uris.push(getPublicIdFromDataStructure(extract))
         dispatch('createDataObject',{ type: 'extract', object: extract})
       })
 
       const selections = Object.values(state.currentAnnot.selection)
       selections.forEach(selection => {
+        uris.push(getPublicIdFromDataStructure(selection))
         dispatch('createDataObject',{ type: 'selection', object: selection})
       })
 
+      let listing = state.solidFileListing
+      const listingPath = state.solidFileListingPath
+      const authFetch = state.solidSession.fetch
+      let thing = getThingAll(listing)[0]
+      let existingUris = getUrlAll(thing, pref.ldp + 'contains')
+
+      uris.forEach(uri => {
+        if(existingUris.indexOf(uri) === -1) {
+          thing = addUrl(thing, pref.ldp + 'contains', uri)
+        }
+      })
+
+      listing = setThing(listing, thing)
+
+      console.log('\nNeed to update listing. Should be like so now:', listing, uris)
+
+      try {
+        saveSolidDatasetAt(
+          listingPath,
+          listing,
+          {
+            fetch: authFetch
+          }
+        ).then(res => {
+          console.log('updated index with ' + uris.length + ' entries')
+          commit('SET_SOLID_FILE_LISTING', listing)
+        }).catch(resErr => {
+          console.log('ERRORED: ' + resErr)
+        })
+      } catch(err) {
+        console.log('ERROR: Unable to update index at ' + listingPath + ' for strange errors: ' + err)
+      }
+      console.log('done updating')
       commit('SET_EDITING', null)
+
+
+      /*
+
+      let listing = state.solidFileListing
+      const listingPath = state.solidFileListingPath
+      let thing = getThingAll(listing)[0]
+      let uris = getUrlAll(thing, pref.ldp + 'contains')
+
+      if(uris.indexOf(uri) === -1) {
+        thing = buildThing(thing)
+          .addUrl(pref.ldp + 'contains', uri)
+          .build()
+      }
+      listing = setThing(listing, thing)
+
+      saveSolidDatasetAt(
+        listingPath,
+        listing,
+        {
+          fetch: authFetch
+        }
+      ).then(res => {
+        console.log('updated index')
+        commit('SET_SOLID_FILE_LISTING', listing)
+      })
+
+       */
+
     }
 
   },
@@ -822,7 +1146,7 @@ export default new Vuex.Store({
       }
     },
     solidId: state => {
-      return state.solidSession.info.webId
+      return state.solidSession?.info?.webId
     },
     isLoggedIn: state => {
       return state.solidSession !== null
@@ -835,6 +1159,17 @@ export default new Vuex.Store({
     },
     musicalMaterials: state => {
       return Object.values(state.annotStore.musicalMaterial)
+    },
+    musicalMaterialIDs: state => {
+      return Object.keys(state.annotStore.musicalMaterial)
+    },
+    musicalMaterialLabel: (state) => (musMatId) => {
+      console.log('searching ' + musMatId)
+      const musMatDS = state.annotStore.musicalMaterial[musMatId]
+      const thing = getThingAll(musMatDS)[0]
+      const label = getStringNoLocale(thing, pref.rdfs + 'label')
+
+      return label
     },
     extracts: state => {
       return Object.values(state.annotStore.extract)
@@ -851,8 +1186,18 @@ export default new Vuex.Store({
     currentMusicalMaterials: state => {
       return Object.values(state.currentAnnot.musicalMaterial)
     },
+    currentMusicalMaterialId: state => {
+      return Object.keys(state.currentAnnot.musicalMaterial)[0]
+    },
+    currentMusicalMaterialLabel: state => {
+      const musMatDS = Object.values(state.currentAnnot.musicalMaterial)[0]
+      const thing = getThingAll(musMatDS)[0]
+      const label = getStringNoLocale(thing, pref.rdfs + 'label')
+
+      return label
+    },
     currentExtracts: state => {
-      return Object.values(state.currentAnnot.extract)
+      return Object.keys(state.currentAnnot.extract)
     },
     activeMusMat: state => {
       return state.currentMusMat
@@ -868,6 +1213,13 @@ export default new Vuex.Store({
     },
     workingExtract: (state) => (extractId) => {
       return state.currentAnnot.extract[extractId]
+    },
+    workingExtractLabel: (state) => (extractId) => {
+      const extractDS = state.currentAnnot.extract[extractId]
+      const thing = getThingAll(extractDS)[0]
+      const label = getStringNoLocale(thing, pref.rdfs + 'label')
+
+      return label
     },
     currentSelections: state => {
       return Object.values(state.currentAnnot.selection)
@@ -885,19 +1237,26 @@ export default new Vuex.Store({
     // getters for highlighting stuff
     allSelectionsForUri: (state) => (uri) => {
       let arr = []
-      Object.values(state.annotStore.selection).forEach(sel => {
-        sel['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+      Object.values(state.annotStore.selection).forEach(selectionDS => {
+        const thing = getThingAll(selectionDS)[0]
+        const urls = getUrlAll(thing, pref.frbr + 'part')
+
+        urls.forEach(idRef => {
           if(idRef.startsWith(uri)) {
             arr.push(idRef)
           }
         })
+
       })
       return arr
     },
     currentSelectionsForUri: (state) => (uri) => {
       let arr = []
-      Object.values(state.currentAnnot.selection).forEach(sel => {
-        sel['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+      Object.values(state.currentAnnot.selection).forEach(selectionDS => {
+        const thing = getThingAll(selectionDS)[0]
+        const urls = getUrlAll(thing, pref.frbr + 'part')
+
+        urls.forEach(idRef => {
           if(idRef.startsWith(uri)) {
             arr.push(idRef)
           }
@@ -911,10 +1270,22 @@ export default new Vuex.Store({
       }
       let arr = []
       try {
-        const musMat = state.currentAnnot.musicalMaterial[state.currentMusMat]
-        musMat['http://purl.org/vocab/frbr/core#embodiment'].forEach(extractId => {
-          state.currentAnnot.extract[extractId]['http://purl.org/vocab/frbr/core#member'].forEach(selectionId => {
-            state.currentAnnot.selection[selectionId]['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+        const musMatDS = state.currentAnnot.musicalMaterial[state.currentMusMat]
+        const musMatThing = getThingAll(musMatDS)[0]
+
+        const extractIDs = getUrlAll(musMatThing, pref.frbr + 'embodiment')
+        extractIDs.forEach(extractId => {
+          const extractDS = state.currentAnnot.extract[extractId]
+          const extractThing = getThingAll(extractDS)[0]
+
+          const selectionIDs = getUrlAll(extractThing, pref.frbr + 'member')
+          selectionIDs.forEach(selectionId => {
+
+            const selectionDS = state.currentAnnot.selection[selectionId]
+            const selectionThing = getThingAll(selectionDS)[0]
+
+            const parts = getUrlAll(selectionThing, pref.frbr + 'part')
+            parts.forEach(idRef => {
               if(idRef.startsWith(uri)) {
                 arr.push(idRef)
               }
@@ -931,9 +1302,17 @@ export default new Vuex.Store({
       }
       let arr = []
       try {
-        const extract = state.currentAnnot.extract[state.currentExtract]
-        extract['http://purl.org/vocab/frbr/core#member'].forEach(selectionId => {
-          state.currentAnnot.selection[selectionId]['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+        const extractDS = state.currentAnnot.extract[state.currentExtract]
+        const extractThing = getThingAll(extractDS)[0]
+
+        const selectionIDs = getUrlAll(extractThing, pref.frbr + 'member')
+        selectionIDs.forEach(selectionId => {
+
+          const selectionDS = state.currentAnnot.selection[selectionId]
+          const selectionThing = getThingAll(selectionDS)[0]
+
+          const parts = getUrlAll(selectionThing, pref.frbr + 'part')
+          parts.forEach(idRef => {
             if(idRef.startsWith(uri)) {
               arr.push(idRef)
             }
@@ -949,8 +1328,11 @@ export default new Vuex.Store({
       }
       let arr = []
       try {
-        const sel = state.currentAnnot.selection[state.currentSelection]
-        sel['http://purl.org/vocab/frbr/core#part'].forEach(idRef => {
+        const selectionDS = state.currentAnnot.selection[state.currentSelection]
+        const selectionThing = getThingAll(selectionDS)[0]
+
+        const parts = getUrlAll(selectionThing, pref.frbr + 'part')
+        parts.forEach(idRef => {
           if(idRef.startsWith(uri)) {
             arr.push(idRef)
           }

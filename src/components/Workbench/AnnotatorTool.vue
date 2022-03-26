@@ -16,7 +16,7 @@
             <table class="table narrow">
               <tbody>
                 <tr v-for="m in musicalMaterials">
-                  <td><MusMatListItem v-bind:musmat="m"/></td>
+                  <td><MusMatListItem v-bind:musMatId="m"/></td>
                 </tr>
                 <tr>
                   <td>
@@ -71,7 +71,7 @@ export default {
       return this.$store.getters.observations
     },
     musicalMaterials: function() {
-      return this.$store.getters.musicalMaterials
+      return this.$store.getters.musicalMaterialIDs
     },
     isEditing: function() {
       return this.$store.getters.isEditing

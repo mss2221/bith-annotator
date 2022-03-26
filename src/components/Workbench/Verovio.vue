@@ -319,15 +319,15 @@ export default {
       stroke: rgba(150,0,0,1);
 
       &.bounding-box.staff rect {
-        fill: rgba(255,0,0,.15);
+        fill: #dfd8d8; //rgba(255,0,0,.15);
       }
 
-      &.currentSelection {
+      &.currentSelection, &.currentMusmat {
         fill: rgba(255,0,0,1);
         stroke: rgba(255,0,0,1);
 
         &.bounding-box.staff rect {
-          fill: rgba(255,0,0,.3);
+          fill: #dfd8d8;
         }
       }
 
@@ -336,7 +336,7 @@ export default {
         stroke: rgba(255,0,255,1);
 
         &.bounding-box.staff rect {
-          fill: rgba(255,0,255,.3);
+          fill: #0f83ff24;
         }
       }
     }

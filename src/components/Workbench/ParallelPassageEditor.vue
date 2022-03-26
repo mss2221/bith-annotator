@@ -11,7 +11,7 @@
     <div class="selectionList">
       <label for="linkedPassages">Linked Passages</label>
       <div class="numberWarning" v-if="currentExtracts.length < 2">You need at least two passages to save a <em>parallel passage</em>.</div>
-      <ExtractListItem v-for="e in currentExtracts" v-bind:extract="e" v-bind:typeLabel="'single Passage'"/>
+      <ExtractListItem v-for="e in currentExtracts" v-bind:extractId="e" v-bind:typeLabel="'single Passage'"/>
       <button class="btn btn-link" v-on:click="startSelectionMode">Add Passage</button>
     </div>
 
@@ -24,6 +24,7 @@
 
 <script>
 import ExtractListItem from './ExtractListItem.vue'
+import { prefix as pref } from './../../meld/prefixes'
 
 export default {
   name: 'ParallelPassageEditor',
@@ -38,7 +39,7 @@ export default {
       return this.$store.getters.currentAnnot
     },
     musMatId: function() {
-      return this.$store.getters.currentMusicalMaterials[0]['@id']
+      return this.$store.getters.currentMusicalMaterialId
     },
     isReadyToSave: function() {
       return this.$store.getters.currentExtracts.length > 1 && this.$store.getters.currentSelections.length > 1
@@ -51,14 +52,37 @@ export default {
     },
     parallelLabel: {
       get () {
-        return this.$store.getters.currentMusicalMaterials[0]['https://www.w3.org/2000/01/rdf-schema#label']
+        const label = this.$store.getters.currentMusicalMaterialLabel
+        return label
       },
       set (val) {
         // console.log('setting to ' + val)
-        let object = this.$store.getters.currentMusicalMaterials[0]
+        /*let object = this.$store.getters.currentMusicalMaterials[0]
         object['https://www.w3.org/2000/01/rdf-schema#label'] = val
         this.$store.dispatch('changeCurrentDataObject', { type: 'musicalMaterial', object })
+*/
+        this.$store.dispatch('changeCurrentDataObject', {
+          type: 'musicalMaterial',
+          id: this.$store.getters.currentMusicalMaterialId,
+          prop: pref.rdfs + 'label',
+          method: 'setStringNoLocale',
+          val
+        })
       }
+
+/*
+
+get () {
+  const label = this.$store.getters.workingExtractLabel(this.extractId)
+  console.log('label for current extract: ', label)
+  return label
+},
+set (val) {
+  this.$store.dispatch('changeCurrentDataObject', { type: 'extract', id: this.extractId, prop: pref.rdfs + 'label', method: 'addStringNoLocale', val })
+}
+
+ */
+
     }
   },
   methods: {

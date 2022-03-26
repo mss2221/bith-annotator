@@ -1,12 +1,17 @@
 <template>
-  <div class="extract" v-bind:class="{'active': extractId === extract['@id']}" v-on:click="activateExtract">
-    <div class="extractLabel"><div class="extractId" v-bind:title="'Prospective @id:\n' + extract['@id']">@id</div>Passage</div>
+  <div class="extract" v-bind:class="{'active': extractId === activeExtractId}" v-on:click="activateExtract">
+    <div class="extractLabel"><div class="extractId" v-bind:title="'Prospective @id:\n' + extractId">@id</div>Passage</div>
     <textarea class="form-input" v-model.trim="extractLabel" v-bind:placeholder="'Label for ' + typeLabel" rows="1"></textarea>
 
   </div>
 </template>
 
 <script>
+import {
+  getStringNoLocale,
+  getThingAll
+} from '@inrupt/solid-client'
+import { prefix as pref } from './../../meld/prefixes'
 
 export default {
   name: 'ExtractListItem',
@@ -14,30 +19,38 @@ export default {
 
   },
   props: {
-    extract: Object,
+    extractId: String,
     typeLabel: String
   },
   computed: {
     currentAnnot: function() {
       return this.$store.getters.currentAnnot
     },
-    extractId: function() {
+    extract: function() {
+      return this.$store.getters.workingExtract(this.extractId)
+    },
+    activeExtractId: function() {
       return this.$store.getters.activeExtract
     },
     extractLabel: {
       get () {
-        return this.$store.getters.workingExtract(this.extract['@id'])['https://www.w3.org/2000/01/rdf-schema#label']
+        const label = this.$store.getters.workingExtractLabel(this.extractId)
+        return label
       },
       set (val) {
-        let object = this.$store.getters.workingExtract(this.extract['@id'])
-        object['https://www.w3.org/2000/01/rdf-schema#label'] = val
-        this.$store.dispatch('changeCurrentDataObject', { type: 'extract', object })
+        this.$store.dispatch('changeCurrentDataObject', {
+          type: 'extract',
+          id: this.extractId,
+          prop: pref.rdfs + 'label',
+          method: 'setStringNoLocale',
+          val
+        })
       }
     }
   },
   methods: {
     activateExtract: function() {
-      this.$store.dispatch('setActivePassage', this.extract['@id'])
+      this.$store.dispatch('setActivePassage', this.extractId)
     }
     /*cancel: function() {
       this.$store.dispatch('setEditing', null)
