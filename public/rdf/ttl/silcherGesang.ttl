@@ -17,8 +17,8 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 example:SilcherVocalArrOfAllegrettoOp92 a vivo:Score;
-	dc:title "Gesang des Peri's";
-	bibo:shortTitle "Gesang des Peri's";
+	dc:title "Gesang der Peri's";
+	bibo:shortTitle "Gesang der Peri's";
 	dcterms:alternative "Silcher vocal arrangement";
   rdau:P60242 dnb:300016417;
 	gndo:arranger dnb:118614339;
