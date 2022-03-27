@@ -68,6 +68,7 @@ import {
   overwriteFile,
   getStringNoLocale,
   getUrlAll,
+  getUrl,
   addUrl,
   addStringNoLocale,
   setStringNoLocale
@@ -297,9 +298,49 @@ const getPublicIdFromDataStructure = (ds) => {
   const url = getThingAll(ds)[0].url
   if(url.indexOf('.well-known/sdk-local-node/') !== -1) {
     return url.split('.well-known/sdk-local-node/')[1]
+  } else if (url.indexOf('#') !== -1) {
+    return url.split('#')[0]
   } else {
     return url
   }
+}
+
+/**
+ * [loadListing description]
+ * @param  {[type]} listingPath               [description]
+ * @param  {[type]} commit                    [description]
+ * @return {[type]}             [description]
+ */
+const loadListing = async (listingPath, commit, authFetch) => {
+
+  let listing = await getSolidDataset(
+    listingPath,               // File in Pod to Read
+    { fetch: authFetch }       // fetch from authenticated session
+  )
+  commit('SET_SOLID_FILE_LISTING',listing)
+
+  const thing = getThingAll(listing)[0]
+  const uris = getUrlAll(thing, pref.ldp + 'contains')
+  console.log('Listing exists at ' + listingPath + ' exists. \nNeed to retrieve the following URIs:', uris)
+
+  uris.forEach(async uri => {
+    let ds = await getSolidDataset(
+      uri,               // File in Pod to Read
+      { fetch: authFetch }       // fetch from authenticated session
+    )
+    const thing = getThingAll(ds)[0]
+    const type = getUrl(thing, pref.rdf + 'type')
+
+    let internalType
+    // todo: no support for annotations yet
+    if(type === 'https://example.com/Terms/MusicalMaterial') {
+      commit('ADD_TO_ANNOTSTORE', { type: 'musicalMaterial', object: ds})
+    } else if(type === 'https://example.com/Terms/Extract') {
+      commit('ADD_TO_ANNOTSTORE', { type: 'extract', object: ds})
+    } else if(type === 'https://example.com/Terms/Selection') {
+      commit('ADD_TO_ANNOTSTORE', { type: 'selection', object: ds})
+    }
+  })
 }
 
 export default new Vuex.Store({
@@ -520,7 +561,6 @@ export default new Vuex.Store({
           state.currentSelection = null
         } else {
           // opening existing parallel passage
-
           let mm = {}
           let ex = {}
           let sel = {}
@@ -757,17 +797,8 @@ export default new Vuex.Store({
           let listing
 
           try {
-            listing = await getSolidDataset(
-              listingPath,               // File in Pod to Read
-              { fetch: authFetch }       // fetch from authenticated session
-            )
-            commit('SET_SOLID_FILE_LISTING',listing)
-            const thing = getThingAll(listing)[0]
-            const uris = getUrlAll(thing, pref.ldp + 'contains')
-            console.log('Listing at ' + listingPath + ' exists. \nNeed to retrieve the following URIs:', uris)
 
-            //uris.forEach()
-
+            loadListing(listingPath, commit, authFetch)
 
           } catch(err) {
             console.log('No listing available at ' + listingPath + '. Creating a new one. \nMessage: ' + err)

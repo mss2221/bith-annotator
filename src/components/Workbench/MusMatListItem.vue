@@ -25,8 +25,20 @@ export default {
   },
   methods: {
     activateMusmat: function() {
-      this.$store.dispatch('setActiveMusMat', this.musMatId)
-      this.$store.dispatch('setEditing','parallelPassage')
+      console.log(1)
+      try {
+        this.$store.dispatch('setActiveMusMat', this.musMatId)
+      } catch(err) {
+        console.log('errored at ' + this.musMatId + ': ' + err)
+      }
+
+      console.log(2)
+      try {
+        this.$store.dispatch('setEditing','parallelPassage')
+      } catch(err) {
+        console.log('errored at setEditing parallelPassage ' + this.musMatId + ': ' + err)
+      }
+      console.log(3)
     }
     /*cancel: function() {
       this.$store.dispatch('setEditing', null)
