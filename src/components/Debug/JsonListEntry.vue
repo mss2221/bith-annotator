@@ -7,6 +7,12 @@
 
 <script>
 import { Splitpanes, Pane } from 'splitpanes'
+import {
+  getThingAll,
+  getStringNoLocale,
+  thingAsMarkdown
+} from '@inrupt/solid-client'
+import { prefix as pref } from './../../meld/prefixes'
 
 export default {
   name: 'JsonListEntry',
@@ -18,17 +24,27 @@ export default {
   },
   computed: {
     label: function() {
-      return this.file['https://www.w3.org/2000/01/rdf-schema#label']
+      const thing = getThingAll(this.file)[0]
+      const label = getStringNoLocale(thing, pref.rdfs + 'label')
+
+      return label
     },
     id: function() {
-      return this.file['@id']
+      const url = getThingAll(this.file)[0].url
+      if(url.indexOf('.well-known/sdk-local-node/') !== -1) {
+        return url.split('.well-known/sdk-local-node/')[1]
+      } else if (url.indexOf('#') !== -1) {
+        return url.split('#')[0]
+      } else {
+        return url
+      }
     }
   },
   methods: {
     showJson: function (e) {
-      console.log('hurz! ' + this.id)
       document.querySelectorAll('.jsonFile.active').forEach(file => file.classList.remove('active'))
       e.target.closest('.jsonFile').classList.add('active')
+
       document.querySelector('#debugJsonPreview').innerHTML = JSON.stringify(this.file, null, 2)
       //this.$store.dispatch('toggleDebugOverlay')
     }

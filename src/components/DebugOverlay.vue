@@ -10,19 +10,27 @@
           <Splitpanes vertical class="default-theme">
             <pane>
               <h2>Observations ({{observations.length}})</h2>
-              <JsonListEntry v-for="o in observations" v-bind:file="o" class="jsonFile"/>
+              <div class="scrollable">
+                <JsonListEntry v-for="o in observations" v-bind:file="o" class="jsonFile"/>
+              </div>
             </pane>
             <pane>
               <h2>Musical Materials ({{musicalMaterials.length}})</h2>
-              <JsonListEntry v-for="m in musicalMaterials" v-bind:file="m" class="jsonFile"/>
+              <div class="scrollable">
+                <JsonListEntry v-for="m in musicalMaterials" v-bind:file="m" class="jsonFile"/>
+              </div>
             </pane>
             <pane>
               <h2>Extracts ({{extracts.length}})</h2>
-              <JsonListEntry v-for="e in extracts" v-bind:file="e" class="jsonFile"/>
+              <div class="scrollable">
+                <JsonListEntry v-for="e in extracts" v-bind:file="e" class="jsonFile"/>
+              </div>
             </pane>
             <pane>
               <h2>Selections ({{selections.length}})</h2>
-              <JsonListEntry v-for="s in selections" v-bind:file="s" class="jsonFile"/>
+              <div class="scrollable">
+                <JsonListEntry v-for="s in selections" v-bind:file="s" class="jsonFile"/>
+              </div>
             </pane>
           </Splitpanes>
         </pane>
@@ -199,6 +207,10 @@ export default {
       font-weight: bold;
       margin: 0 0 .2rem;
       padding: .1rem;
+    }
+
+    .splitpanes.default-theme .splitpanes__pane {
+      overflow-y: auto;
     }
 
     #debugJsonPreview {
