@@ -798,7 +798,7 @@ export default new Vuex.Store({
 
           try {
 
-            loadListing(listingPath, commit, authFetch)
+            await loadListing(listingPath, commit, authFetch)
 
           } catch(err) {
             console.log('No listing available at ' + listingPath + '. Creating a new one. \nMessage: ' + err)
