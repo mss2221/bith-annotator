@@ -1090,18 +1090,19 @@ export default new Vuex.Store({
     },
     arrangements: state => {
       // todo
-      return staticArrangements // state.arrangements
+      return state.arrangements // staticArrangements
     },
     worklist: state => {
       // todo
-      return staticWorklist // state.worklist
+      return state.worklist // staticWorklist
     },
     work: (state) => (id) => {
       // todo
-      return staticWorklist.find(work => work['@id'] === id)
+      // return staticWorklist.find(work => work['@id'] === id)
+      return state.worklist.find(work => work['@id'] === id)
     },
     arrangementsForWork: (state) => (workId) => {
-      return staticArrangements.filter(object => {
+      return state.arrangements.filter(object => {
         let fits = false
         try {
           fits = object.work['@id'] === workId
