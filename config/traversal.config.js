@@ -3,7 +3,7 @@ import { prefix as pref } from './../src/meld/prefixes.js'
 export const graphURI = 'http://localhost:8081/rdf/BitHCollection.jsonld'
 
 export const params = {
-  numHops: 2,
+  numHops: 3,
   followPropertyUri: [
     pref.bibo + 'shortTitle',
     pref.dbpedia + 'genre',
@@ -19,7 +19,7 @@ export const params = {
     pref.rdau + 'O60242',
     pref.wdt + 'P217',
     pref.rdfs + 'label',
-    'http://www.w3.org/ns/ldp#contains'
+    pref.ldp + 'contains'
   ],
   ignoreObjectPrefix: ['http://d-nb.info/gnd/', 'http://rdaregistry.info/']
 }
