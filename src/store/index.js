@@ -1213,7 +1213,12 @@ export default new Vuex.Store({
       return Object.keys(state.currentAnnot.musicalMaterial)[0]
     },
     currentMusicalMaterialLabel: state => {
-      const musMatDS = Object.values(state.currentAnnot.musicalMaterial)[0]
+      const musMats = Object.values(state.currentAnnot.musicalMaterial)
+      if(musMats.length === 0) {
+        return null
+      }
+
+      const musMatDS = musMats[0]
       const thing = getThingAll(musMatDS)[0]
       const label = getStringNoLocale(thing, pref.rdfs + 'label')
 
