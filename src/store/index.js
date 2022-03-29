@@ -142,7 +142,7 @@ const graphHasChanged = (graph, commit) => {
   let arrangements = []
   let worklist = []
 
-  console.log('graphHasChanged', graph)
+  //console.log('graphHasChanged', graph)
 
   // 0. Get arrangements
   if (graph.graph && graph.graph.outcomes &&
@@ -150,7 +150,6 @@ const graphHasChanged = (graph, commit) => {
      graph.graph.outcomes[0]['@graph'] &&
      graph.graph.outcomes[0]['@graph'].length) {
     // TODO: This isn't working
-    console.log('\n-->in here, should work now!')
     arrangements = graph.graph.outcomes[0]['@graph'].map(transformArrangement)
     // Extract all unique works from the arrangements list
     worklist = arrangements.reduce(addWork, [])
@@ -393,12 +392,10 @@ export default new Vuex.Store({
     SET_ARRANGEMENTS (state, arrangements) {
       state.arrangements = arrangements
 
-      console.log('hallo test')
       const meiLinks = []
       arrangements.forEach(arr => {
         meiLinks.push(arr.MEI)
       })
-      console.log(meiLinks)
     },
     SET_WORKLIST (state, worklist) {
       state.worklist = worklist
@@ -753,15 +750,9 @@ export default new Vuex.Store({
     traverseGraph ({ commit, state }) {
       // this initiates MELD traversal from within Vue. Called once…
       console.log('starting traverseGraph()')
-      console.log(0)
-      console.log(graphURI)
-      console.log(params)
-      meldStore.dispatch(registerTraversal(graphURI, params))
-      console.log(1)
-      const newParams = meldStore.getState().traversalPool.pool[graphURI]
-      console.log(2)
-      meldStore.dispatch(traverse(graphURI, newParams))
-      console.log(3)
+      const res = meldStore.dispatch(registerTraversal(graphURI, params))
+      const newParams = res.payload.params //meldStore.getState().traversalPool.pool[graphURI]
+      meldStore.dispatch(traverse(graphURI, newParams))// newParams))
     },
     setPerspective ({ commit }, perspective) {
       commit('SET_PERSPECTIVE', perspective)
