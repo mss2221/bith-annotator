@@ -28,7 +28,7 @@ example:SilcherVocalArrOfAllegrettoOp92 a vivo:Score;
 	dc:publisher dnb:1064327222;
 	rdau:P60163 wd:Q1022;
 	gndo:dateOfPublication "1871";
-	frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/op.%2092/StimKlvZumsteeg%20-%20D-BNba%20C%20SILCH_5/D-BNbaC_SILCH_5.mei> .
+	frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/StimKlvZumsteeg%20-%20D-BNba%20C%20SILCH_5/D-BNbaC_SILCH_5.mei> .
 
 dnb:118614339 rdfs:label "Friedrich Silcher" .
 

@@ -28,7 +28,7 @@ example:PittmanArrOfAllegrettoOp92 a vivo:Score;
 	dc:publisher dnb:1072942461;
 	rdau:P60163 wd:Q84;
 	gndo:dateOfPublication "1859";
-	frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/op.%2092/StimKlvAugener%20-%20D-BNba%20C92_48/D-BNbaC92_48.mei> .
+	frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/StimKlvAugener%20-%20D-BNba%20C92_48/D-BNbaC92_48.mei> .
 
 dnb:1124865284 rdfs:label "Josiah Pittman" .
 
