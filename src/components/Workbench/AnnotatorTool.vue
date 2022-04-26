@@ -31,12 +31,26 @@
 
         <template v-if="tab === 'observations'">
           <div class="content">
-            Observations: {{observations.length}}
+            <table class="table narrow">
+              <tbody>
+                <tr v-for="o in observations">
+                  <td><ObservationListItem v-bind:observationId="o"/></td>
+                </tr>
+                <tr>
+                  <td>
+                    <button v-on:click="setEditing('observation')" class="btn btn-link"><i class="icon icon-plus"></i>
+                      Add new Observation
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </template>
       </template>
       <template v-else>
         <ParallelPassageEditor v-if="editMode === 'parallelPassage'"/>
+        <ObservationEditor v-else-if="editMode === 'observation'"/>
       </template>
 
   </div>
@@ -45,13 +59,17 @@
 <script>
 
 import ParallelPassageEditor from './ParallelPassageEditor.vue'
+import ObservationEditor from './ObservationEditor.vue'
 import MusMatListItem from './MusMatListItem.vue'
+import ObservationListItem from './ObservationListItem.vue'
 
 export default {
   name: 'AnnotatorTool',
   components: {
     ParallelPassageEditor,
-    MusMatListItem
+    MusMatListItem,
+    ObservationEditor,
+    ObservationListItem
   },
   methods: {
     setTab: function(which) {
@@ -68,7 +86,7 @@ export default {
   },
   computed: {
     observations: function() {
-      return this.$store.getters.observations
+      return this.$store.getters.observationIDs
     },
     musicalMaterials: function() {
       return this.$store.getters.musicalMaterialIDs

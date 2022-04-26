@@ -172,11 +172,11 @@ const getAnnotDS = (state) => {
   let ds = createSolidDataset()
 
   const thing = buildThing(createThing({ name: id }))
-    .addStringNoLocale('type', 'Annotation')
+    .addStringNoLocale(pref.rdf + 'type', 'Annotation')
     .addDate(pref.dct + 'created', date)
     .addStringNoLocale(pref.dct + 'creator', user)
-    .addStringNoLocale('motivation', 'describing')
-
+    .addStringNoLocale(pref.oa + 'Motivation', 'describing')
+    .addStringNoLocale(pref.oa + 'bodyValue','')
     //.addUrl(pref.frbr + 'embodiment','http://test1.com/ads')
     //.addUrl(pref.frbr + 'embodiment','http://test2.com/sad')
     .build()
@@ -329,15 +329,20 @@ const loadListing = async (listingPath, commit, authFetch) => {
     )
     const thing = getThingAll(ds)[0]
     const type = getUrl(thing, pref.rdf + 'type')
+    const annotType = getStringNoLocale(thing, pref.rdf + 'type')
 
     let internalType
     // todo: no support for annotations yet
-    if(type === 'https://example.com/Terms/MusicalMaterial') {
+    if(annotType === 'Annotation') {
+      commit('ADD_TO_ANNOTSTORE', { type: 'observation', object: ds})
+    } else if(type === 'https://example.com/Terms/MusicalMaterial') {
       commit('ADD_TO_ANNOTSTORE', { type: 'musicalMaterial', object: ds})
     } else if(type === 'https://example.com/Terms/Extract') {
       commit('ADD_TO_ANNOTSTORE', { type: 'extract', object: ds})
     } else if(type === 'https://example.com/Terms/Selection') {
       commit('ADD_TO_ANNOTSTORE', { type: 'selection', object: ds})
+    } else {
+      //console.log('\n\n\nFound something strange: ', type, annotType, ds)
     }
   })
 }
@@ -365,6 +370,7 @@ export default new Vuex.Store({
       extract: {},
       selection: {}
     },
+    currentObservation: null,
     currentMusMat: null,
     currentExtract: null,
     currentSelection: null,
@@ -448,6 +454,24 @@ export default new Vuex.Store({
         Vue.set(state.annotStore[type], id, obj)
       }
     },
+    MOVE_TO_CURRENT_ANNOT (state, payload) {
+      const type = payload.type
+      const obj = payload.object
+      const id = getPublicIdFromDataStructure(obj)
+
+      if(type in state.annotStore && !(id in state.currentAnnot[type])) {
+        Vue.set(state.currentAnnot[type], id, obj)
+      }
+    },
+    REMOVE_FROM_CURRENT_ANNOT (state, payload) {
+      const type = payload.type
+      const obj = payload.object
+      const id = getPublicIdFromDataStructure(obj)
+
+      if(type in state.annotStore && id in state.currentAnnot[type]) {
+        Vue.delete(state.currentAnnot[type], id, obj)
+      }
+    },
     REMOVE_FROM_ANNOTSTORE (state, payload) {
       const type = payload.type
       const obj = payload.object
@@ -479,8 +503,15 @@ export default new Vuex.Store({
         thing = buildThing(thing)
           .addUrl(prop, val)
           .build()
-      }
-      else if(method === 'addDate') {
+      } else if(method === 'setUrl') {
+        thing = buildThing(thing)
+          .setUrl(prop, val)
+          .build()
+      } else if(method === 'removeUrl') {
+        thing = buildThing(thing)
+          .removeUrl(prop, val)
+          .build()
+      } else if(method === 'addDate') {
         thing = buildThing(thing)
           .addDate(prop, val)
           .build()
@@ -492,14 +523,14 @@ export default new Vuex.Store({
 
       Vue.set(state.currentAnnot[type], id, ds)
     },
-    REMOVE_FROM_CURRENT_ANNOT (state, payload) {
+    /*REMOVE_FROM_CURRENT_ANNOT (state, payload) {
       const type = payload.type
       const obj = payload.object
 
       if(type in state.currentAnnot) {
         Vue.delete(state.currentAnnot[type], obj['@id'])
       }
-    },
+    },*/
     TOGGLE_DEBUG_OVERLAY (state) {
       state.showDebugOverlay = !state.showDebugOverlay
     },
@@ -520,6 +551,7 @@ export default new Vuex.Store({
         })
         state.editing = mode
         state.selectionModeActive = false
+        state.currentObservation = null
         state.currentMusMat = null
         state.currentExtract = null
         state.currentSelection = null
@@ -553,6 +585,7 @@ export default new Vuex.Store({
           })
           state.editing = mode
           state.selectionModeActive = false
+          state.currentObservation = null
           state.currentMusMat = id
           state.currentExtract = null
           state.currentSelection = null
@@ -593,13 +626,90 @@ export default new Vuex.Store({
 
           state.editing = mode
           state.selectionModeActive = false
+          state.currentObservation = null
           state.currentExtract = null
           state.currentSelection = null
 
         }
 
       } else if(mode === 'observation') {
-        console.log('todo: how to enter observation editing mode?')
+
+        // starting new observation
+        if(state.currentObservation === null) {
+
+          const ds = getAnnotDS(state)
+          const id = getPublicIdFromDataStructure(ds)
+
+          const observation = {}
+          observation[id] = ds
+
+          Vue.set(state, 'currentAnnot', {
+            observation: observation,
+            musicalMaterial: {},
+            extract: {},
+            selection: {}
+          })
+          state.editing = mode
+          state.selectionModeActive = false
+          state.currentObservation = id
+          state.currentMusMat = null
+          state.currentExtract = null
+          state.currentSelection = null
+        } else {
+          // opening existing observation
+          let ob = {}
+          let mm = {}
+          let ex = {}
+          let sel = {}
+
+          const id = state.currentObservation
+          const ds = state.annotStore.observation[id]
+
+          ob[id] = ds
+
+          const thing = getThingAll(ds)[0]
+
+          const musMatId = getUrl(thing, pref.oa + 'hasTarget')
+          const musMat = state.annotStore.musicalMaterial[musMatId]
+
+          mm[musMatId] = musMat
+          const mmThing = getThingAll(musMat)[0]
+          const extracts = getUrlAll(mmThing, pref.frbr + 'embodiment')
+
+          extracts.forEach(extractId => {
+            const extract = state.annotStore.extract[extractId]
+
+            ex[extractId] = extract
+
+            const exThing = getThingAll(extract)[0]
+            const selections = getUrlAll(exThing, pref.frbr + 'member')
+
+            selections.forEach(selectionId => {
+              const selection = state.annotStore.selection[selectionId]
+              sel[selectionId] = selection
+            })
+          })
+
+          Vue.set(state, 'currentAnnot', {
+            observation: ob,
+            musicalMaterial: mm,
+            extract: ex,
+            selection: sel
+          })
+
+          state.editing = mode
+          state.selectionModeActive = false
+          state.currentObservation = id
+          state.currentMusMat = null
+          state.currentExtract = null
+          state.currentSelection = null
+
+        }
+
+        /*
+         * stop it here
+         */
+
       }
 
       /*if([null,'parallelPassage','observation'].indexOf(mode) !== -1) {
@@ -661,6 +771,9 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_MUSMAT (state, id) {
       state.currentMusMat = id
+    },
+    SET_ACTIVE_OBSERVATION (state, id) {
+      state.currentObservation = id
     },
     ACTIVATE_PASSAGE (state, id) {
       state.currentExtract = id
@@ -940,7 +1053,8 @@ export default new Vuex.Store({
     },
     addCurrentDataObject ({ commit, state }, payload) {
       if(payload.type in state.currentAnnot && payload.object) {
-        commit('ADD_TO_CURRENT_ANNOT', payload)
+        commit('MOVE_TO_CURRENT_ANNOT', payload)
+        //MOVE_TO_CURRENT_ANNOT
       }
     },
     changeCurrentDataObject ({ commit, state }, payload) {
@@ -959,12 +1073,61 @@ export default new Vuex.Store({
     addPassage ({ commit }) {
       commit('ADD_PASSAGE')
     },
+    setActiveObservation({ commit }, id) {
+      commit('SET_ACTIVE_OBSERVATION', id)
+    },
     setActiveMusMat({ commit }, id) {
       commit('SET_ACTIVE_MUSMAT', id)
     },
     setActivePassage ({ commit, state, dispatch }, id) {
       commit('ACTIVATE_PASSAGE', id)
       commit('SET_SELECTION_MODE_ACTIVE', true)
+    },
+    setObservationTarget ({ commit, state, dispatch }, id) {
+
+      const observations = Object.values(state.currentAnnot.observation)
+      if(observations.length === 0) {
+        return null
+      }
+      const currentObservationId = Object.keys(state.currentAnnot.observation)[0]
+
+      const observationDS = observations[0]
+      const thing = getThingAll(observationDS)[0]
+      const existingMusMat = getUrl(thing, pref.oa + 'hasTarget')
+
+      // console.log('Found existing ' + existingMusMat)
+
+      // the current one is supposed to be added, so nothing needs to be done
+      if(existingMusMat === id) {
+        return null
+      }
+
+      if(existingMusMat !== null) {
+        //remove old one
+        dispatch('changeCurrentDataObject', {
+          type: 'observation',
+          id: currentObservationId,
+          prop: pref.oa + 'hasTarget',
+          method: 'removeUrl',
+          val: existingMusMat
+        })
+        dispatch('removeCurrentDataObject', {
+          type: 'musicalMaterial',
+          object: state.currentAnnot.musicalMaterial[existingMusMat]
+        })
+      }
+      //add new one
+      dispatch('changeCurrentDataObject', {
+        type: 'observation',
+        id: currentObservationId,
+        prop: pref.oa + 'hasTarget',
+        method: 'setUrl',
+        val: id
+      })
+      dispatch('addCurrentDataObject', {
+        type: 'musicalMaterial',
+        object: state.annotStore.musicalMaterial[id]
+      })
     },
     setSelectionModeActive ({ commit }, bool) {
       commit('SET_SELECTION_MODE_ACTIVE', bool)
@@ -992,6 +1155,13 @@ export default new Vuex.Store({
     saveCurrentAnnot ({ commit, state, dispatch }) {
 
       const uris = []
+
+      const observations = Object.values(state.currentAnnot.observation)
+      observations.forEach(observation => {
+        uris.push(getPublicIdFromDataStructure(observation))
+        dispatch('createDataObject',{ type: 'observation', object: observation})
+      })
+
       const musMats = Object.values(state.currentAnnot.musicalMaterial)
       musMats.forEach(musMat => {
         uris.push(getPublicIdFromDataStructure(musMat))
@@ -1180,6 +1350,23 @@ export default new Vuex.Store({
     observations: state => {
       return Object.values(state.annotStore.observation)
     },
+    observationIDs: state => {
+      return Object.keys(state.annotStore.observation)
+    },
+    observationLabel: (state) => (observationId) => {
+      //console.log('searching ' + observationId)
+      const observationDS = state.annotStore.observation[observationId]
+      const thing = getThingAll(observationDS)[0]
+
+      const target = getUrl(thing, pref.oa + 'hasTarget')
+
+      const musMatDS = state.annotStore.musicalMaterial[target]
+      const musMatThing = getThingAll(musMatDS)[0]
+
+      const label = getStringNoLocale(musMatThing, pref.rdfs + 'label')
+
+      return label
+    },
     musicalMaterials: state => {
       return Object.values(state.annotStore.musicalMaterial)
     },
@@ -1205,6 +1392,21 @@ export default new Vuex.Store({
     },
     currentObservations: state => {
       return Object.values(state.currentAnnot.observation)
+    },
+    currentObservationId: state => {
+      return Object.keys(state.currentAnnot.observation)[0]
+    },
+    currentObservationBody: state => {
+      const observations = Object.values(state.currentAnnot.observation)
+      if(observations.length === 0) {
+        return null
+      }
+
+      const observationDS = observations[0]
+      const thing = getThingAll(observationDS)[0]
+      const body = getStringNoLocale(thing, pref.oa + 'bodyValue')
+
+      return body
     },
     currentMusicalMaterials: state => {
       return Object.values(state.currentAnnot.musicalMaterial)
