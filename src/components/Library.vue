@@ -2,7 +2,7 @@
   <div id="hello">
     <splitpanes vertical style="height: 600px" class="default-theme">
       <pane>
-        <Library_Work v-for="work in worklist" v-bind:id="work['@id']" v-bind:work="work"/>
+        <Library_Work v-for="work in worklist" v-bind:id="work['@id']" v-bind:work="work" size="78"/>
       </pane>
 
 <!-- Sidebar -->
@@ -11,7 +11,7 @@
     <i class="icon icon-delete"></i>
   </button>
 </span> -->
-      <pane class="sidebar" size="30">
+      <pane class="sidebar" size="22">
         <splitpanes horizontal style="height: 600px">
           <pane style="height: 40px">
               <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">Load Arrangements into Workbench</button>
