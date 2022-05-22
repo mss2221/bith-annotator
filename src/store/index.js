@@ -962,31 +962,6 @@ export default new Vuex.Store({
       console.log('hello 2')
       */
     },
-    uploadTest ({ commit, state }) {
-      const session = state.solidSession
-      const webId = session.info.webId
-      const authFetch = session.fetch
-
-      if (session.info.isLoggedIn) {
-        async function uploadData () {
-          // get some random data…
-          const userCard = await getSolidDataset(
-            webId, {
-              fetch: authFetch
-            })
-
-          // For example, the user must be someone with Write access to the specified URL.
-          const savedSolidDataset = await saveSolidDatasetAt(
-            'https://pod.inrupt.com/markannot/private/hello2.ttl',
-            userCard, {
-              fetch: authFetch
-            })
-
-          console.log('success', savedSolidDataset)
-        }
-        uploadData()
-      }
-    },
     toggleDebugOverlay ({ commit, state }) {
       commit('TOGGLE_DEBUG_OVERLAY')
     },
