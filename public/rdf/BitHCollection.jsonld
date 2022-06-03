@@ -16,10 +16,10 @@
 			"ldp:Container"
 		],
 		"ldp:contains": [
-			{"@id": "http://localhost:8081/rdf/pittman.nq"} ,
-			{"@id": "http://localhost:8081/rdf/silcherGesang.nq"} ,
-			{"@id": "http://localhost:8081/rdf/silcherNachtgesang.nq"},
-			{"@id": "http://localhost:8081/rdf/hanslingerTrio93.nq"}
+			{"@id": "http://localhost:8080/rdf/pittman.nq"} ,
+			{"@id": "http://localhost:8080/rdf/silcherGesang.nq"} ,
+			{"@id": "http://localhost:8080/rdf/silcherNachtgesang.nq"},
+			{"@id": "http://localhost:8080/rdf/hanslingerTrio93.nq"}
 		]
 	}
 }
