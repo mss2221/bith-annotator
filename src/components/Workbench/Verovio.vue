@@ -22,14 +22,14 @@ const verovioOptions = {
 }
 
 let listeners = []
-
+/*
 let addListener = (anchor) => {
   listeners.push(anchor.addEventListener('click',(e) => {
     const staff = e.target.parentNode.parentNode
     staff.classList.toggle('marked')
   }))
 }
-
+*/
 export default {
   name: 'Verovio',
   props: {
@@ -74,7 +74,7 @@ export default {
           let selectables = []
           let selNoBBox = []
           vrvSelectables.forEach(elem => {
-            selectables.push('*[data-class="' + elem + '"]')
+            selectables.push('.' + elem + ':not(.bounding-box)')
           })
           selectables = selectables.join(', ')
           console.log('selectables:', selectables)
@@ -84,7 +84,15 @@ export default {
               return false
             }
             const target = e.target
-            const closest = target.closest(selectables)
+            const closest = (e.shiftKey) ? target.closest('.measure:not(.bounding-box)') : target.closest(selectables)
+
+            if(closest.classList.contains('staff') || closest.classList.contains('measure')) {
+              console.log('selected a staff or measure')
+              const children = closest.querySelectorAll(selectables)
+              console.log('found children:')
+              console.log(children)
+            }
+
             console.log('clicked ', target, closest)
             this.$store.dispatch('selectionToggle', this.uri + '#' + closest.getAttribute('data-id'))
 
@@ -315,29 +323,58 @@ export default {
     }
 
     .selected, .current {
-      fill: rgba(150,0,0,1);
-      stroke: rgba(150,0,0,1);
 
-      &.bounding-box.staff rect {
+      &:not(.staff):not(.measure) {
+        fill: rgba(150,0,0,1);
+        stroke: rgba(150,0,0,1);
+      }
+
+      & > .bounding-box.staff rect {
         fill: #dfd8d8; //rgba(255,0,0,.15);
       }
 
       &.currentSelection, &.currentMusmat {
-        fill: rgba(255,0,0,1);
-        stroke: rgba(255,0,0,1);
 
-        &.bounding-box.staff rect {
-          fill: #dfd8d8;
+        &:not(.staff):not(.measure) {
+          fill: #666666;
+          stroke: #666666;
+        }
+
+        &.measure .bounding-box.staff {
+          rect {
+            fill: #e5e5e5;
+          }
+        }
+
+        & > .bounding-box.staff {
+          rect {
+            fill: #0f83ff24;
+            fill: #cccccc !important;
+          }
         }
       }
 
       &.currentExtract {
-        fill: rgba(255,0,255,1);
-        stroke: rgba(255,0,255,1);
 
-        &.bounding-box.staff rect {
-          fill: #0f83ff24;
+        &:not(.staff):not(.measure) {
+          fill: #2582b5f4;
+          stroke: #2582b5f4;
         }
+
+        &.measure .bounding-box.staff {
+          rect {
+            fill: #0f83ff24;
+          }
+        }
+
+        & > .bounding-box.staff {
+          rect {
+            fill: #0f83ff24;
+            fill: #0f83ff55 !important;
+          }
+        }
+
+
       }
     }
   }
