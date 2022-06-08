@@ -609,7 +609,7 @@ export default new Vuex.Store({
             ex[extractId] = extract
 
             const exThing = getThingAll(extract)[0]
-            const selections = getUrlAll(exThing, pref.frbr + 'member')
+            const selections = getUrlAll(exThing, pref.rdfs + 'member')
 
             selections.forEach(selectionId => {
               const selection = state.annotStore.selection[selectionId]
@@ -682,7 +682,7 @@ export default new Vuex.Store({
             ex[extractId] = extract
 
             const exThing = getThingAll(extract)[0]
-            const selections = getUrlAll(exThing, pref.frbr + 'member')
+            const selections = getUrlAll(exThing, pref.rdfs + 'member')
 
             selections.forEach(selectionId => {
               const selection = state.annotStore.selection[selectionId]
@@ -795,7 +795,7 @@ export default new Vuex.Store({
       let thing = getThingAll(extractDS)[0]
 
       thing = buildThing(thing)
-        .addUrl(pref.frbr + 'member', selectionId)
+        .addUrl(pref.rdfs + 'member', selectionId)
         .build()
 
       extractDS = setThing(extractDS, thing)
@@ -1138,7 +1138,7 @@ export default new Vuex.Store({
         const extractDS = state.currentAnnot.extract[state.currentExtract]
         const thing = getThingAll(extractDS)[0]
 
-        const urls = getUrlAll(thing, pref.frbr + 'member')
+        const urls = getUrlAll(thing, pref.frbr + 'rdfs')
 
         if(urls.length > 0) {
           console.log('trying to activate selection. following thing should be an ID / uri: ', urls[0])
@@ -1508,7 +1508,7 @@ export default new Vuex.Store({
           const extractDS = state.currentAnnot.extract[extractId]
           const extractThing = getThingAll(extractDS)[0]
 
-          const selectionIDs = getUrlAll(extractThing, pref.frbr + 'member')
+          const selectionIDs = getUrlAll(extractThing, pref.rdfs + 'member')
           selectionIDs.forEach(selectionId => {
 
             const selectionDS = state.currentAnnot.selection[selectionId]
@@ -1535,7 +1535,7 @@ export default new Vuex.Store({
         const extractDS = state.currentAnnot.extract[state.currentExtract]
         const extractThing = getThingAll(extractDS)[0]
 
-        const selectionIDs = getUrlAll(extractThing, pref.frbr + 'member')
+        const selectionIDs = getUrlAll(extractThing, pref.rdfs + 'member')
         selectionIDs.forEach(selectionId => {
 
           const selectionDS = state.currentAnnot.selection[selectionId]
