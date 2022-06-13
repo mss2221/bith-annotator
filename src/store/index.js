@@ -238,8 +238,8 @@ const getExtractDS = (state) => {
     .addDate(pref.dct + 'created', new Date())
     .addStringNoLocale(pref.dct + 'creator', user)
     .addStringNoLocale(pref.rdfs + 'label', '')
-    //.addUrl(pref.frbr + 'member','http://test1.com/ads')
-    //.addUrl(pref.frbr + 'member','http://test2.com/sad')
+    // * .addUrl(pref.frbr + 'member','http://test1.com/ads')
+    // * .addUrl(pref.frbr + 'member','http://test2.com/sad')
     .build()
 
   ds = setThing(ds, thing)
@@ -252,7 +252,11 @@ const getExtractDS = (state) => {
     "http://purl.org/dc/terms/created": date,
     "http://purl.org/dc/terms/creator": user,
     "https://www.w3.org/2000/01/rdf-schema#label": "",
-    "http://purl.org/vocab/frbr/core#member": []
+    * "http://purl.org/vocab/frbr/core#member": []
+
+    * NB: Extract moved to "expression" level, so its Selections are "embodiments"
+       http://purl.org/vocab/frbr/core#embodiment
+
   }*/
 }
 
@@ -609,7 +613,7 @@ export default new Vuex.Store({
             ex[extractId] = extract
 
             const exThing = getThingAll(extract)[0]
-            const selections = getUrlAll(exThing, pref.frbr + 'member')
+            const selections = getUrlAll(exThing, pref.frbr + 'embodiment')
 
             selections.forEach(selectionId => {
               const selection = state.annotStore.selection[selectionId]
@@ -682,7 +686,7 @@ export default new Vuex.Store({
             ex[extractId] = extract
 
             const exThing = getThingAll(extract)[0]
-            const selections = getUrlAll(exThing, pref.frbr + 'member')
+            const selections = getUrlAll(exThing, pref.frbr + 'embodiment')
 
             selections.forEach(selectionId => {
               const selection = state.annotStore.selection[selectionId]
@@ -795,7 +799,7 @@ export default new Vuex.Store({
       let thing = getThingAll(extractDS)[0]
 
       thing = buildThing(thing)
-        .addUrl(pref.frbr + 'member', selectionId)
+        .addUrl(pref.frbr + 'embodiment', selectionId)
         .build()
 
       extractDS = setThing(extractDS, thing)
@@ -962,31 +966,6 @@ export default new Vuex.Store({
       console.log('hello 2')
       */
     },
-    uploadTest ({ commit, state }) {
-      const session = state.solidSession
-      const webId = session.info.webId
-      const authFetch = session.fetch
-
-      if (session.info.isLoggedIn) {
-        async function uploadData () {
-          // get some random data…
-          const userCard = await getSolidDataset(
-            webId, {
-              fetch: authFetch
-            })
-
-          // For example, the user must be someone with Write access to the specified URL.
-          const savedSolidDataset = await saveSolidDatasetAt(
-            'https://pod.inrupt.com/markannot/private/hello2.ttl',
-            userCard, {
-              fetch: authFetch
-            })
-
-          console.log('success', savedSolidDataset)
-        }
-        uploadData()
-      }
-    },
     toggleDebugOverlay ({ commit, state }) {
       commit('TOGGLE_DEBUG_OVERLAY')
     },
@@ -1138,7 +1117,7 @@ export default new Vuex.Store({
         const extractDS = state.currentAnnot.extract[state.currentExtract]
         const thing = getThingAll(extractDS)[0]
 
-        const urls = getUrlAll(thing, pref.frbr + 'member')
+        const urls = getUrlAll(thing, pref.frbr + 'rdfs')
 
         if(urls.length > 0) {
           console.log('trying to activate selection. following thing should be an ID / uri: ', urls[0])
@@ -1508,7 +1487,7 @@ export default new Vuex.Store({
           const extractDS = state.currentAnnot.extract[extractId]
           const extractThing = getThingAll(extractDS)[0]
 
-          const selectionIDs = getUrlAll(extractThing, pref.frbr + 'member')
+          const selectionIDs = getUrlAll(extractThing, pref.frbr + 'embodiment')
           selectionIDs.forEach(selectionId => {
 
             const selectionDS = state.currentAnnot.selection[selectionId]
@@ -1535,7 +1514,7 @@ export default new Vuex.Store({
         const extractDS = state.currentAnnot.extract[state.currentExtract]
         const extractThing = getThingAll(extractDS)[0]
 
-        const selectionIDs = getUrlAll(extractThing, pref.frbr + 'member')
+        const selectionIDs = getUrlAll(extractThing, pref.frbr + 'embodiment')
         selectionIDs.forEach(selectionId => {
 
           const selectionDS = state.currentAnnot.selection[selectionId]

@@ -16,9 +16,6 @@
         <p>
           <button class="btn btn-primary" v-on:click="showLibrary">Library</button>
         </p>
-        <p v-if="isLoggedIn">
-          <button class="btn" v-on:click="uploadTest">uploadTest</button>
-        </p>
         <!--<p>
           <button class="btn btn-primary" v-on:click="testVerovio">test verovio</button>
         </p>-->
@@ -43,14 +40,7 @@ export default {
   methods: {
     showLibrary: function () {
       this.$store.dispatch('setPerspective','library')
-    },
-    uploadTest: function () {
-      this.$store.dispatch('uploadTest')
-    }/*,
-    testVerovio: function() {
-      const svg = this.$store.getters.rendering({uri: 'https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioSteiner%20-%20D-BNba%20C92_30/D-BNbaC92_30.2nd.mei', settings: 'fullScore'})
-      console.log(svg)
-    }*/
+    }
   }
 }
 </script>

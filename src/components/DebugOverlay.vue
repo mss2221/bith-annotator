@@ -93,7 +93,7 @@ export default {
        "http://purl.org/dc/terms/created": "2022-02-02T11:31:43.714Z",
        "http://purl.org/dc/terms/creator": "https://bithUsr.inrupt.net/profile/card#me",
        "https://www.w3.org/2000/01/rdf-schema#label": "Pittman, Star Shining Brightly, mm 3-6",
-       "http://purl.org/vocab/frbr/core#member": [
+       "http://purl.org/vocab/frbr/core#embodiment": [
           "https://bithUsr.inrupt.net/public/objects/selection-8bf70834.jsonld",
           "https://bithUsr.inrupt.net/public/objects/selection-b324afee9.jsonld"
         ]
@@ -129,7 +129,7 @@ export default {
        "http://purl.org/dc/terms/created": "2022-02-02T11:31:43.714Z",
        "http://purl.org/dc/terms/creator": "https://bithUsr.inrupt.net/profile/card#me",
        "https://www.w3.org/2000/01/rdf-schema#label": "Silcher, Gesang des Peris,  mm1-4",
-       "http://purl.org/vocab/frbr/core#member": [
+       "http://purl.org/vocab/frbr/core#embodiment": [
           "https://bithUsr.inrupt.net/public/objects/selection-2dbcc8cc.jsonld"
        ]
     }
