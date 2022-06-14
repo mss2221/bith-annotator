@@ -1,6 +1,6 @@
 <template>
   <div id="hello">
-    <splitpanes vertical style="height: 600px" class="default-theme">
+    <splitpanes vertical style="height: 920px" class="default-theme">
       <pane>
         <Library_Work v-for="work in worklist" v-bind:id="work['@id']" v-bind:work="work"/>
       </pane>
@@ -12,11 +12,11 @@
   </button>
 </span> -->
       <pane class="sidebar" size="30">
-        <splitpanes horizontal style="height: 600px">
+        <splitpanes horizontal style="height: 920px">
           <pane style="height: 40px">
               <button v-on:click="showWorkbench" class="btn btn-sm" style="float: right">Load Arrangements into Workbench</button>
           </pane>
-          <pane v-for="(view, index) in views" class="preview">
+          <pane v-for="(view, index) in views" class="preview" style="height: 260px">
             <Arrangement_Metadata v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
           </pane>
         </splitpanes>
