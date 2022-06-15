@@ -23,7 +23,7 @@ npm install
 ```
 
 ### Compiles and hot-reloads for development
-#### Runs on PORT 8081
+#### Runs on port 8081
 ```
 PORT=8081 npm run serve
 ```
