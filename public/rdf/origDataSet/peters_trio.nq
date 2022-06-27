@@ -1,0 +1,22 @@
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://purl.org/dc/elements/1.1/title> "Allegretto aus der Symphonie A dur." .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://purl.org/ontology/bibo/shortTitle> "Op 92 / 2nd mov - Piano trio (Peters)" .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#arranger> <http://viaf.org/viaf/19944637> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015550> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015782> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015120> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <https://dbpedia.org/ontology/genre> <https://www.wikidata.org/wiki/Special:EntityData/Q1414262> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <https://www.wikidata.org/prop/direct/P217> "PL-Wn, Mus.III.117.335/2" .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://purl.org/dc/elements/1.1/publisher> <https://d-nb.info/dnbn/330003461> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://rdaregistry.info/Elements/u/P60163> <https://www.wikidata.org/wiki/Special:EntityData/Q2079> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> _:genid1 .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://purl.org/vocab/frbr/core#embodiment> <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioPeters%20-%20PL-Wn%20Mus.III.117.335_2/PL-WnMus.III.117.335_2.mei> .
+_:genid1 <http://postdata.linhd.uned.es/ontology/postdata-dates#notAfter> "1894"^^<http:w3c.org/2001/XMLSchema#gYear> .
+<http://d-nb.info/gnd/300016417> <http://www.w3.org/2000/01/rdf-schema#label> "Sinfonien, Nr. 7, op. 92 (A-Dur)" .
+<http://d-nb.info/gnd/300016417> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288> .
+<http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "92" .
+<http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "1816"^^<http:w3c.org/2001/XMLSchema#gYear> .
+<http://d-nb.info/gnd/118508288> <http://www.w3.org/2000/01/rdf-schema#label> "Ludwig van Beethoven" .
+<http://d-nb.info/gnd/11072942461> <http://www.w3.org/2000/01/rdf-schema#label> "C. F. Peters" .
+<http://viaf.org/viaf/19944637> <http://www.w3.org/2000/01/rdf-schema#label> "Hans Sitt" .

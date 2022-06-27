@@ -1,0 +1,43 @@
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix vivo: <http://vivoweb.org/ontology/core#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix rdau: <http://rdaregistry.info/Elements/u/> .
+@prefix example: <http://example.org/> .
+@prefix dnb: <http://d-nb.info/gnd/> .
+@prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
+@prefix loc: <https://id.loc.gov/authorities/performanceMediums/> .
+@prefix wdt: <https://www.wikidata.org/prop/direct/> .
+@prefix wd: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix dbpedia: <https://dbpedia.org/ontology/> .
+@prefix frbr: <http://purl.org/vocab/frbr/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix viaf: <http://viaf.org/viaf/> .
+@prefix dnbn: <https://d-nb.info/dnbn/> .
+@prefix xs: <http:w3c.org/2001/XMLSchema#> .
+@prefix pd: <http://postdata.linhd.uned.es/ontology/postdata-dates#> .
+
+example:LitolffTrioArrOfAllegrettoOp92 a vivo:Score ;
+   dc:title "ALLEGRETTO DE LA VIIme SYMPHONIE DE L. VAN BEETHOVEN." ;
+   bibo:shortTitle "Op 92 / 2nd mov - Piano trio (Litolff)" ;
+   rdau:P60242 dnb:300016417 ;
+   gndo:arranger viaf:54413159 , "Heinrich Plock" , viaf:64778593 ;
+   gndo:mediumOfPerformance loc:mp2013015550 , loc:mp2013015782 , loc:mp2013015120 ;
+   dbpedia:genre wd:Q1414262 ;
+   wdt:P217 "D-BNba, C 92 / 12" ;
+   dc:publisher dnbn:1027856756 ;
+   rdau:P60163 wd:Q2773 ;
+   gndo:dateOfPublication [pd:notAfter "1879"^^xs:gYear] ;
+   frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioLitolff%20-%20D-BNba%20C92_12/D-BNbaC92_12.mei> .
+
+dnb:300016417 rdfs:label "Sinfonien, Nr. 7, op. 92 (A-Dur)" ;
+   rdau:P60426 dnb:118508288 ;
+   gndo:opusNumericDesignationOfMusicalWork "92" ;
+   gndo:dateOfPublication "1816"^^xs:gYear .
+
+dnb:118508288 rdfs:label "Ludwig van Beethoven" .
+
+viaf:54413159 rdfs:label "Renaud de Vilbac" .
+
+viaf:64778593 rdfs:label "August Schulz" .
+
+dnbn:1027856756 rdfs:label "Henry Litolff's Verlag" .

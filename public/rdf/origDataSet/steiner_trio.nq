@@ -1,0 +1,19 @@
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <http://purl.org/dc/elements/1.1/title> "Siebente GROSSE SINFONIE in A dur von Ludwig VAN Beethoven 92-tes Werk. F\u00FCr das Piano=Forte, Violin und Violonzello eingerichtet." .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <http://purl.org/ontology/bibo/shortTitle> "Op 92 / 2nd mov - Piano trio (Steiner)" .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015550> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015782> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015120> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <https://dbpedia.org/ontology/genre> <https://www.wikidata.org/wiki/Special:EntityData/Q1414262> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <https://www.wikidata.org/prop/direct/P217> "D-BNba, C 92 / 30" .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <http://purl.org/dc/elements/1.1/publisher> <http://viaf.org/viaf/30329703> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <http://rdaregistry.info/Elements/u/P60163> <https://www.wikidata.org/wiki/Special:EntityData/Q1741> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "1816"^^<http:w3c.org/2001/XMLSchema#gYear> .
+<http://example.org/SteinerTrioArrOfAllegrettoOp92> <http://purl.org/vocab/frbr/core#embodiment> <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioSteiner%20-%20D-BNba%20C92_30/D-BNbaC92_30.mei> .
+<http://d-nb.info/gnd/300016417> <http://www.w3.org/2000/01/rdf-schema#label> "Sinfonien, Nr. 7, op. 92 (A-Dur)" .
+<http://d-nb.info/gnd/300016417> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288> .
+<http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "92" .
+<http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "1816"^^<http:w3c.org/2001/XMLSchema#gYear> .
+<http://d-nb.info/gnd/118508288> <http://www.w3.org/2000/01/rdf-schema#label> "Ludwig van Beethoven" .
+<http://viaf.org/viaf/30329703> <http://www.w3.org/2000/01/rdf-schema#label> "S. A. Steiner und Comp." .
