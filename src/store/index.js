@@ -390,8 +390,10 @@ export default new Vuex.Store({
     },
 
     REMOVE_VIEW (state, index) {
-      Vue.set(state, 'index')
-      state.views = state.views.splice(index, 0)
+      let arr = [...state.views]
+      arr.splice(index, 1)
+
+      Vue.set(state,'views',arr)
     },
     REMOVE_ALL (state) {
 
