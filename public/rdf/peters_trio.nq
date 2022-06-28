@@ -11,7 +11,7 @@
 <http://example.org/PetersTrioArrOfAllegrettoOp92> <http://purl.org/dc/elements/1.1/publisher> <http://d-nb.info/gnd/330003461> .
 <http://example.org/PetersTrioArrOfAllegrettoOp92> <http://rdaregistry.info/Elements/u/P60163> <https://www.wikidata.org/wiki/Special:EntityData/Q2079> .
 <http://example.org/PetersTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "1894" .
-<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://purl.org/vocab/frbr/core#embodiment> <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioPeters%20-%20PL-Wn%20Mus.III.117.335_2/PL-WnMus.III.117.335_2.mei> .
+<http://example.org/PetersTrioArrOfAllegrettoOp92> <http://purl.org/vocab/frbr/core#embodiment> <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioPeters%20-%20PL-WnMus.III.117335-2/PL-WnMus.III.117335-2.mei> .
 <http://d-nb.info/gnd/300016417> <http://www.w3.org/2000/01/rdf-schema#label> "Sinfonien, Nr. 7, op. 92 (A-Dur)" .
 <http://d-nb.info/gnd/300016417> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288> .
 <http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "92" .
