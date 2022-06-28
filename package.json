@@ -4,8 +4,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "test": "standard --fix | snazzy",
-    "build": "vue-cli-service build",
-    "postinstall": "patch-package"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "@inrupt/solid-client": "^1.19.0",
@@ -14,7 +13,7 @@
     "@recogito/annotorious-toolbar": "^1.1.0",
     "core-js": "^3.6.5",
     "jsonld": "^5.2.0",
-    "meld-clients-core": "github:oerc-music/meld-clients-core",
+    "meld-clients-core": "github:DomesticBeethoven/meld-clients-core",
     "openseadragon": "^3.0.0",
     "rdflib": "^2.2.18",
     "redux": "^4.1.2",
