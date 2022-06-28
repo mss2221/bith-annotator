@@ -5,7 +5,6 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdau: <http://rdaregistry.info/Elements/u/> .
 @prefix example: <http://example.org/> .
-@prefix bibl: <http://purl.org/ontology/bibo/> .
 @prefix dnb: <http://d-nb.info/gnd/> .
 @prefix gndo: <https://d-nb.info/standards/elementset/gnd#> .
 @prefix loc: <https://id.loc.gov/authorities/performanceMediums/> .

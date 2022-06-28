@@ -21,7 +21,11 @@
 			{"@id": "http://localhost:8081/rdf/silcherGesang.nq"},
 			{"@id": "http://localhost:8081/rdf/haslingerTrio93.nq"},
 			{"@id": "http://localhost:8081/rdf/klvaus93.nq"},
-			{"@id": "http://localhost:8081/rdf/harmonicon7.nq"}
+			{"@id": "http://localhost:8081/rdf/harmonicon7.nq"},
+			{"@id": "http://localhost:8081/rdf/litolff_trio.nq"},
+			{"@id": "http://localhost:8081/rdf/peters_trio.nq"},
+			{"@id": "http://localhost:8081/rdf/steiner_trio.nq"}
+
 		]
 	}
 }

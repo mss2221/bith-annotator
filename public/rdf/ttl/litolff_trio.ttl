@@ -10,25 +10,26 @@
 @prefix loc: <https://id.loc.gov/authorities/performanceMediums/> .
 @prefix wdt: <https://www.wikidata.org/prop/direct/> .
 @prefix wd: <https://www.wikidata.org/wiki/Special:EntityData/> .
-@prefix geonames: <http://www.geonames.org/> .
 @prefix dbpedia: <https://dbpedia.org/ontology/> .
 @prefix frbr: <http://purl.org/vocab/frbr/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix viaf: <http://viaf.org/viaf/> .
+@prefix xs: <http:w3c.org/2001/XMLSchema#> .
+@prefix pd: <http://postdata.linhd.uned.es/ontology/postdata-dates#> .
 
-example:KlvauszHarmonicon a vivo:Score;
-	dc:title "A Fragment of the Seventh Symphony of L. von Beethoven; Arranged for the Pianoforte";
-	bibo:shortTitle "A Fragment of the Seventh Symphony";
-	dcterms:alternative "Harmonicon arrangement";
-	rdau:P60242 dnb:300016425;
-	gndo:mediumOfPerformance loc:mp2013015550;
-	dbpedia:genre wd:Q10349334;
-	wdt:P217 "D-BNba HCB P / 1823 Harm";
-	dc:publisher dnb:1055232877;
-	rdau:P60163 wd:Q84;
-	gndo:dateOfPublication "1824";
-	frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlvauszHarmonicon%20-%20D-BNba%20HCB%20P_1823%20Harm/D-BNbaHCBP_1823Harm.mei> .
-
-dnb:1072942461 rdfs:label "W. Pinnock" .
+example:LitolffTrioArrOfAllegrettoOp92 a vivo:Score ;
+   dc:title "ALLEGRETTO DE LA VIIme SYMPHONIE DE L. VAN BEETHOVEN." ;
+   bibo:shortTitle "Op 92 / 2nd mov - Piano trio (Litolff)" ;
+   dcterms:alternative "Op 92 - Litolff piano trio" ;
+   rdau:P60242 dnb:300016417 ;
+   gndo:arranger dnb:112xxx  ;
+   gndo:mediumOfPerformance loc:mp2013015550 , loc:mp2013015782 , loc:mp2013015120 ;
+   dbpedia:genre wd:Q1414262 ;
+   wdt:P217 "D-BNba, C 92 / 12" ;
+   dc:publisher dnb:1027856756 ;
+   rdau:P60163 wd:Q2773 ;
+   gndo:dateOfPublication "1879" ;
+   frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioLitolff%20-%20D-BNba%20C92_12/D-BNbaC92_12.mei> .
 
 dnb:300016417 rdfs:label "Sinfonien, Nr. 7, op. 92 (A-Dur)" ;
 	rdau:P60426 dnb:118508288 ;
@@ -36,3 +37,7 @@ dnb:300016417 rdfs:label "Sinfonien, Nr. 7, op. 92 (A-Dur)" ;
 	gndo:dateOfPublication "1816" .
 
 dnb:118508288 rdfs:label "Ludwig van Beethoven" .
+
+dnb:112xxx rdfs:label "Renaud de Vilbac" .
+
+dnbn:1027856756 rdfs:label "Henry Litolff's Verlag" .
