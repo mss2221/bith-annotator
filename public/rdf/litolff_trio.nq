@@ -1,0 +1,23 @@
+
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <http://purl.org/dc/elements/1.1/title> "ALLEGRETTO DE LA VIIme SYMPHONIE DE L. VAN BEETHOVEN." .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <http://purl.org/ontology/bibo/shortTitle> "Op 92 / 2nd mov - Piano trio (Litolff)" .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <http://purl.org/dc/terms/alternative> "Op 92 - Litolff piano trio" .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#arranger> <http://d-nb.info/gnd/112xxx> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015550> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015782> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015120> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <https://dbpedia.org/ontology/genre> <https://www.wikidata.org/wiki/Special:EntityData/Q1414262> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <https://www.wikidata.org/prop/direct/P217> "D-BNba, C 92 / 12" .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <http://purl.org/dc/elements/1.1/publisher> <https://d-nb.info/1027856756> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <http://rdaregistry.info/Elements/u/P60163> <https://www.wikidata.org/wiki/Special:EntityData/Q2773> .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "1879" .
+<http://example.org/LitolffTrioArrOfAllegrettoOp92> <http://purl.org/vocab/frbr/core#embodiment> <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioLitolff%20-%20D-BNba%20C92_12/D-BNbaC92_12.mei> .
+<http://d-nb.info/gnd/300016417> <http://www.w3.org/2000/01/rdf-schema#label> "Sinfonien, Nr. 7, op. 92 (A-Dur)" .
+<http://d-nb.info/gnd/300016417> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288> .
+<http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "92" .
+<http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "1816" .
+<http://d-nb.info/gnd/118508288> <http://www.w3.org/2000/01/rdf-schema#label> "Ludwig van Beethoven" .
+<http://d-nb.info/gnd/112xxx> <http://www.w3.org/2000/01/rdf-schema#label> "Renaud de Vilbac" .
+<https://d-nb.info/1027856756> <http://www.w3.org/2000/01/rdf-schema#label> "Henry Litolff's Verlag" .

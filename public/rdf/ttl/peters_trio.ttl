@@ -1,8 +1,6 @@
-@prefix schema: <http://schema.org/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix vivo: <http://vivoweb.org/ontology/core#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdau: <http://rdaregistry.info/Elements/u/> .
 @prefix example: <http://example.org/> .
 @prefix dnb: <http://d-nb.info/gnd/> .
@@ -10,28 +8,23 @@
 @prefix loc: <https://id.loc.gov/authorities/performanceMediums/> .
 @prefix wdt: <https://www.wikidata.org/prop/direct/> .
 @prefix wd: <https://www.wikidata.org/wiki/Special:EntityData/> .
-@prefix geonames: <http://www.geonames.org/> .
 @prefix dbpedia: <https://dbpedia.org/ontology/> .
 @prefix frbr: <http://purl.org/vocab/frbr/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xs: <http:w3c.org/2001/XMLSchema#> .
 
-example:PittmanArrOfAllegrettoOp92 a vivo:Score;
-	dc:title "No. 7. The Epiphany 'Star Brightly Shining, Where Dost Thou Lead Us?'";
-	bibo:shortTitle "Star Brightly Shining";
-	dcterms:alternative "Pittman arrangement";
-	rdau:P60242 dnb:300016417;
-	gndo:arranger dnb:1124865284;
-	gndo:mediumOfPerformance loc:mp2013015550, loc:mp2013015791;
-	dbpedia:genre wd:Q7190079;
-	wdt:P217 "D-BNba, C92_48";
-	dc:publisher dnb:1072942461;
-	rdau:P60163 wd:Q84;
-	gndo:dateOfPublication "1859";
-	frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/StimKlvAugener%20-%20D-BNba%20C92_48/D-BNbaC92_48.mei> .
-
-dnb:1124865284 rdfs:label "Josiah Pittman" .
-
-dnb:1072942461 rdfs:label "Augener & Co." .
+example:PetersTrioArrOfAllegrettoOp92 a vivo:Score ;
+   dc:title "Allegretto aus der Symphonie A dur." ;
+   bibo:shortTitle "Op 92 / 2nd mov - Piano trio (Peters)" ;
+   rdau:P60242 dnb:300016417 ;
+   gndo:arranger dnb:112yyy ;
+   gndo:mediumOfPerformance loc:mp2013015550 , loc:mp2013015782 , loc:mp2013015120 ;
+   dbpedia:genre wd:Q1414262 ;
+   wdt:P217 "PL-Wn, Mus.III.117.335/2" ;
+   dc:publisher dnb:330003461 ;
+   rdau:P60163 wd:Q2079 ;
+   gndo:dateOfPublication "1894" ;
+   frbr:embodiment <https://raw.githubusercontent.com/DomesticBeethoven/data/main/mei/op.%2092/KlaviertrioPeters%20-%20PL-Wn%20Mus.III.117.335_2/PL-WnMus.III.117.335_2.mei> .
 
 dnb:300016417 rdfs:label "Sinfonien, Nr. 7, op. 92 (A-Dur)" ;
 	rdau:P60426 dnb:118508288 ;
@@ -39,3 +32,7 @@ dnb:300016417 rdfs:label "Sinfonien, Nr. 7, op. 92 (A-Dur)" ;
 	gndo:dateOfPublication "1816" .
 
 dnb:118508288 rdfs:label "Ludwig van Beethoven" .
+
+dnb:330003461 rdfs:label "C. F. Peters" .
+
+dnb:112yyy rdfs:label "Hans Sitt" .
