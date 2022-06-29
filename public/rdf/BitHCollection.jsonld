@@ -16,12 +16,12 @@
 			"ldp:Container"
 		],
 		"ldp:contains": [
-			{"@id": "http://localhost:8081/rdf/pittman.nq"} ,
-			{"@id": "http://localhost:8081/rdf/silcherNachtgesang.nq"},
-			{"@id": "http://localhost:8081/rdf/silcherGesang.nq"},
-			{"@id": "http://localhost:8081/rdf/haslingerTrio93.nq"},
-			{"@id": "http://localhost:8081/rdf/klvaus93.nq"},
-			{"@id": "http://localhost:8081/rdf/harmonicon7.nq"}
+			{"@id": "http://beta.domestic-beethoven.eu/rdf/pittman.nq"} ,
+			{"@id": "http://beta.domestic-beethoven.eu/rdf/silcherNachtgesang.nq"},
+			{"@id": "http://beta.domestic-beethoven.eu/rdf/silcherGesang.nq"},
+			{"@id": "http://beta.domestic-beethoven.eu/rdf/haslingerTrio93.nq"},
+			{"@id": "http://beta.domestic-beethoven.eu/rdf/klvaus93.nq"},
+			{"@id": "http://beta.domestic-beethoven.eu/rdf/harmonicon7.nq"}
 		]
 	}
 }
