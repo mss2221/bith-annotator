@@ -16,15 +16,15 @@
 			"ldp:Container"
 		],
 		"ldp:contains": [
-			{"@id": "https://beta.domestic-beethoven.eu/pittman.nq"} ,
-			{"@id": "https://beta.domestic-beethoven.eu/silcherNachtgesang.nq"},
-			{"@id": "https://beta.domestic-beethoven.eu/silcherGesang.nq"},
-			{"@id": "https://beta.domestic-beethoven.eu/haslingerTrio93.nq"},
-			{"@id": "https://beta.domestic-beethoven.eu/klvaus93.nq"},
-			{"@id": "https://beta.domestic-beethoven.eu/rdf/leigh.nq"},
-			{"@id": "https://beta.domestic-beethoven.eu/litolff_trio.nq"},
-			{"@id": "https://beta.domestic-beethoven.eu/peters_trio.nq"},
-			{"@id": "https://beta.domestic-beethoven.eu/steiner_trio.nq"}
+			{"@id": "http://localhost:8081/rdf/pittman.nq"} ,
+			{"@id": "http://localhost:8081/rdf/silcherNachtgesang.nq"},
+			{"@id": "http://localhost:8081/rdf/silcherGesang.nq"},
+			{"@id": "http://localhost:8081/rdf/haslingerTrio93.nq"},
+			{"@id": "http://localhost:8081/rdf/klvaus93.nq"},
+			{"@id": "http://localhost:8081/rdf/leigh.nq"},
+			{"@id": "http://localhost:8081/rdf/litolff_trio.nq"},
+			{"@id": "http://localhost:8081/rdf/peters_trio.nq"},
+			{"@id": "http://localhost:8081/rdf/steiner_trio.nq"}
 
 		]
 	}
