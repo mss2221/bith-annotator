@@ -12,8 +12,8 @@
           <tr>
             <th class="shortTitle">Title</th>
             <th class="arranger">Arranger</th>
-            <th class="publisherDate">Publisher / Date</th>
-            <th class="catNumber">Catalog Number</th>
+            <th class="publisherDate">Publisher</th>
+            <th class="catNumber">Year</th>
             <th></th>
           </tr>
         </thead>
