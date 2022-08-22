@@ -7,6 +7,8 @@ module.exports = defineConfig({
     resolve: {
       // configuration options
       fallback: {
+        path: false,
+        fs: false,
         crypto: require.resolve('crypto-browserify'),
         stream: false
       }

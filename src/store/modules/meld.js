@@ -35,7 +35,9 @@ export const transformArrangement = (graphObject) => {
 }
 
 export const addWork = (worklist, arrangement) => {
-  if (!arrangement.work || !('@id' in arrangement.work)) return worklist
+  if (!arrangement.work || !('@id' in arrangement.work)) {
+    return worklist
+  }
   const wID = arrangement.work['@id']
   if (worklist.find(x => x['@id'] === wID)) {
     return worklist
@@ -80,20 +82,24 @@ export const graphHasChanged = (graph, commit) => {
   let arrangements = []
   let worklist = []
 
-  // console.log('graphHasChanged', graph)
-
   // 0. Get arrangements
   if (graph.graph && graph.graph.outcomes &&
      graph.graph.outcomes[0] &&
      graph.graph.outcomes[0]['@graph'] &&
      graph.graph.outcomes[0]['@graph'].length) {
-    // TODO: This isn't working
     arrangements = graph.graph.outcomes[0]['@graph'].map(transformArrangement)
     // Extract all unique works from the arrangements list
-    worklist = arrangements.reduce(addWork, [])
+    // worklist = arrangements.reduce(addWork, [])
+
+    const workMap = new Map()
+    arrangements.forEach(arr => {
+      if (arr.work && arr.work['@id']) {
+        workMap.set(arr.work['@id'], arr.work)
+      }
+    })
+    worklist = [...workMap.values()]
   }
   // 1. convert this.graph.outcomes[0] into this.state.worklist
-
   commit('SET_ARRANGEMENTS', arrangements)
   commit('SET_WORKLIST', worklist)
 }
@@ -108,7 +114,7 @@ export const initMeld = () => {
 
   // creating MELD Redux Store
   const meldStore = createStore(rootReducer, applyMiddleware(thunk))
-  console.log('MELD: Initial State', meldStore.getState())
+  // console.log('MELD: Initial State', meldStore.getState())
   /* END REDUX SETUP FOR MELD-CLIENTS-CORE */
 
   return meldStore

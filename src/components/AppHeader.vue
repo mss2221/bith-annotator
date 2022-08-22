@@ -18,9 +18,9 @@ export default {
     UserManagement
   },
   computed: {
-    showSelectionTool: function () {
+    /* showSelectionTool: function () {
       return this.$store.getters.selectionToolVisible
-    }
+    } */
   },
   methods: {
     goHome: function () {

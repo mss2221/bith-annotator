@@ -1,19 +1,37 @@
 <template>
   <div class="">
     <AppHeader/>
+    <template v-if="landingPageVisible">
+      <LandingPage/>
+    </template>
+    <template v-else>
+      <WorkBench/>
+    </template>
     <AppFooter/>
+    <LibraryModal/>
   </div>
 </template>
 
 <script>
 import AppHeader from '@/components/AppHeader.vue'
+import LandingPage from '@/components/LandingPage.vue'
+import WorkBench from '@/components/WorkBench.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import LibraryModal from '@/components/SelectionTool/LibraryModal.vue'
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    AppFooter
+    LandingPage,
+    WorkBench,
+    AppFooter,
+    LibraryModal
+  },
+  computed: {
+    landingPageVisible: function () {
+      return this.$store.getters.landingPageVisible
+    }
   }
 }
 </script>

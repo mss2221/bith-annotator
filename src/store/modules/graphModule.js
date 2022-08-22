@@ -1,4 +1,4 @@
-import { graphComponentDidUpdate, graphHasChanged, initMeld } from '@/store/modules/meldStore.js'
+import { graphComponentDidUpdate, graphHasChanged, initMeld } from '@/store/modules/meld.js'
 
 // Dependencies for MELD
 import { registerTraversal, traverse, setTraversalObjectives } from 'meld-clients-core/lib/actions/index'
@@ -33,8 +33,6 @@ export const graphModule = {
       commit('SET_GRAPH', graph)
     },
     initMeld ({ commit, state }) {
-      console.log('initMeld()')
-
       this.meldStore = initMeld()
 
       // initialize Vuex store with initial Redux graph
@@ -51,11 +49,7 @@ export const graphModule = {
 
         // check if additional traversal jobs are necessary
         if (graphComponentDidUpdate(graph, prevGraph, this.meldStore)) {
-          // error level just to highlight between other console.messages
-          // console.error('passed')
           graphHasChanged(graph, commit)
-        } else {
-          // console.log('not passed')
         }
       })
     },
@@ -72,8 +66,32 @@ export const graphModule = {
     }
   },
   getters: {
-    /* landingPageVisible: state => {
-      return state.landingPageVisible
-    } */
+    graph: state => {
+      return state.graph
+    },
+    arrangements: state => {
+      // todo
+      return state.arrangements // staticArrangements
+    },
+    worklist: state => {
+      // todo
+      return state.worklist // staticWorklist
+    },
+    work: (state) => (id) => {
+      // todo
+      // return staticWorklist.find(work => work['@id'] === id)
+      return state.worklist.find(work => work['@id'] === id)
+    },
+    arrangementsForWork: (state) => (workId) => {
+      return state.arrangements.filter(object => {
+        let fits = false
+        try {
+          fits = object.work['@id'] === workId
+        } catch (err) {
+          console.log('ERROR retrieving arrangements for work ' + workId + ': ' + err)
+        }
+        return fits
+      })
+    }
   }
 }

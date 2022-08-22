@@ -1,16 +1,17 @@
 export const appModule = {
   state: () => ({
     selectionTool: {
-      visible: false
+      visible: true
     },
     overviewTool: {
-      visible: false
+      visible: true
     },
     annotationTool: {
       visible: false
     },
     libraryModalVisible: false,
-    landingPageVisible: true
+    landingPageVisible: true,
+    views: []
   }),
   mutations: {
     SHOW_SELECTION_TOOL (state, bool) {
@@ -27,7 +28,19 @@ export const appModule = {
     },
     TOGGLE_LANDING_PAGE (state) {
       state.landingPageVisible = !state.landingPageVisible
+    },
+    ADD_VIEW (state, view) {
+    // TODO: think about how to deal with more than 2 views
+      state.views = state.views.concat([view])
+      // console.log('added new view:', view)
+    },
+    REMOVE_VIEW (state, index) {
+      const arr = [...state.views]
+      arr.splice(index, 1)
+
+      state.views = arr
     }
+
   },
   actions: {
     setSelectionMode ({ commit }) {
@@ -45,6 +58,12 @@ export const appModule = {
     },
     toggleLandingPage ({ commit }) {
       commit('TOGGLE_LANDING_PAGE')
+    },
+    addView ({ commit }, view) {
+      commit('ADD_VIEW', view)
+    },
+    removeView ({ commit }, index) {
+      commit('REMOVE_VIEW', index)
     }
   },
   getters: {
@@ -74,6 +93,9 @@ export const appModule = {
     },
     landingPageVisible: state => {
       return state.landingPageVisible
+    },
+    views: state => {
+      return state.views
     }
   }
 }
