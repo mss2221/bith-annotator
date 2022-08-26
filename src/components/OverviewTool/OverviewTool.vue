@@ -10,12 +10,12 @@
     <div class="scrollBox">
 
       <template v-if="!showAnnotationTool">
-        <h1>Extracts on Current Documents:</h1>
+        <h1>Extracts on current Arrangements:</h1>
 
         <button class="btn btn-link" @click="newExtract">New Extract</button>
         <div class="solidBox">
           <div class="scrollable">
-            <GraphEntry v-for="(e, eI) in extracts" :key="eI" :file="e" :level="1" :type="bithTypes.extract"/>
+            <GraphEntry v-for="(e, eI) in viewedExtracts" :key="eI" :file="e" :level="1" :type="bithTypes.extract"/>
           </div>
         </div>
 
@@ -81,6 +81,9 @@ export default {
     },
     extracts: function () {
       return this.$store.getters.allThingsByType(bithTypes.extract)
+    },
+    viewedExtracts: function () {
+      return this.$store.getters.extractsForViewedArrangements
     },
     selections: function () {
       return this.$store.getters.allThingsByType(bithTypes.selection)

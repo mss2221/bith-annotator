@@ -201,6 +201,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+@import '@/css/_variables.scss';
 
 .meiContainer {
   overflow: auto;
@@ -218,31 +219,36 @@ export default {
     .selected, .current {
 
       &:not(.staff):not(.measure) {
-        fill: rgba(150,0,0,1);
-        stroke: rgba(150,0,0,1);
+        fill: $svgSelectionEvents;
+        stroke: $svgSelectionEvents;
+      }
+
+      &.measure .bounding-box.staff {
+        rect {
+          fill: $svgSelectionMeasures;
+        }
       }
 
       & > .bounding-box.staff rect {
-        fill: #dfd8d8; //rgba(255,0,0,.15);
+        fill: $svgSelectionStaves; //rgba(255,0,0,.15);
       }
 
-      &.activeSelection, &.activeMusmat {
+      &.activeSelection {
 
         &:not(.staff):not(.measure) {
-          fill: #666666;
-          stroke: #666666;
+          fill: $svgActiveSelectionEvents;
+          stroke: $svgActiveSelectionEvents;
         }
 
         &.measure .bounding-box.staff {
           rect {
-            fill: #e5e5e5;
+            fill: $svgActiveSelectionMeasures;
           }
         }
 
         & > .bounding-box.staff {
           rect {
-            fill: #0f83ff24;
-            fill: #cccccc !important;
+            fill: $svgActiveSelectionStaves !important;
           }
         }
       }
@@ -250,20 +256,19 @@ export default {
       &.activeExtract {
 
         &:not(.staff):not(.measure) {
-          fill: #2582b5f4;
-          stroke: #2582b5f4;
+          fill: $svgCurrentExtractEvents;
+          stroke: $svgCurrentExtractEvents;
         }
 
         &.measure .bounding-box.staff {
           rect {
-            fill: #0f83ff24;
+            fill: $svgCurrentExtractMeasures;
           }
         }
 
         & > .bounding-box.staff {
           rect {
-            fill: #0f83ff24;
-            fill: #0f83ff55 !important;
+            fill: $svgCurrentExtractStaves !important;
           }
         }
 

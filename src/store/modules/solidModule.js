@@ -12,7 +12,7 @@ import {
   setThing
 } from '@inrupt/solid-client'
 
-import { getPublicIdFromDataStructure, getAnnotDS, getMusMatDS, getExtractDS, getSelectionDS, resetActivations, populateActivations, emptyCurrentAnnot, populateCurrentAnnot, getChildren } from '@/store/tools/solidHelpers.js'
+import { getPublicIdFromDataStructure, getAnnotDS, getMusMatDS, getExtractDS, getSelectionDS, resetActivations, populateActivations, emptyCurrentAnnot, populateCurrentAnnot, getChildren, getParents } from '@/store/tools/solidHelpers.js'
 
 export const solidModule = {
   state: () => ({
@@ -431,6 +431,12 @@ export const solidModule = {
       if (state.activated.selection === null) {
         console.log(1)
         const extractDS = state.currentAnnot.extract[state.activated[bithTypes.extract]]
+
+        if (extractDS === undefined) {
+          console.log('1b')
+          return false
+        }
+
         const thing = getThingAll(extractDS)[0]
 
         const urls = getUrlAll(thing, pref.frbr + 'rdfs')
@@ -925,19 +931,69 @@ export const solidModule = {
       return arr
     },
 
+    /**
+     * retrieves all extracts that have selections affecting the currently shown arrangements
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} getters                 [description]
+     * @param  {[type]} rootState               [description]
+     * @return {[type]}           [description]
+     */
     extractsForViewedArrangements: (state, getters, rootState) => {
       const views = rootState.app.views
-      const uris = []
+      const arrangementUris = []
 
       views.forEach(view => {
         if ('iiif' in view?.arrangement) {
-          uris.push(view.arrangement.iiif)
+          arrangementUris.push(view.arrangement.iiif)
         }
         if ('MEI' in view?.arrangement) {
-          uris.push(view.arrangement.MEI)
+          arrangementUris.push(view.arrangement.MEI)
         }
       })
-      return uris
+      // TODO Continue here…
+
+      const selections = {}
+      const extracts = {}
+
+      // get all selections from annotStore
+      Object.values(state.annotStore.selection).forEach(selectionDS => {
+        const selectionID = getPublicIdFromDataStructure(selectionDS)
+        const thing = getThingAll(selectionDS)[0]
+        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
+
+        selectionUrls.forEach(idRef => {
+          arrangementUris.forEach(arrangementUri => {
+            if (idRef.startsWith(arrangementUri)) {
+              selections[selectionID] = selectionDS
+            }
+          })
+        })
+      })
+
+      // maybe overwrite with selections from currentAnnot
+      Object.values(state.currentAnnot.selection).forEach(selectionDS => {
+        const selectionID = getPublicIdFromDataStructure(selectionDS)
+        const thing = getThingAll(selectionDS)[0]
+        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
+
+        selectionUrls.forEach(idRef => {
+          arrangementUris.forEach(arrangementUri => {
+            if (idRef.startsWith(arrangementUri)) {
+              selections[selectionID] = selectionDS
+            }
+          })
+        })
+      })
+
+      Object.values(selections).forEach(selection => {
+        const parentExtracts = getParents(state, selection, bithTypes.selection)
+        parentExtracts.forEach(parentExtract => {
+          const parentExtractID = getPublicIdFromDataStructure(parentExtract)
+          extracts[parentExtractID] = parentExtract
+        })
+      })
+
+      return Object.values(extracts)
     }
   }
 }

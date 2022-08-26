@@ -43,11 +43,11 @@ const loadListing = async (listingPath, commit, authFetch) => {
     // todo: no support for annotations yet
     if (annotType === 'Annotation') {
       commit('ADD_TO_ANNOTSTORE', { type: 'observation', object: ds })
-    } else if (type === 'https://example.com/Terms/MusicalMaterial') {
+    } else if (type === prefix.bithTerms + 'MusicalMaterial') {
       commit('ADD_TO_ANNOTSTORE', { type: 'musicalMaterial', object: ds })
-    } else if (type === 'https://example.com/Terms/Extract') {
+    } else if (type === prefix.bithTerms + 'Extract') {
       commit('ADD_TO_ANNOTSTORE', { type: 'extract', object: ds })
-    } else if (type === 'https://example.com/Terms/Selection') {
+    } else if (type === prefix.bithTerms + 'Selection') {
       commit('ADD_TO_ANNOTSTORE', { type: 'selection', object: ds })
     } else {
       // console.log('\n\n\nFound something strange: ', type, annotType, ds)

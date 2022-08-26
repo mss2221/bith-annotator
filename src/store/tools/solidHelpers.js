@@ -235,6 +235,21 @@ export const getPredicateByType = (type) => {
 }
 
 /**
+ * provides a mapping between object types and relationships that "higher" entities have
+ * @param  {[type]} type               [description]
+ * @return {[type]}      [description]
+ */
+export const getParentPredicateByType = (type) => {
+  if (type === bithTypes.extract) {
+    return pref.frbr + 'embodiment'
+  }
+
+  if (type === bithTypes.selection) {
+    return pref.frbr + 'embodiment'
+  }
+}
+
+/**
  * get child types. Observations may attach to different things
  * @param  {[type]} type               [description]
  * @return {[type]}      [description]
@@ -282,4 +297,50 @@ export const getChildren = (state, ds, type) => {
   })
 
   return arr
+}
+
+/**
+ * get all parents from selections (-> extracts) or extracts (-> musicalMaterials)
+ * @param  {[type]} state               [description]
+ * @param  {[type]} ds                  [description]
+ * @param  {[type]} type                [description]
+ * @return {[type]}       [description]
+ */
+export const getParents = (state, ds, type) => {
+  const id = getPublicIdFromDataStructure(ds)
+  const predicate = getParentPredicateByType(type)
+
+  const parents = {}
+
+  const types = [bithTypes.observation, bithTypes.musicalMaterial, bithTypes.extract, bithTypes.selection]
+  const parentIndex = types.indexOf(type) - 1
+
+  if (parentIndex <= 0) {
+    // console.log('An item of type ' + type + ' has no children')
+    return []
+  }
+
+  const parentType = types[parentIndex]
+
+  Object.values(state.annotStore[parentType]).forEach(parentDS => {
+    const parentId = getPublicIdFromDataStructure(parentDS)
+    const thing = getThingAll(parentDS)[0]
+    const childrenIDs = getUrlAll(thing, predicate)
+
+    if (childrenIDs.indexOf(id) !== -1) {
+      parents[parentId] = parentDS
+    }
+  })
+
+  Object.values(state.currentAnnot[parentType]).forEach(parentDS => {
+    const parentId = getPublicIdFromDataStructure(parentDS)
+    const thing = getThingAll(parentDS)[0]
+    const childrenIDs = getUrlAll(thing, predicate)
+
+    if (childrenIDs.indexOf(id) !== -1) {
+      parents[parentId] = parentDS
+    }
+  })
+
+  return Object.values(parents)
 }
