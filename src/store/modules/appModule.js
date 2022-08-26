@@ -11,7 +11,8 @@ export const appModule = {
     },
     libraryModalVisible: false,
     landingPageVisible: true,
-    views: []
+    views: [],
+    ldDetails: ''
   }),
   mutations: {
     SHOW_SELECTION_TOOL (state, bool) {
@@ -39,8 +40,10 @@ export const appModule = {
       arr.splice(index, 1)
 
       state.views = arr
+    },
+    SET_LD_DETAILS (state, code) {
+      state.ldDetails = code
     }
-
   },
   actions: {
     setSelectionMode ({ commit }) {
@@ -64,6 +67,9 @@ export const appModule = {
     },
     removeView ({ commit }, index) {
       commit('REMOVE_VIEW', index)
+    },
+    setLdDetails ({ commit }, code) {
+      commit('SET_LD_DETAILS', code)
     }
   },
   getters: {
@@ -96,6 +102,9 @@ export const appModule = {
     },
     views: state => {
       return state.views
+    },
+    ldDetails: state => {
+      return state.ldDetails
     }
   }
 }

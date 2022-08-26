@@ -859,18 +859,30 @@ export const solidModule = {
 
       return arr
     },
-    allSelectionsForCurrentExtract: (state) => (uri) => {
-      if (state.currentExtract === null) {
+
+    /**
+     * retrieves all selection paths for the activated extract
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
+    allSelectionsForActiveExtract: (state) => (uri) => {
+      if (state.activated[bithTypes.extract] === null) {
         return []
       }
       const arr = []
       try {
-        const extractDS = state.currentAnnot.extract[state.currentExtract]
+        let extractDS = state.currentAnnot.extract[state.activated[bithTypes.extract]]
+        if (extractDS === undefined) {
+          extractDS = state.annotStore.extract[state.activated[bithTypes.extract]]
+        }
         const extractThing = getThingAll(extractDS)[0]
 
         const selectionIDs = getUrlAll(extractThing, pref.frbr + 'embodiment')
         selectionIDs.forEach(selectionId => {
-          const selectionDS = state.currentAnnot.selection[selectionId]
+          let selectionDS = state.currentAnnot.selection[selectionId]
+          if (selectionDS === undefined) {
+            selectionDS = state.annotStore.selection[selectionId]
+          }
           const selectionThing = getThingAll(selectionDS)[0]
 
           const parts = getUrlAll(selectionThing, pref.frbr + 'part')
@@ -884,13 +896,22 @@ export const solidModule = {
 
       return arr
     },
-    allSelectionsForCurrentSelection: (state) => (uri) => {
-      if (state.currentSelection === null) {
+
+    /**
+     * retreives all selection paths for the activated selection
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
+    allSelectionsForActiveSelection: (state) => (uri) => {
+      if (state.activated[bithTypes.selection] === null) {
         return []
       }
       const arr = []
       try {
-        const selectionDS = state.currentAnnot.selection[state.currentSelection]
+        let selectionDS = state.currentAnnot.selection[state.activated[bithTypes.selection]]
+        if (selectionDS === undefined) {
+          selectionDS = state.annotStore.selection[state.activated[bithTypes.selection]]
+        }
         const selectionThing = getThingAll(selectionDS)[0]
 
         const parts = getUrlAll(selectionThing, pref.frbr + 'part')
@@ -902,6 +923,21 @@ export const solidModule = {
       } catch (err) {}
 
       return arr
+    },
+
+    extractsForViewedArrangements: (state, getters, rootState) => {
+      const views = rootState.app.views
+      const uris = []
+
+      views.forEach(view => {
+        if ('iiif' in view?.arrangement) {
+          uris.push(view.arrangement.iiif)
+        }
+        if ('MEI' in view?.arrangement) {
+          uris.push(view.arrangement.MEI)
+        }
+      })
+      return uris
     }
   }
 }

@@ -2,16 +2,17 @@
   <div class="graphEntry" :class="{'active': activated}" :data-level="this.level" :title="type + ': ' + id" :data-id="id">
     <div class="firstLine" @click="activateThing">
       <template v-if="this.level === 1">
-        <div class="editButtons float-right" v-if="activated">
-          <template v-if="isCurrent">
-            <i class="icon icon-cross" @click="discardChanges" title="cancel changes"></i>
-            <i class="icon icon-check" @click="saveChanges" title="save changes"></i>
+        <div class="editButtons float-right">
+          <template v-if="isCurrent && activated">
+            <i class="icon icon-cross" @click.stop="discardChanges" title="cancel changes"></i>
+            <i class="icon icon-check" @click.stop="saveChanges" title="save changes"></i>
           </template>
-          <template v-else>
-            <i class="icon icon-edit" @click="startEditing"></i>
+          <template v-if="!isCurrent && activated">
+            <i class="icon icon-edit" @click.stop="startEditing"></i>
           </template>
+          <i class="icon icon-search" @click.stop="showLD"></i>
         </div>
-        <i class="icon icon-caret" @click="deactivateThing"></i>
+        <i class="icon icon-caret" @click.stop="deactivateThing"></i>
       </template>
       <template v-if="isCurrent && activated">
         <input type="text" v-model.trim="label"/>
@@ -57,12 +58,6 @@ export default {
         return url
       }
     },
-    /* extract: function () {
-      return this.$store.getters.activeThingByTypeAndID(bithTypes.extract, this.id)
-    }, */
-    /* modified: function () {
-      return this.$store.getters.thingIsInModification(this.id, this.type)
-    }, */
     activated: function () {
       return this.$store.getters.activeThingIDByType(this.type) === this.id
     },
@@ -133,13 +128,10 @@ export default {
         this.$store.dispatch('setActiveExtract', this.id)
       }
     }, */
-    showDetails: async function (e) {
-      document.querySelectorAll('.jsonFile.active').forEach(file => file.classList.remove('active'))
-      e.target.closest('.jsonFile').classList.add('active')
-
+    showLD: async function (e) {
       const ttl = await solidDatasetAsTurtle(this.file, { prefixes: pref })
-      console.log(this.id + ' (' + ttl.length + ')')
-      // this.$store.dispatch('toggleDebugOverlay')
+      // console.log(this.id + ' (' + ttl.length + ')')
+      this.$store.dispatch('setLdDetails', ttl)
     }
   }
 }
@@ -185,6 +177,10 @@ export default {
 
     .editButtons {
       margin: 0 .3rem;
+
+      i {
+        margin-left: .3rem;
+      }
     }
 
     .itemLabel {

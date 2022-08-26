@@ -11,6 +11,12 @@ import verovio from 'verovio'
 import { vrvPresets, vrvSelectables } from '@/config/verovio.config.js'
 import { bithTypes } from '@/meld/constants.js'
 
+let selectables = []
+vrvSelectables.forEach(elem => {
+  selectables.push('.' + elem + ':not(.bounding-box)')
+})
+selectables = selectables.join(', ')
+
 /* const verovioOptions = {
   scale: 30,
   breaks: 'none',
@@ -48,16 +54,74 @@ export default {
     },
     currentExtract: function () {
       return this.$store.getters.activeThingByType(bithTypes.extract)
+    },
+    currentSelectionsForUri: function () {
+      return this.$store.getters.currentSelectionsForUri(this.uri)
+    },
+    allSelectionsForUri: function () {
+      return this.$store.getters.allSelectionsForUri(this.uri)
+    },
+    allSelectionsForActiveExtract: function () {
+      return this.$store.getters.allSelectionsForActiveExtract(this.uri)
+    },
+    allSelectionsForActiveSelection: function () {
+      return this.$store.getters.allSelectionsForActiveSelection(this.uri)
     }
   },
   methods: {
+    clickListenerSVG: function (e) {
+      const target = e.target
+      console.log('target:', target)
+      const closest = (e.shiftKey) ? target.closest('.measure:not(.bounding-box)') : target.closest(selectables)
 
+      console.log('clicked', closest)
+
+      e.stopPropagation()
+      if (!this.selectionModeActive) {
+        console.log('a')
+        return false
+      }
+
+      if (closest.classList.contains('staff') || closest.classList.contains('measure')) {
+        console.log('selected a staff or measure')
+        const children = closest.querySelectorAll(selectables)
+        console.log('found children:')
+        console.log(children)
+      }
+
+      console.log('clicked ', target, closest)
+      this.$store.dispatch('selectionToggle', this.uri + '#' + closest.getAttribute('data-id'))
+      console.log('dispatched selectionToggle')
+    },
+
+    highlightSelections: function (newSelections, oldSelections, className) {
+      // console.log('highlighting ' + className + ' (' + newSelections.length + ')')
+      const addedVals = newSelections.filter(val => oldSelections.indexOf(val) === -1)
+      const removedVals = oldSelections.filter(val => newSelections.indexOf(val) === -1)
+
+      addedVals.forEach(val => {
+        const id = val.split('#')[1]
+        try {
+          const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
+          elem.classList.add(className)
+        } catch (err) {}
+      })
+
+      removedVals.forEach(val => {
+        const id = val.split('#')[1]
+        try {
+          const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
+          elem.classList.remove(className)
+        } catch (err) {}
+      })
+    }
   },
   beforeUnmount () {
-    console.log(this.unwatchers)
     this.unwatchers.forEach(unwatch => {
       unwatch()
     })
+
+    document.querySelector('#meiContainer_' + this.idSeed + ' > svg').removeEventListener('click', this.clickListenerSVG)
     document.querySelector('#meiContainer_' + this.idSeed).innerHTML = 'empty'
   },
   mounted: function () {
@@ -85,172 +149,50 @@ export default {
         this.$refs.mei.innerHTML = svg
 
         if (this.settings === 'fullScore') {
-          const renderedSvg = document.querySelector('#meiContainer_' + this.idSeed + ' svg')
+          const renderedSvg = document.querySelector('#meiContainer_' + this.idSeed + ' > svg')
 
-          let selectables = []
-          // const selNoBBox = []
-          vrvSelectables.forEach(elem => {
-            selectables.push('.' + elem + ':not(.bounding-box)')
-          })
-          selectables = selectables.join(', ')
-          console.log('selectables:', selectables)
+          // listen to clicks on the svg, used for selections
+          renderedSvg.addEventListener('click', this.clickListenerSVG)
 
-          const clickListener = (e) => {
-            const target = e.target
-            console.log('target:', target)
-            const closest = (e.shiftKey) ? target.closest('.measure:not(.bounding-box)') : target.closest(selectables)
+          // listen for changes to selections in currentAnnot
+          this.unwatchers.push(
+            this.$store.watch(
+              (state, getters) => getters.currentSelectionsForUri(this.uri), (newSel, oldSel) => {
+                this.highlightSelections(newSel, oldSel, 'current')
+              }
+            )
+          )
+          this.highlightSelections(this.currentSelectionsForUri, [], 'current')
 
-            console.log('clicked', closest)
+          // listen for changes to selections in all annot
+          this.unwatchers.push(
+            this.$store.watch(
+              (state, getters) => getters.allSelectionsForUri(this.uri), (newSel, oldSel) => {
+                this.highlightSelections(newSel, oldSel, 'selected')
+              }
+            )
+          )
+          this.highlightSelections(this.allSelectionsForUri, [], 'selected')
 
-            e.stopPropagation()
-            if (!this.selectionModeActive) {
-              console.log('a')
-              return false
-            }
+          // listen for changes to selections in all annot
+          this.unwatchers.push(
+            this.$store.watch(
+              (state, getters) => getters.allSelectionsForActiveExtract(this.uri), (newSel, oldSel) => {
+                this.highlightSelections(newSel, oldSel, 'activeExtract')
+              }
+            )
+          )
+          this.highlightSelections(this.allSelectionsForActiveExtract, [], 'activeExtract')
 
-            if (closest.classList.contains('staff') || closest.classList.contains('measure')) {
-              console.log('selected a staff or measure')
-              const children = closest.querySelectorAll(selectables)
-              console.log('found children:')
-              console.log(children)
-            }
-
-            console.log('clicked ', target, closest)
-            this.$store.dispatch('selectionToggle', this.uri + '#' + closest.getAttribute('data-id'))
-            console.log('dispatched selectionToggle')
-            // todo: this needs to be coming from the store…
-            // closest.classList.toggle('selected')
-          }
-
-          console.log('renderedSvg:')
-          console.log(renderedSvg)
-
-          renderedSvg.addEventListener('click', clickListener)
-
-          // renderedSvg.addEventListener('click', clickListener)
-          /* renderedSvg.querySelectorAll(selectables).forEach(elem => {
-            elem.addEventListener('click', clickListener)
-          }) */
-
-          const watchFuncCurrent = () => {
-            return this.$store.getters.currentSelectionsForUri(this.uri)
-          }
-          this.unwatchers.push(this.$store.watch(watchFuncCurrent, (newArr, oldArr) => {
-            const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
-            const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
-
-            addedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.add('current')
-              } catch (err) {}
-            })
-
-            removedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.remove('current')
-              } catch (err) {}
-            })
-          }))
-
-          const watchFuncAll = () => {
-            return this.$store.getters.allSelectionsForUri(this.uri)
-          }
-          this.unwatchers.push(this.$store.watch(watchFuncAll, (newArr, oldArr) => {
-            const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
-            const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
-
-            addedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.add('selected')
-              } catch (err) {}
-            })
-
-            removedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.remove('selected')
-              } catch (err) {}
-            })
-          }))
-
-          const watchFuncCurrentMusMat = () => {
-            return this.$store.getters.allSelectionsForCurrentMusMat(this.uri)
-          }
-          this.unwatchers.push(this.$store.watch(watchFuncCurrentMusMat, (newArr, oldArr) => {
-            const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
-            const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
-
-            addedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.add('currentMusmat')
-              } catch (err) {}
-            })
-
-            removedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.remove('currentMusmat')
-              } catch (err) {}
-            })
-          }))
-
-          const watchFuncCurrentExtract = () => {
-            return this.$store.getters.allSelectionsForCurrentExtract(this.uri)
-          }
-          this.unwatchers.push(this.$store.watch(watchFuncCurrentExtract, (newArr, oldArr) => {
-            const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
-            const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
-
-            addedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.add('currentExtract')
-              } catch (err) {}
-            })
-
-            removedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.remove('currentExtract')
-              } catch (err) {}
-            })
-          }))
-
-          const watchFuncCurrentSelection = () => {
-            return this.$store.getters.allSelectionsForCurrentSelection(this.uri)
-          }
-          this.unwatchers.push(this.$store.watch(watchFuncCurrentSelection, (newArr, oldArr) => {
-            // const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
-            const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
-
-            newArr.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.add('currentSelection')
-              } catch (err) {}
-            })
-
-            removedVals.forEach(val => {
-              const id = val.split('#')[1]
-              try {
-                const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')
-                elem.classList.remove('currentSelection')
-              } catch (err) {}
-            })
-          }))
+          // listen for changes to selections in all annot
+          this.unwatchers.push(
+            this.$store.watch(
+              (state, getters) => getters.allSelectionsForActiveSelection(this.uri), (newSel, oldSel) => {
+                this.highlightSelections(newSel, oldSel, 'activeSelection')
+              }
+            )
+          )
+          this.highlightSelections(this.allSelectionsForActiveSelection, [], 'activeSelection')
         }
       })
   }
@@ -284,7 +226,7 @@ export default {
         fill: #dfd8d8; //rgba(255,0,0,.15);
       }
 
-      &.currentSelection, &.currentMusmat {
+      &.activeSelection, &.activeMusmat {
 
         &:not(.staff):not(.measure) {
           fill: #666666;
@@ -305,7 +247,7 @@ export default {
         }
       }
 
-      &.currentExtract {
+      &.activeExtract {
 
         &:not(.staff):not(.measure) {
           fill: #2582b5f4;

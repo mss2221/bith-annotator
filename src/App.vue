@@ -9,6 +9,7 @@
     </template>
     <AppFooter/>
     <LibraryModal/>
+    <LdDetailOverlay/>
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import LandingPage from '@/components/LandingPage.vue'
 import WorkBench from '@/components/WorkBench.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import LibraryModal from '@/components/SelectionTool/LibraryModal.vue'
+import LdDetailOverlay from '@/components/LdDetailOverlay.vue'
 
 export default {
   name: 'App',
@@ -26,7 +28,8 @@ export default {
     LandingPage,
     WorkBench,
     AppFooter,
-    LibraryModal
+    LibraryModal,
+    LdDetailOverlay
   },
   computed: {
     landingPageVisible: function () {
