@@ -56,7 +56,8 @@ export default {
   right: 0;
   bottom: $appFooterHeight;
   left: 0;
-  background: linear-gradient(to bottom, lighten($mainBackgroundColor, 5%), $mainBackgroundColor);
+  background-color: #ffffff;
+  // background: linear-gradient(to bottom, lighten($mainBackgroundColor, 5%), $mainBackgroundColor);
 
   .firstLevelPane {
     position: relative;

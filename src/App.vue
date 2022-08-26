@@ -49,4 +49,8 @@ body {
   left: 0;
   background-color: $mainBackgroundColor;
 }
+
+.splitpanes.default-theme .splitpanes__splitter {
+  background-color: #cccccc;
+}
 </style>
