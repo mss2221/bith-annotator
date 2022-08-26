@@ -5,7 +5,7 @@
       <pane v-for="(view, x) in views" v-bind:key="x" v-bind:view="view">
         <div class="view">
           <div class="content">
-            <DisplayPane v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="index"/>
+            <DisplayPane v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="x"/>
           </div>
         </div>
       </pane>
@@ -53,6 +53,7 @@ export default {
 .view {
   overflow: scroll;
   height: 100%;
+  background-color: #ffffff;
 }
 
 </style>

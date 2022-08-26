@@ -1,7 +1,7 @@
 <template>
-  <span class="viewTab">
-    <span class="tabLabel">Label</span>
-    <i class="icon icon-cross"></i>
+  <span class="viewTab" :title="arr.shortTitle + ', arr. by ' + arr.arranger['http://www.w3.org/2000/01/rdf-schema#label']">
+    <span class="tabLabel">{{(arr.shortTitle.length > 16) ? arr.shortTitle.substring(0, 7) + '…' + arr.shortTitle.substring(arr.shortTitle.length - 8) : arr.shortTitle }}</span>
+    <i class="icon icon-cross" @click="removeView"></i>
   </span>
 </template>
 
@@ -10,15 +10,20 @@ export default {
   name: 'ViewTab',
   components: {
   },
+  props: {
+    perspective: String,
+    arr: Object,
+    index: Number
+  },
   computed: {
     /* showAnnotationTool: function () {
       return this.$store.getters.annotationToolVisible
     } */
   },
   methods: {
-    /* select: function () {
-      this.$store.dispatch('setSelectionMode')
-    } */
+    removeView: function () {
+      this.$store.dispatch('removeView', this.index)
+    }
   }
 }
 </script>

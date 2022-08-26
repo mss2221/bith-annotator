@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:id="'meiContainer_' + idSeed" class="meiContainer">
+  <div v-bind:id="'meiContainer_' + idSeed" class="meiContainer" ref="mei">
     <span v-bind:id="'activity_' + idSeed">Loading</span> MEI Data
     <div class="loading loading-lg"></div>
   </div>
@@ -9,6 +9,7 @@
 import verovio from 'verovio'
 // import svgDragSelect from "svg-drag-select"
 import { vrvPresets, vrvSelectables } from '@/config/verovio.config.js'
+import { bithTypes } from '@/meld/constants.js'
 
 /* const verovioOptions = {
   scale: 30,
@@ -43,14 +44,21 @@ export default {
       return this.$store.getters.selectionModeActive
     },
     currentSelection: function () {
-      return this.$store.getters.activeSelection
+      return this.$store.getters.activeThingByType(bithTypes.selection)
     },
     currentExtract: function () {
-      return this.$store.getters.activeExtract
+      return this.$store.getters.activeThingByType(bithTypes.extract)
     }
   },
   methods: {
 
+  },
+  beforeUnmount () {
+    console.log(this.unwatchers)
+    this.unwatchers.forEach(unwatch => {
+      unwatch()
+    })
+    document.querySelector('#meiContainer_' + this.idSeed).innerHTML = 'empty'
   },
   mounted: function () {
     // eslint-disable-next-line
@@ -59,6 +67,12 @@ export default {
 
     vrvToolkit.setOptions(options)
 
+    this.unwatchers = []
+
+    // don't call the same content twice
+    if (this.$refs.mei.querySelector('svg') !== null) {
+      return false
+    }
     fetch(this.uri)
       .then(res => {
         document.querySelector('#activity_' + this.idSeed).innerHTML = 'Processing'
@@ -67,7 +81,8 @@ export default {
       .then(mei => {
         vrvToolkit.loadData(mei)
         const svg = vrvToolkit.renderToSVG(1, {})
-        document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
+        // document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
+        this.$refs.mei.innerHTML = svg
 
         if (this.settings === 'fullScore') {
           const renderedSvg = document.querySelector('#meiContainer_' + this.idSeed + ' svg')
@@ -79,13 +94,19 @@ export default {
           })
           selectables = selectables.join(', ')
           console.log('selectables:', selectables)
+
           const clickListener = (e) => {
+            const target = e.target
+            console.log('target:', target)
+            const closest = (e.shiftKey) ? target.closest('.measure:not(.bounding-box)') : target.closest(selectables)
+
+            console.log('clicked', closest)
+
             e.stopPropagation()
             if (!this.selectionModeActive) {
+              console.log('a')
               return false
             }
-            const target = e.target
-            const closest = (e.shiftKey) ? target.closest('.measure:not(.bounding-box)') : target.closest(selectables)
 
             if (closest.classList.contains('staff') || closest.classList.contains('measure')) {
               console.log('selected a staff or measure')
@@ -96,21 +117,25 @@ export default {
 
             console.log('clicked ', target, closest)
             this.$store.dispatch('selectionToggle', this.uri + '#' + closest.getAttribute('data-id'))
-
+            console.log('dispatched selectionToggle')
             // todo: this needs to be coming from the store…
             // closest.classList.toggle('selected')
           }
 
-          // renderedSvg.addEventListener('click', clickListener)
-          renderedSvg.querySelectorAll(selectables).forEach(elem => {
-            elem.addEventListener('click', clickListener)
-          })
+          console.log('renderedSvg:')
+          console.log(renderedSvg)
 
-          const unwatchers = []
+          renderedSvg.addEventListener('click', clickListener)
+
+          // renderedSvg.addEventListener('click', clickListener)
+          /* renderedSvg.querySelectorAll(selectables).forEach(elem => {
+            elem.addEventListener('click', clickListener)
+          }) */
+
           const watchFuncCurrent = () => {
             return this.$store.getters.currentSelectionsForUri(this.uri)
           }
-          unwatchers.push(this.$store.watch(watchFuncCurrent, (newArr, oldArr) => {
+          this.unwatchers.push(this.$store.watch(watchFuncCurrent, (newArr, oldArr) => {
             const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
             const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
 
@@ -134,7 +159,7 @@ export default {
           const watchFuncAll = () => {
             return this.$store.getters.allSelectionsForUri(this.uri)
           }
-          unwatchers.push(this.$store.watch(watchFuncAll, (newArr, oldArr) => {
+          this.unwatchers.push(this.$store.watch(watchFuncAll, (newArr, oldArr) => {
             const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
             const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
 
@@ -158,7 +183,7 @@ export default {
           const watchFuncCurrentMusMat = () => {
             return this.$store.getters.allSelectionsForCurrentMusMat(this.uri)
           }
-          unwatchers.push(this.$store.watch(watchFuncCurrentMusMat, (newArr, oldArr) => {
+          this.unwatchers.push(this.$store.watch(watchFuncCurrentMusMat, (newArr, oldArr) => {
             const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
             const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
 
@@ -182,7 +207,7 @@ export default {
           const watchFuncCurrentExtract = () => {
             return this.$store.getters.allSelectionsForCurrentExtract(this.uri)
           }
-          unwatchers.push(this.$store.watch(watchFuncCurrentExtract, (newArr, oldArr) => {
+          this.unwatchers.push(this.$store.watch(watchFuncCurrentExtract, (newArr, oldArr) => {
             const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
             const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
 
@@ -206,7 +231,7 @@ export default {
           const watchFuncCurrentSelection = () => {
             return this.$store.getters.allSelectionsForCurrentSelection(this.uri)
           }
-          unwatchers.push(this.$store.watch(watchFuncCurrentSelection, (newArr, oldArr) => {
+          this.unwatchers.push(this.$store.watch(watchFuncCurrentSelection, (newArr, oldArr) => {
             // const addedVals = newArr.filter(val => oldArr.indexOf(val) === -1)
             const removedVals = oldArr.filter(val => newArr.indexOf(val) === -1)
 
@@ -227,75 +252,6 @@ export default {
             })
           }))
         }
-
-        // document.querySelectorAll('#meiContainer_ .staff > .staff.bounding-box > rect').forEach(bbox => addListener(bbox))
-        /*
-          const mei_svg = document.querySelector('#meiContainer_' + this.idSeed + ' > svg')
-          console.log('found svg: ', mei_svg)
-
-          const strictIntersectionSelector = ({
-            svg,                            // the svg element.
-            referenceElement,               // please select only descendants of this SVGElement if specified.
-            pointerEvent,                   // a `PointerEvent` instance with either a "pointerdown" event or a "pointermove" event.
-                                            // (in case of Safari, a `MouseEvent` or a `TouchEvent` is used instead.)
-            dragAreaInClientCoordinate,     // a `SVGRect` that represents the dragging area in client coordinate.
-            dragAreaInSvgCoordinate,        // a `SVGRect` that represents the dragging area in svg coordinate.
-            dragAreaInInitialSvgCoordinate, // a `SVGRect` that represents the dragging area in initial viewport coordinate of the svg.
-            getEnclosures,                  // `getEnclosures()` returns elements enclosed in the dragging area.
-            getIntersections,               // `getIntersections()` returns elements intersect the dragging area.
-                                            // Chrome, Safari and Firefox checks only bounding box intersection.
-          }) => getIntersections().filter(element => {
-            // the element that the pointer event raised is considered to intersect.
-            console.log('hello', element)
-            if (pointerEvent.target === element) {
-              return true
-            }
-            // strictly check only <path>s.
-            if (!(element instanceof SVGPathElement)) {
-              return true
-            }
-            // check if there is at least one enclosed point in the path.
-            for (let i = 0, len = element.getTotalLength(); i <= len; i += 4 ) {
-              const { x, y } = element.getPointAtLength(i)
-              if (
-                  dragAreaInSvgCoordinate.x <= x && x <= dragAreaInSvgCoordinate.x + dragAreaInSvgCoordinate.width &&
-                  dragAreaInSvgCoordinate.y <= y && y <= dragAreaInSvgCoordinate.y + dragAreaInSvgCoordinate.height
-              ) {
-                return true
-              }
-            }
-            return false
-          })
-
-          console.log(svgDragSelect)
-
-          const { cancel } = svgDragSelect({
-            svg: mei_svg,
-            selector: strictIntersectionSelector,//'enclosure', // 'enclosure' or: 'intersection'
-            onSelectionStart: (e) => {
-              console.log('onSelectionStart', e)
-            },
-            onSelectionChange: (e) => {
-              console.log('onSelectionChange', e)
-            },
-            onSelectionEnd: (e) => {
-              console.log('onSelectionEnd', e)
-            }
-            /*onSelectionChange({
-              svg,                      // the svg element.
-              pointerEvent,             // a `PointerEvent` instance with either a "pointerdown" event or a "pointermove" event.
-                                        // (in case of Safari, a `MouseEvent` or a `TouchEvent` is used instead.)
-              selectedElements,         // selected element array.
-              previousSelectedElements, // previous selected element array.
-              newlySelectedElements,    // `selectedElements - previousSelectedElements`
-              newlyDeselectedElements,  // `previousSelectedElements - selectedElements`
-            }) {
-              // for example: toggle "data-selected" attribute
-              newlyDeselectedElements.forEach(element => element.removeAttribute('data-selected'))
-              newlySelectedElements.forEach(element => element.setAttribute('data-selected', ''))
-            }* /
-          })
-          */
       })
   }
 }
@@ -306,7 +262,7 @@ export default {
 
 .meiContainer {
   overflow: auto;
-  background-color: #ffffff;
+  // background-color: #ffffff;
 
   svg {
     .marked.staff > .staff.bounding-box > rect {

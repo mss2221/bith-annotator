@@ -2,7 +2,7 @@
   <header>
     <span class="title">Views</span>
     <span class="views">
-      <ViewTab v-for="(view, v) in views" v-bind:key="v" v-bind:view="view"/>
+      <ViewTab v-for="(view, v) in views" v-bind:key="v" v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="v"/>
     </span>
     <button class="customButton" @click="openLibrary"><i class="icon icon-plus"></i></button>
   </header>

@@ -70,3 +70,10 @@ const constants = {
 }
 
 export default constants
+
+export const bithTypes = {
+  observation: 'observation',
+  musicalMaterial: 'musicalMaterial',
+  extract: 'extract',
+  selection: 'selection'
+}

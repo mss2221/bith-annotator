@@ -74,27 +74,6 @@ export const userModule = {
     },
     SET_SOLID_LISTING_PATH (state, listingPath) {
       state.solidFileListingPath = listingPath
-    },
-    ADD_FILE_TO_SOLID_FILE_LISTING (state, uri) {
-      console.log('trying to add ' + uri)
-      const existingIndex = state.solidFileListing[prefix.ldp + 'contains'].findIndex(item => {
-        return item['@id'] === uri
-      })
-      console.log('index is ' + existingIndex)
-      if (existingIndex === -1) {
-        const obj = {}
-        obj['@id'] = uri
-        state.solidFileListing[prefix.ldp + 'contains'].push(obj)
-      }
-      console.log(state.solidFileListing)
-    },
-    REMOVE_FILE_FROM_SOLID_FILE_LISTING (state, uri) {
-      const existingIndex = state.solidFileListing[prefix.ldp + 'contains'].findIndex(item => {
-        return item['@id'] === uri
-      })
-      if (existingIndex !== -1) {
-        state.solidFileListing[prefix.ldp + 'contains'].splice(existingIndex, 1)
-      }
     }
   },
   actions: {

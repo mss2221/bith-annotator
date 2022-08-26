@@ -6,21 +6,20 @@
     <td class="date">{{ date }}</td>
     <!-- <td class="catNumber">{{ catNumber}}</td> -->
     <td class="buttons">
-      <button v-on:click="selectRendering" class="btn btn-sm textBtn">Render</button>
-      <button v-on:click="selectFacs" class="btn btn-sm facsBtn">Facsimile</button>
+      <button v-on:click="selectFacs" class="btn btn-sm facsBtn">IIIF</button>
+      <button v-on:click="selectRendering" class="btn btn-sm textBtn">Transcript</button>
     </td>
   </tr>
 </template>
 
 <script>
-import { prefix as pref } from './../../meld/prefixes'
+import { prefix as pref } from '@/meld/prefixes'
 export default {
   name: 'LibraryArrangement',
   props: {
     work: Object,
     arr: Object
   },
-
   computed: {
     shortTitle: function () {
       return this.arr.shortTitle
@@ -69,7 +68,7 @@ export default {
   font-size: .7rem;
 
   .facsBtn {
-    margin-left: .5rem;
+    margin-right: .5rem;
   }
 
   td {
