@@ -6,8 +6,8 @@
     <td class="date">{{ date }}</td>
     <!-- <td class="catNumber">{{ catNumber}}</td> -->
     <td class="buttons">
-      <button v-on:click="selectFacs" class="btn btn-sm facsBtn">IIIF</button>
-      <button v-on:click="selectRendering" class="btn btn-sm textBtn">Transcript</button>
+      <button v-on:click="selectFacs" :disabled="this.arr.iiif === false" class="btn btn-sm facsBtn">IIIF</button>
+      <button v-on:click="selectRendering" :disabled="this.arr.MEI === false" class="btn btn-sm textBtn">Transcript</button>
     </td>
   </tr>
 </template>
@@ -39,22 +39,26 @@ export default {
   },
   methods: {
     selectRendering: function () {
-      const obj = {
-        perspective: 'render',
-        arrangement: this.arr
+      if (this.arr.MEI !== false) {
+        const obj = {
+          perspective: 'render',
+          arrangement: this.arr
+        }
+        // console.log('Selecting the Verovio view, which means pulling MEI from ' + this.arr.MEI, obj)
+        this.$store.dispatch('addView', obj)
+        this.$store.dispatch('toggleLibraryModal')
       }
-      // console.log('Selecting the Verovio view, which means pulling MEI from ' + this.arr.MEI, obj)
-      this.$store.dispatch('addView', obj)
-      this.$store.dispatch('toggleLibraryModal')
     },
     selectFacs: function () {
-      const obj = {
-        perspective: 'facsimile',
-        arrangement: this.arr
+      if (this.arr.iiif !== false) {
+        const obj = {
+          perspective: 'facsimile',
+          arrangement: this.arr
+        }
+        // console.log('Selecting the Facsimile.')
+        this.$store.dispatch('addView', obj)
+        this.$store.dispatch('toggleLibraryModal')
       }
-      // console.log('Selecting the Facsimile.')
-      this.$store.dispatch('addView', obj)
-      this.$store.dispatch('toggleLibraryModal')
     }
   }
 }

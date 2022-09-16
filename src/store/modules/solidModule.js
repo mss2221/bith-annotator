@@ -4,6 +4,7 @@ import { bithTypes } from '@/meld/constants.js'
 import {
   addUrl,
   buildThing,
+  getDate,
   getStringNoLocale,
   getThingAll,
   getUrl,
@@ -353,6 +354,30 @@ export const solidModule = {
 
       selectionDS = setThing(selectionDS, thing)
       state.currentAnnot.selection[selectionId] = selectionDS
+    },
+    TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION (state, uri) {
+      if (state.activated[bithTypes.extract] !== null &&
+        state.activated[bithTypes.selection]) {
+        //
+        let selectionDS = state.currentAnnot.selection[state.activated[bithTypes.selection]]
+        const selectionId = getPublicIdFromDataStructure(selectionDS)
+        let thing = getThingAll(selectionDS)[0]
+
+        const urls = getUrlAll(thing, pref.frbr + 'part')
+        console.log(urls)
+        if (urls.indexOf(uri) === -1) {
+          thing = buildThing(thing)
+            .addUrl(pref.frbr + 'part', uri)
+            .build()
+        } else {
+          thing = buildThing(thing)
+            .removeUrl(pref.frbr + 'part', uri)
+            .build()
+        }
+
+        selectionDS = setThing(selectionDS, thing)
+        state.currentAnnot.selection[selectionId] = selectionDS
+      }
     }
   },
   actions: {
@@ -381,6 +406,7 @@ export const solidModule = {
       commit('START_EDITING', { type, id })
     },
 
+    // todo?
     setAnnotationTarget ({ commit, state, dispatch }, id) {
       const observations = Object.values(state.currentAnnot.observation)
       if (observations.length === 0) {
@@ -427,6 +453,13 @@ export const solidModule = {
       })
     },
 
+    /**
+     * used by Verovio to toggle selections
+     * @param  {[type]} commit               [description]
+     * @param  {[type]} state                [description]
+     * @param  {[type]} id                   [description]
+     * @return {[type]}        [description]
+     */
     selectionToggle ({ commit, state }, id) {
       if (state.activated.selection === null) {
         console.log(1)
@@ -452,6 +485,20 @@ export const solidModule = {
       commit('TOGGLE_SELECTION', id)
       console.log(3)
       // console.log('selectionToggle for ' + id)
+    },
+
+    /**
+     * used by OpenSeadragon to create new selections
+     * @param  {[type]} commit               [description]
+     * @param  {[type]} state                [description]
+     * @param  {[type]} uri                  [description]
+     * @return {[type]}        [description]
+     */
+    addFacsimileSelection ({ commit, state, rootState }, uri) {
+      // const userState = rootState.user
+      // const webId = userState.solidSession.info.webId
+      // commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', webId)
+      commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
     },
 
     changeCurrentDataObject ({ commit, state }, payload) {
@@ -932,7 +979,7 @@ export const solidModule = {
     },
 
     /**
-     * retrieves all extracts that have selections affecting the currently shown arrangements
+     * retrieves all extracts that have selections affecting the currently shown arrangements, plus the active extract (necessary for creating new extracts)
      * @param  {[type]} state                   [description]
      * @param  {[type]} getters                 [description]
      * @param  {[type]} rootState               [description]
@@ -943,14 +990,20 @@ export const solidModule = {
       const arrangementUris = []
 
       views.forEach(view => {
-        if ('iiif' in view?.arrangement) {
-          arrangementUris.push(view.arrangement.iiif)
+        if ('iiifTilesources' in view?.arrangement) {
+          view.arrangement.iiifTilesources.forEach(uri => {
+            if (arrangementUris.indexOf(uri) === -1) {
+              arrangementUris.push(uri.replace('http://', 'https://'))
+            }
+          })
+          // arrangementUris.push(view.arrangement.iiif)
         }
         if ('MEI' in view?.arrangement) {
-          arrangementUris.push(view.arrangement.MEI)
+          if (arrangementUris.indexOf(view.arrangement.MEI) === -1) {
+            arrangementUris.push(view.arrangement.MEI.replace('http://', 'https://'))
+          }
         }
       })
-      // TODO Continue here…
 
       const selections = {}
       const extracts = {}
@@ -963,7 +1016,7 @@ export const solidModule = {
 
         selectionUrls.forEach(idRef => {
           arrangementUris.forEach(arrangementUri => {
-            if (idRef.startsWith(arrangementUri)) {
+            if (idRef.replace('http://', 'https://').startsWith(arrangementUri)) {
               selections[selectionID] = selectionDS
             }
           })
@@ -978,12 +1031,25 @@ export const solidModule = {
 
         selectionUrls.forEach(idRef => {
           arrangementUris.forEach(arrangementUri => {
-            if (idRef.startsWith(arrangementUri)) {
+            if (idRef.replace('http://', 'https://').startsWith(arrangementUri)) {
               selections[selectionID] = selectionDS
             }
           })
         })
       })
+
+      if (state.activated[bithTypes.extract] !== null) {
+        const storeDS = state.annotStore[bithTypes.extract][state.activated[bithTypes.extract]]
+        if (storeDS !== undefined) {
+          const storeId = getPublicIdFromDataStructure(storeDS)
+          extracts[storeId] = storeDS
+        }
+        const currentDS = state.currentAnnot[bithTypes.extract][state.activated[bithTypes.extract]]
+        if (currentDS !== undefined) {
+          const currentId = getPublicIdFromDataStructure(currentDS)
+          extracts[currentId] = currentDS
+        }
+      }
 
       Object.values(selections).forEach(selection => {
         const parentExtracts = getParents(state, selection, bithTypes.selection)
@@ -993,7 +1059,145 @@ export const solidModule = {
         })
       })
 
-      return Object.values(extracts)
+      const arr = Object.values(extracts)
+      arr.sort((a, b) => {
+        const thingA = getThingAll(a)[0]
+        const dateA = getDate(thingA, pref.dct + 'created')
+        const thingB = getThingAll(b)[0]
+        const dateB = getDate(thingB, pref.dct + 'created')
+
+        const dateCompare = new Date(dateB) - new Date(dateA)
+        if (dateCompare === 0) {
+          console.log('same date: ' + dateA)
+          const labelA = getStringNoLocale(thingA, pref.rdfs + 'label')
+          const labelB = getStringNoLocale(thingB, pref.rdfs + 'label')
+          const labelCompare = (labelA < labelB) ? -1 : (labelA > labelB) ? 1 : 0
+          console.log('labels: ' + labelA + ' vs ' + labelB + ': ' + labelCompare)
+          return labelCompare
+        } else {
+          console.log('dates: ' + dateA + ' vs ' + dateB + ': ' + dateCompare)
+          return dateCompare
+        }
+      })
+
+      return arr
+    },
+
+    /**
+     * retrieves all image region selections on a given page
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
+    facsimileSelectionsByViewIndex: (state, getters, rootState) => (index) => {
+      const view = rootState.app.views[index]
+      const uri = view?.state?.pageUri
+
+      if (typeof uri !== 'string') {
+        return []
+      }
+
+      const foundSelections = {}
+
+      if (uri === undefined) {
+        console.error('\n\nno uri provided')
+        return []
+      }
+
+      const pageUri = uri.replace('http://', 'https://')
+      const getXywh = (selectionUrl) => {
+        return selectionUrl.split('/').at(-4).split(',')
+      }
+
+      // console.log('searching for ' + pageUri)
+
+      // get all selections from annotStore
+      Object.values(state.annotStore.selection).forEach(selectionDS => {
+        const selectionID = getPublicIdFromDataStructure(selectionDS)
+        const thing = getThingAll(selectionDS)[0]
+        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
+
+        selectionUrls.forEach(idRef => {
+          const selectionUrl = idRef.replace('http://', 'https://')
+          if (selectionUrl.startsWith(pageUri)) {
+            const xywh = getXywh(selectionUrl)
+            foundSelections[selectionID] = {
+              id: selectionID,
+              uri: selectionUrl,
+              x: parseInt(xywh[0]),
+              y: parseInt(xywh[1]),
+              w: parseInt(xywh[2]),
+              h: parseInt(xywh[3]),
+              classList: [],
+              extracts: {}
+            }
+
+            if (state.activated.selection === selectionID) {
+              foundSelections[selectionID].classList.push('activeSelection')
+            }
+
+            const extracts = getParents(state, selectionDS, bithTypes.selection)
+            extracts.forEach(extractDS => {
+              const extractID = getPublicIdFromDataStructure(extractDS)
+              foundSelections[selectionID].extracts[extractID] = true
+              if (state.activated.extract === extractID) {
+                foundSelections[selectionID].classList.push('activeExtract')
+              }
+            })
+          }
+        })
+      })
+
+      // get all selections from currentAnnot
+      Object.values(state.currentAnnot.selection).forEach(selectionDS => {
+        const selectionID = getPublicIdFromDataStructure(selectionDS)
+        const thing = getThingAll(selectionDS)[0]
+        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
+
+        selectionUrls.forEach(idRef => {
+          const selectionUrl = idRef.replace('http://', 'https://')
+          if (selectionUrl.startsWith(pageUri)) {
+            if (foundSelections[selectionID] === undefined) {
+              foundSelections[selectionID] = {
+                id: selectionID,
+                uri: selectionUrl,
+                classList: [],
+                extracts: {}
+              }
+            }
+
+            const xywh = getXywh(selectionUrl)
+            foundSelections[selectionID].x = xywh[0]
+            foundSelections[selectionID].y = xywh[1]
+            foundSelections[selectionID].w = xywh[2]
+            foundSelections[selectionID].h = xywh[3]
+            foundSelections[selectionID].classList.push('current')
+
+            if (state.activeSelection === selectionID && foundSelections[selectionID].classList.indexOf('activeSelection') === -1) {
+              foundSelections[selectionID].classList.push('activeSelection')
+            }
+
+            const extracts = getParents(state, selectionDS, bithTypes.selection)
+            extracts.forEach(extractDS => {
+              const extractID = getPublicIdFromDataStructure(extractDS)
+              foundSelections[selectionID].extracts[extractID] = true
+              if (state.activated.extract === extractID) {
+                foundSelections[selectionID].classList.push('activeExtract')
+              }
+            })
+          }
+        })
+      })
+
+      // console.log('foundSelections:')
+      // console.log(foundSelections)
+
+      return Object.values(foundSelections)
+    },
+
+    problem1: (state, getters, rootState) => (index) => {
+      // const view = rootState.app.views[index]
+
+      return 'received ' + index + ' state.activated.selection: ' + state.activated.selection + ' – views.length: '
     }
   }
 }

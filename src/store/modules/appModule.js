@@ -43,6 +43,9 @@ export const appModule = {
     },
     SET_LD_DETAILS (state, code) {
       state.ldDetails = code
+    },
+    SET_FACSIMILE_VIEW_CURRENT_PAGE (state, { viewIndex, pageN, pageUri }) {
+      state.views[viewIndex].state = { pageN, pageUri }
     }
   },
   actions: {
@@ -70,6 +73,9 @@ export const appModule = {
     },
     setLdDetails ({ commit }, code) {
       commit('SET_LD_DETAILS', code)
+    },
+    announceCurrentPage ({ commit }, { viewIndex, pageN, pageUri }) {
+      commit('SET_FACSIMILE_VIEW_CURRENT_PAGE', { viewIndex, pageN, pageUri })
     }
   },
   getters: {

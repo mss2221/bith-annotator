@@ -1,19 +1,19 @@
 <template>
   <div class="graphEntry" :class="{'active': activated}" :data-level="this.level" :title="type + ': ' + id" :data-id="id">
     <div class="firstLine" @click="activateThing">
-      <template v-if="this.level === 1">
-        <div class="editButtons float-right">
-          <template v-if="isCurrent && activated">
-            <i class="icon icon-cross" @click.stop="discardChanges" title="cancel changes"></i>
-            <i class="icon icon-check" @click.stop="saveChanges" title="save changes"></i>
-          </template>
-          <template v-if="!isCurrent && activated">
-            <i class="icon icon-edit" @click.stop="startEditing"></i>
-          </template>
-          <i class="icon icon-search" @click.stop="showLD"></i>
-        </div>
-        <i class="icon icon-caret" @click.stop="deactivateThing"></i>
-      </template>
+
+      <div class="editButtons float-right">
+        <template v-if="isCurrent && activated && this.level === 1">
+          <i class="icon icon-cross" @click.stop="discardChanges" title="cancel changes"></i>
+          <i class="icon icon-check" @click.stop="saveChanges" title="save changes"></i>
+        </template>
+        <template v-if="!isCurrent && activated && this.level === 1">
+          <i class="icon icon-edit" @click.stop="startEditing"></i>
+        </template>
+        <i class="icon icon-search" @click.stop="showLD"></i>
+      </div>
+      <i class="icon icon-caret" v-if="this.level === 1" @click.stop="deactivateThing"></i>
+
       <template v-if="isCurrent && activated">
         <input type="text" v-model.trim="label"/>
       </template>

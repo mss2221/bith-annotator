@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <template v-if="perspective==='facsimile'">
-      <Facsimile :idSeed="'facs_' + index" :manifest="arr.MEI"/>
+      <Facsimile :idSeed="'facs_' + index" :uri="arr.iiif" :index="index"/>
     </template>
     <template v-if="perspective==='render'">
       <div class="title">{{ shortTitle}}</div>

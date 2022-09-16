@@ -20,12 +20,77 @@ import { MAX_TRAVERSERS } from '@/config/traversal.config.js'
 export const transformArrangement = (graphObject) => {
   // Take graph of arrangement and make more intuitive local object
   const obj = {}
+  obj.id = graphObject['@id']
   obj.shortTitle = graphObject[prefix.bibo + 'shortTitle']
   obj.genre = prefix.dbpedia + 'genre' in graphObject ? graphObject[prefix.dbpedia + 'genre']['@id'] : false
   obj.arranger = graphObject[prefix.gndo + 'arranger'] // Change so we have name, not URL
   obj.publisher = graphObject[prefix.dce + 'publisher'] // Change so we have name, not URL
   obj.date = graphObject[prefix.gndo + 'dateOfPublication']
-  obj.MEI = prefix.frbr + 'embodiment' in graphObject ? graphObject[prefix.frbr + 'embodiment']['@id'] : false
+
+  const embodiments = graphObject[prefix.frbr + 'embodiment']
+  let mei = false
+  let iiif = false
+  let manifest = null
+
+  // decide the different outputs for embodiments
+  if (embodiments === undefined) {
+    // no embodiments are provided, nothing needs to be done
+  } else if (Array.isArray(embodiments)) {
+    // an array of embodiments is provided. this assumes to find objects
+
+    embodiments.forEach(emb => {
+      if (prefix.dct + 'format' in emb && '@id' in emb[prefix.dct + 'format'] && '@id' in emb) {
+        mei = emb['@id']
+      }
+
+      if ('@type' in emb && emb['@type'] === prefix.iiif2 + 'Manifest' && '@id' in emb) {
+        iiif = emb['@id']
+        manifest = emb
+      }
+
+      if (prefix.rdf + 'type' in emb && emb[prefix.rdf + 'type'] === prefix.iiif2 + 'Manifest' && '@id' in embodiments) {
+        iiif = emb['@id']
+        manifest = emb
+      }
+    })
+  } else if (typeof embodiments === 'object') {
+    // an single qualified object is given
+
+    if (prefix.dct + 'format' in embodiments && '@id' in embodiments[prefix.dct + 'format'] && '@id' in embodiments) {
+      mei = embodiments['@id']
+    }
+
+    if ('@type' in embodiments && embodiments['@type'] === prefix.iiif2 + 'Manifest' && '@id' in embodiments) {
+      iiif = embodiments['@id']
+      manifest = embodiments
+    }
+
+    if (prefix.rdf + 'type' in embodiments && embodiments[prefix.rdf + 'type'] === prefix.iiif2 + 'Manifest' && '@id' in embodiments) {
+      iiif = embodiments['@id']
+      manifest = embodiments
+    }
+  } else if (typeof embodiments === 'string') {
+    // not supported…
+  }
+
+  obj.MEI = mei
+  obj.iiif = iiif
+
+  if (manifest !== null) {
+    try {
+      const tileSources = []
+      // const sequence1 =
+      const canvases = manifest[prefix.iiif2 + 'hasSequences']['@list'][0][prefix.iiif2 + 'hasCanvases']['@list']
+      canvases.forEach(canvas => {
+        const infoJsonUri = canvas[prefix.iiif2 + 'hasImageAnnotations']['@list'][0][prefix.oa + 'hasBody'][prefix.sioc + 'has_service']['@id']
+        tileSources.push(infoJsonUri)
+      })
+      obj.iiifTilesources = tileSources
+    } catch (err) {
+      console.error('something went wrong: ' + err)
+    }
+  }
+
   obj.place = graphObject[prefix.rdau + 'P60163']
   // obj.catNumber = pref.wdt+"P217" in graph ? graph[pref.wdt+"P217"]['@id'] : false;
   obj.catNumber = graphObject[prefix.wdt + 'P217']

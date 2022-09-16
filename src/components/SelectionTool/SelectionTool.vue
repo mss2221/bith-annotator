@@ -54,6 +54,10 @@ export default {
   overflow: scroll;
   height: 100%;
   background-color: #ffffff;
+
+  .content {
+    height: 100%;
+  }
 }
 
 </style>

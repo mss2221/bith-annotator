@@ -10,14 +10,38 @@
     <div class="scrollBox">
 
       <template v-if="!showAnnotationTool">
-        <h1>Extracts on current Arrangements:</h1>
+        <template v-if="views.length === 0">
+          <h1>Introduction</h1>
+          <p>
+            BitH Annotator has two different modes. In the <strong>select</strong> mode,
+            you can create <em>Named Extracts</em>, which rely on <em>Selections</em>
+            within the available <em>Arrangements</em>. In this mode, only the
+            <em>Extracts</em> of the currently viewed arrangements are displayed.
+            In order to start, you therefore need to open a view first. This is
+            possible with the plus button in the top left of the application.
+          </p>
+          <p>
+            In <strong>annotate</strong> mode, you will then be able to see all
+            available <em>Extracts</em>. Opening one of them will automatically
+            open the corresponding selections from the arrangements they're
+            extracted from. You may then combine multiple extracts into entities
+            called <em>Musical Materials</em>. This can be used to identify
+            themes across multiple arrangements of the work, for instance. In
+            addition, you may write <em>Observations</em> about
+            <em>Musical Materials</em>, <em>Extracts</em>, and recursively about
+            <em>Observations</em> themselves.
+          </p>
+        </template>
+        <template v-else>
+          <h1>Extracts on current Arrangements:</h1>
 
-        <button class="btn btn-link" @click="newExtract">New Extract</button>
-        <div class="solidBox">
-          <div class="scrollable">
-            <GraphEntry v-for="(e, eI) in viewedExtracts" :key="eI" :file="e" :level="1" :type="bithTypes.extract"/>
+          <button class="btn btn-link" @click="newExtract">New Extract</button>
+          <div class="solidBox">
+            <div class="scrollable">
+              <GraphEntry v-for="(e, eI) in viewedExtracts" :key="eI" :file="e" :level="1" :type="bithTypes.extract"/>
+            </div>
           </div>
-        </div>
+        </template>
 
       </template>
 
@@ -70,6 +94,9 @@ export default {
     bithTypes: function () {
       return bithTypes
     },
+    views: function () {
+      return this.$store.getters.views
+    },
     showAnnotationTool: function () {
       return this.$store.getters.annotationToolVisible
     },
@@ -83,7 +110,9 @@ export default {
       return this.$store.getters.allThingsByType(bithTypes.extract)
     },
     viewedExtracts: function () {
-      return this.$store.getters.extractsForViewedArrangements
+      const arr = this.$store.getters.extractsForViewedArrangements
+      console.log('\n\nARR:', arr)
+      return arr
     },
     selections: function () {
       return this.$store.getters.allThingsByType(bithTypes.selection)
