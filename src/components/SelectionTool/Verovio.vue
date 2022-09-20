@@ -137,12 +137,10 @@ export default {
     if (this.$refs.mei.querySelector('svg') !== null) {
       return false
     }
-    fetch(this.uri)
-      .then(res => {
-        document.querySelector('#activity_' + this.idSeed).innerHTML = 'Processing'
-        return res.text()
-      })
-      .then(mei => {
+
+    this.$store.dispatch('loadMEI', this.uri)
+      .then(() => {
+        const mei = this.$store.getters.mei(this.uri)
         vrvToolkit.loadData(mei)
         const svg = vrvToolkit.renderToSVG(1, {})
         // document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
@@ -195,6 +193,14 @@ export default {
           this.highlightSelections(this.allSelectionsForActiveSelection, [], 'activeSelection')
         }
       })
+    /* fetch(this.uri)
+      .then(res => {
+        document.querySelector('#activity_' + this.idSeed).innerHTML = 'Processing'
+        return res.text()
+      })
+      .then(mei => {
+
+      }) */
   }
 }
 </script>

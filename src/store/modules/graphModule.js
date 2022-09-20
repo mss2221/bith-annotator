@@ -92,6 +92,17 @@ export const graphModule = {
         }
         return fits
       })
+    },
+    meiByManifestUri: (state) => (manifestUri) => {
+      const arr = state.arrangements.find(arr => {
+        return arr.iiif === manifestUri
+      })
+
+      if (arr.MEI === false) {
+        return null
+      } else {
+        return arr.MEI
+      }
     }
   }
 }

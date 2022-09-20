@@ -1,6 +1,6 @@
 import { prefix as pref } from '@/meld/prefixes.js'
 
-export const graphURI = 'http://localhost:8082/rdf/BitHCollection.jsonld' // 'https://beta.domestic-beethoven.eu/rdf/BitHCollection.jsonld' // 'http://localhost:8082/rdf/BitHCollection.jsonld'
+export const graphURI = './rdf/BitHCollection.jsonld' // 'http://localhost:8082/rdf/BitHCollection.jsonld' // 'https://beta.domestic-beethoven.eu/rdf/BitHCollection.jsonld' // 'http://localhost:8082/rdf/BitHCollection.jsonld'
 
 export const params = {
   numHops: 3,

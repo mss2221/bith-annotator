@@ -12,7 +12,8 @@ export const appModule = {
     libraryModalVisible: false,
     landingPageVisible: true,
     views: [],
-    ldDetails: ''
+    ldDetails: '',
+    meiCache: {}
   }),
   mutations: {
     SHOW_SELECTION_TOOL (state, bool) {
@@ -46,6 +47,9 @@ export const appModule = {
     },
     SET_FACSIMILE_VIEW_CURRENT_PAGE (state, { viewIndex, pageN, pageUri }) {
       state.views[viewIndex].state = { pageN, pageUri }
+    },
+    CACHE_MEI (state, { uri, mei }) {
+      state.meiCache[uri] = mei
     }
   },
   actions: {
@@ -76,6 +80,24 @@ export const appModule = {
     },
     announceCurrentPage ({ commit }, { viewIndex, pageN, pageUri }) {
       commit('SET_FACSIMILE_VIEW_CURRENT_PAGE', { viewIndex, pageN, pageUri })
+    },
+    loadMEI ({ commit, state }, uri) {
+      return new Promise((resolve, reject) => {
+        if (state.meiCache[uri] !== undefined) {
+          resolve()
+        } else {
+          fetch(uri)
+            .then(res => res.text())
+            .then(mei => {
+              commit('CACHE_MEI', { uri, mei })
+              resolve()
+            })
+            .catch(err => {
+              console.log('failed to load ' + uri + ': ' + err)
+              reject(err)
+            })
+        }
+      })
     }
   },
   getters: {
@@ -111,6 +133,9 @@ export const appModule = {
     },
     ldDetails: state => {
       return state.ldDetails
+    },
+    mei: state => uri => {
+      return state.meiCache[uri]
     }
   }
 }

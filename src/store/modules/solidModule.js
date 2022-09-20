@@ -15,6 +15,8 @@ import {
 
 import { getPublicIdFromDataStructure, getAnnotDS, getMusMatDS, getExtractDS, getSelectionDS, resetActivations, populateActivations, emptyCurrentAnnot, populateCurrentAnnot, getChildren, getParents } from '@/store/tools/solidHelpers.js'
 
+const parser = new DOMParser()
+
 export const solidModule = {
   state: () => ({
     annotStore: {
@@ -308,6 +310,18 @@ export const solidModule = {
 
       state.activated.selection = null
     },
+
+    ADD_MUSMAT (state, user) {
+      const musMat = getMusMatDS(user)
+      const musMatId = getPublicIdFromDataStructure(musMat)
+
+      emptyCurrentAnnot(state)
+      resetActivations(state)
+
+      state.currentAnnot.musicalMaterial[musMatId] = musMat
+      state.activated.musicalMaterial = musMatId
+    },
+
     ACTIVATE_THING (state, { type, id }) {
       if (type in bithTypes) {
         state.activated[type] = id
@@ -386,6 +400,13 @@ export const solidModule = {
       const webId = userState.solidSession.info.webId
       commit('ADD_EXTRACT', webId)
       commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', webId)
+    },
+    addMusMat ({ commit, rootState }) {
+      const userState = rootState.user
+      const webId = userState.solidSession.info.webId
+
+      // TODO: should we ask to save unsaved changes first?
+      commit('ADD_MUSMAT', webId)
     },
     setActiveObservation ({ commit }, id) {
       commit('ACTIVATE_THING', { type: bithTypes.observation, id })
@@ -499,6 +520,21 @@ export const solidModule = {
       // const webId = userState.solidSession.info.webId
       // commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', webId)
       commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
+    },
+
+    /**
+     * used by OpenSeadragon when a user clicks on a measure
+     * @param  {[type]} commit               [description]
+     * @param  {[type]} uri                  fileURI + '#' + measureID
+     * @return {[type]}        [description]
+     */
+    clickMeasure ({ commit, state, rootState }, uri) {
+      if (state.activated.selection !== null && state.currentAnnot.selection[state.activated.selection] !== undefined) {
+        // console.log('toggle measure selection')
+        commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
+      } else {
+        console.log('ignoring measure click')
+      }
     },
 
     changeCurrentDataObject ({ commit, state }, payload) {
@@ -804,6 +840,26 @@ export const solidModule = {
       }
     },
 
+    /**
+     * returns all parent IDs
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
+    parentIDsByTypeAndId: (state) => (type, id) => {
+      if (type in bithTypes) {
+        const currentDS = state.currentAnnot[type][id]
+        const ds = currentDS !== undefined ? currentDS : state.annotStore[type][id]
+        const arr = []
+        getParents(state, ds, type).forEach(parentDS => {
+          arr.push(getPublicIdFromDataStructure(parentDS))
+        })
+        return arr
+      } else {
+        console.error('Unknown type ' + type)
+        return []
+      }
+    },
+
     /* activeExtractObject: state => {
       return state.currentAnnot.extract[state.currentExtract]
     }, */
@@ -1068,14 +1124,11 @@ export const solidModule = {
 
         const dateCompare = new Date(dateB) - new Date(dateA)
         if (dateCompare === 0) {
-          console.log('same date: ' + dateA)
           const labelA = getStringNoLocale(thingA, pref.rdfs + 'label')
           const labelB = getStringNoLocale(thingB, pref.rdfs + 'label')
           const labelCompare = (labelA < labelB) ? -1 : (labelA > labelB) ? 1 : 0
-          console.log('labels: ' + labelA + ' vs ' + labelB + ': ' + labelCompare)
           return labelCompare
         } else {
-          console.log('dates: ' + dateA + ' vs ' + dateB + ': ' + dateCompare)
           return dateCompare
         }
       })
@@ -1194,10 +1247,174 @@ export const solidModule = {
       return Object.values(foundSelections)
     },
 
-    problem1: (state, getters, rootState) => (index) => {
-      // const view = rootState.app.views[index]
+    /**
+     * gets all selections with measures on current facsimile page
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} getters                 [description]
+     * @param  {[type]} rootState               [description]
+     * @return {[type]}           [description]
+     */
+    allMeasureSelectionsOnCurrentFacsimilePage: (state, getters, rootState) => (index) => {
+      const view = rootState.app.views[index]
 
-      return 'received ' + index + ' state.activated.selection: ' + state.activated.selection + ' – views.length: '
+      const arrangement = view.arrangement
+      let meiUri
+
+      if (arrangement.MEI === false) {
+        return {}
+      } else {
+        meiUri = arrangement.MEI
+      }
+      const pageUri = view?.state?.pageUri
+
+      const meiString = rootState.app?.meiCache[meiUri]
+      if (meiString === undefined) {
+        return {}
+      }
+
+      const mei = parser.parseFromString(meiString, 'application/xml')
+      const surface = mei.querySelector('graphic[target="' + pageUri + '"]').closest('surface')
+      const zones = surface.querySelectorAll('zone')
+      const measures = []
+
+      zones.forEach(zone => {
+        const zoneId = zone.getAttribute('xml:id')
+        const elem = mei.querySelector('measure[facs~="#' + zoneId + '"]')
+        const measureUri = meiUri + '#' + elem.getAttribute('xml:id')
+        measures.push(measureUri)
+      })
+
+      const obj = {}
+
+      Object.values(state.annotStore.selection).forEach(selectionDS => {
+        const selectionId = getPublicIdFromDataStructure(selectionDS)
+        const thing = getThingAll(selectionDS)[0]
+        const urls = getUrlAll(thing, pref.frbr + 'part')
+        const isActivatedSelection = state.activated.selection === selectionId
+        let isActivatedExtract = false
+
+        const extracts = getParents(state, selectionDS, bithTypes.selection)
+        extracts.forEach(extractDS => {
+          const extractID = getPublicIdFromDataStructure(extractDS)
+          if (state.activated.extract === extractID) {
+            isActivatedExtract = true
+          }
+        })
+
+        urls.forEach(idRef => {
+          if (measures.indexOf(idRef) !== -1) {
+            obj[idRef] = {}
+            obj[idRef][selectionId] = ['selection']
+            if (isActivatedSelection) {
+              obj[idRef][selectionId].push('activeSelection')
+            }
+            if (isActivatedExtract) {
+              obj[idRef][selectionId].push('activeExtract')
+            }
+          }
+        })
+      })
+
+      Object.values(state.currentAnnot.selection).forEach(selectionDS => {
+        const selectionId = getPublicIdFromDataStructure(selectionDS)
+        const thing = getThingAll(selectionDS)[0]
+        const urls = getUrlAll(thing, pref.frbr + 'part')
+        const isActivatedSelection = state.activated.selection === selectionId
+        let isActivatedExtract = false
+
+        const extracts = getParents(state, selectionDS, bithTypes.selection)
+        extracts.forEach(extractDS => {
+          const extractID = getPublicIdFromDataStructure(extractDS)
+          if (state.activated.extract === extractID) {
+            isActivatedExtract = true
+          }
+        })
+
+        urls.forEach(idRef => {
+          if (measures.indexOf(idRef) !== -1) {
+            if (obj[idRef] === undefined) {
+              obj[idRef] = {}
+              obj[idRef][selectionId] = ['current']
+              if (isActivatedSelection) {
+                obj[idRef][selectionId].push('activeSelection')
+              }
+              if (isActivatedExtract) {
+                obj[idRef][selectionId].push('activeExtract')
+              }
+            } else {
+              obj[idRef][selectionId].push('current')
+              if (isActivatedSelection) {
+                obj[idRef][selectionId].push('activeSelection')
+              }
+              if (isActivatedExtract) {
+                obj[idRef][selectionId].push('activeExtract')
+              }
+            }
+          }
+        })
+      })
+
+      return obj
+    },
+
+    /**
+     * retrieve arrangement from extract. Problem: This retrieves measures only,
+     * not IIIF resources. For that, we don't seem to have all info required
+     * (link to page's info.json only, not manifest.json)
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} getters                 [description]
+     * @param  {[type]} rootState               [description]
+     * @return {[type]}           [description]
+     */
+    arrangementByExtract: (state, getters, rootState) => (extractDS) => {
+      const arrangements = rootState.graph.arrangements
+      const tileSources = []
+
+      arrangements.forEach(arr => {
+        tileSources.push(JSON.parse(JSON.stringify(arr.iiifTilesources)))
+      })
+
+      const fileUrls = []
+      const selections = getChildren(state, extractDS, bithTypes.extract)
+      selections.forEach(selectionDS => {
+        const thing = getThingAll(selectionDS)[0]
+        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
+        selectionUrls.forEach(url => {
+          if (url.indexOf('#') !== -1) {
+            fileUrls.push(url.split('#')[0])
+          } else {
+            fileUrls.push(url)
+          }
+        })
+      })
+
+      const arrangement = arrangements.find((arr, i) => {
+        // console.log('comparing', fileUrls, tileSources[i])
+
+        if (fileUrls.indexOf(arr.MEI) !== -1) {
+          return true
+        }
+
+        let iiifHit = false
+        let count = 0
+        if (tileSources[i] !== undefined && tileSources[i].length > 0) {
+          fileUrls.forEach(url => {
+            tileSources[i].forEach(tileSource => {
+              if (url.replace('http://', 'https://').startsWith(tileSource.replace('http://', 'https://'))) {
+                iiifHit = true
+                if (count < 3) {
+                  // console.log('HIT:', url.replace('http://', 'https://'), tileSource.replace('http://', 'https://'))
+                  count++
+                }
+              }
+            })
+          })
+        }
+        // console.log('found iiifHit: ' + iiifHit)
+        return iiifHit
+      })
+      // console.log('found arrangement: ', arrangement)
+      return arrangement
     }
   }
 }

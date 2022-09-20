@@ -45,35 +45,53 @@
 
       </template>
 
+      <!-- the contents for annotation mode -->
       <template v-else>
-        <h1>Full Dataset</h1>
-        <div class="solidBox">
-          <h1>Observations</h1>
-          <div class="scrollable">
-            <GraphEntry v-for="(o, oI) in observations" :key="oI" v-bind:file="o"/>
-          </div>
-        </div>
+        <splitpanes horizontal class="default-theme annotPanes">
+          <pane min-size="10">
+            <div class="scrollBox">
+              <h1>Observations</h1>
+              <div class="scrollable">
+                <table class="table table-striped">
+                  <tbody>
+                    <GraphEntryDetailed v-for="(o, oI) in observations" :key="oI" :file="o" :level="1" :type="bithTypes.observation"/>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </pane>
+          <pane min-size="10">
+            <div class="scrollBox">
+              <h1>Musical Materials <span class="float-right addThing"><i class="icon icon-plus" title="new Musical Material" @click="newMusMat"></i></span></h1>
+              <div class="scrollable">
+                <table class="table table-striped">
+                  <tbody>
+                    <MusMatEntryDetailed v-for="(m, mI) in musicalMaterials" :key="mI" :file="m" :level="1" :type="bithTypes.musicalMaterial"/>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </pane>
+          <pane min-size="10">
+            <div class="scrollBox">
+              <h1>Extracts <small>[these can be modified in <em>select</em> view]</small></h1>
+              <div class="scrollable">
+                <table class="table table-striped">
+                  <tbody>
+                    <ExtractEntryDetailed v-for="(e, eI) in extracts" :key="eI" :file="e" :level="1" :type="bithTypes.extract"/>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </pane>
+        </splitpanes>
 
-        <div class="solidBox">
-          <h1>Musical Materials</h1>
-          <div class="scrollable">
-            <GraphEntry v-for="(m, mI) in musicalMaterials" :key="mI" v-bind:file="m"/>
-          </div>
-        </div>
-
-        <div class="solidBox">
-          <h1>Extracts</h1>
-          <div class="scrollable">
-            <GraphEntry v-for="(e, eI) in extracts" :key="eI" v-bind:file="e"/>
-          </div>
-        </div>
-
-        <div class="solidBox">
+        <!--<div class="solidBox">
           <h1>Selections</h1>
           <div class="scrollable">
             <GraphEntry v-for="(s, sI) in selections" :key="sI" v-bind:file="s"/>
           </div>
-        </div>
+        </div>-->
       </template>
 
     </div>
@@ -82,13 +100,24 @@
 
 <script>
 import GraphEntry from '@/components/OverviewTool/GraphEntry.vue'
+import GraphEntryDetailed from '@/components/OverviewTool/GraphEntryDetailed.vue'
+import MusMatEntryDetailed from '@/components/OverviewTool/MusMatEntryDetailed.vue'
+import ExtractEntryDetailed from '@/components/OverviewTool/ExtractEntryDetailed.vue'
+import { Splitpanes, Pane } from 'splitpanes'
+import 'splitpanes/dist/splitpanes.css'
+
 // eslint-disable-next-line
 import { bithTypes } from '@/meld/constants.js'
 
 export default {
   name: 'OverviewTool',
   components: {
-    GraphEntry
+    GraphEntry,
+    GraphEntryDetailed,
+    ExtractEntryDetailed,
+    MusMatEntryDetailed,
+    Splitpanes,
+    Pane
   },
   computed: {
     bithTypes: function () {
@@ -111,7 +140,6 @@ export default {
     },
     viewedExtracts: function () {
       const arr = this.$store.getters.extractsForViewedArrangements
-      console.log('\n\nARR:', arr)
       return arr
     },
     selections: function () {
@@ -127,6 +155,9 @@ export default {
     },
     newExtract: function () {
       this.$store.dispatch('addExtract')
+    },
+    newMusMat: function () {
+      this.$store.dispatch('addMusMat')
     }
   }
 }
@@ -145,6 +176,11 @@ export default {
   h1 {
     font-size: 0.8rem;
     font-weight: 500;
+
+    .addThing {
+      font-size: .6rem;
+      cursor: pointer;
+    }
   }
 }
 
@@ -160,8 +196,15 @@ export default {
   }
 }
 
+.annotPanes {
+  .splitpanes__pane {
+    background-color: #ffffff;
+  }
+}
+
 .scrollBox {
   overflow: scroll;
+  height: 100%;
   flex-grow: 1;
   padding: 0 .5rem .5rem .5rem;
 

@@ -16,9 +16,8 @@
 			"ldp:Container"
 		],
 		"ldp:contains": [
-
-			{"@id": "http://localhost:8081/rdf/haslingerTrio93.nq"},
-			{"@id": "https://beta.domestic-beethoven.eu/rdf/klvaus93.nq"}
+			{"@id": "./rdf/haslingerTrio93.nq"},
+			{"@id": "./rdf/klvaus93.nq"}
 		]
 	}
 }

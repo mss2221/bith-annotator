@@ -26,6 +26,8 @@ import '@recogito/annotorious-openseadragon/dist/annotorious.min.css'
 import { uuid } from '@/store/tools/uuid.js'
 import { bithTypes } from '@/meld/constants.js'
 
+const parser = new DOMParser()
+
 export default {
   // eslint-disable-next-line
   name: 'Facsimile',
@@ -46,6 +48,13 @@ export default {
     },
     containerID: function () {
       return 'iiifContainer_' + this.idSeed
+    },
+    allMeasureSelectionsOnCurrentFacsimilePage: function () {
+      if (this.viewer === undefined || this.facsimileInfo === undefined) {
+        return {}
+      }
+
+      return this.$store.getters.allMeasureSelectionsOnCurrentFacsimilePage(this.index)
     }
   },
   methods: {
@@ -155,8 +164,85 @@ export default {
       this.currentImageUri = this.facsimileInfo[currentPage].imageUri.replace('/info.json', '')
       console.log('calling preparePage on page ' + this.currentImageUri + ' at ' + this.index)
 
-      const selections = this.$store.getters.facsimileSelectionsByViewIndex(this.index)
       this.viewer.clearOverlays()
+
+      // deal with measure zones
+      const meiUri = this.$store.getters.meiByManifestUri(this.uri)
+      if (meiUri !== null) {
+        this.$store.dispatch('loadMEI', meiUri)
+          .then(() => {
+            const meiString = this.$store.getters.mei(meiUri)
+
+            if (meiString !== undefined) {
+              const mei = parser.parseFromString(meiString, 'application/xml')
+              const surface = [...mei.querySelectorAll('surface')].find(surface => {
+                return surface.querySelector('graphic').getAttribute('target') === this.currentImageUri
+              })
+
+              if (surface !== undefined) {
+                const zones = surface.querySelectorAll('zone')
+
+                const allSelectedMeasures = this.$store.getters.allMeasureSelectionsOnCurrentFacsimilePage(this.index)
+
+                zones.forEach(zone => {
+                  const zoneId = zone.getAttribute('xml:id')
+                  const measure = mei.querySelector('measure[facs~="#' + zoneId + '"]')
+                  const measureId = measure.getAttribute('xml:id')
+                  const label = measure.hasAttribute('label') ? measure.getAttribute('label') : measure.getAttribute('n')
+
+                  const elem = document.createElement('div')
+                  // elem.setAttribute('data-zone-id', zoneId)
+                  elem.setAttribute('data-measure-id', measureId)
+                  elem.setAttribute('data-mei-uri', meiUri)
+                  // elem.setAttribute('data-manifest', this.uri)
+                  elem.setAttribute('title', label)
+
+                  elem.classList.add('overlay')
+                  elem.classList.add('measure')
+
+                  if (allSelectedMeasures[meiUri + '#' + measureId] !== undefined) {
+                    const obj = allSelectedMeasures[meiUri + '#' + measureId]
+                    elem.setAttribute('data-selections', Object.keys(obj).join(' '))
+
+                    Object.values(obj).forEach(classes => {
+                      classes.forEach(cl => elem.classList.add(cl))
+                    })
+                  }
+
+                  const labelContainer = document.createElement('div')
+                  labelContainer.classList.add('lc')
+
+                  const labelElem = document.createElement('label')
+                  labelElem.classList.add('measureNum')
+                  labelElem.textContent = label
+
+                  labelContainer.append(labelElem)
+                  elem.append(labelContainer)
+                  labelElem.addEventListener('click', this.measureClickListener)
+
+                  const x = parseInt(zone.getAttribute('ulx'))
+                  const y = parseInt(zone.getAttribute('uly'))
+                  const w = parseInt(zone.getAttribute('lrx')) - parseInt(zone.getAttribute('ulx'))
+                  const h = parseInt(zone.getAttribute('lry')) - parseInt(zone.getAttribute('uly'))
+
+                  // elem.addEventListener('click', this.overlayClickListener)
+
+                  const rect = new OpenSeadragon.Rect(x, y, w, h)
+
+                  // append the new element as overlay, apply scaling factor to dimensions
+                  this.viewer.addOverlay({
+                    element: elem,
+                    location: rect
+                  })
+                })
+              } else {
+                console.log('no surface')
+              }
+            }
+          })
+      }
+
+      const selections = this.$store.getters.facsimileSelectionsByViewIndex(this.index)
       // console.log(selections)
 
       // This is a working (!) way to render the selections with Annotorious
@@ -205,7 +291,7 @@ export default {
 
         elem.addEventListener('click', this.overlayClickListener)
 
-        const rect = new OpenSeadragon.Rect(selection.x, selection.y, selection.w, selection.h, 45)
+        const rect = new OpenSeadragon.Rect(selection.x, selection.y, selection.w, selection.h)
 
         // append the new element as overlay, apply scaling factor to dimensions
         this.viewer.addOverlay({
@@ -282,6 +368,30 @@ export default {
     },
 
     /**
+     * called when user clicks on measure. The action is determined
+     * in the Vuex action dispatched from here.
+     * @param  {[type]} e               [description]
+     * @return {[type]}   [description]
+     */
+    measureClickListener: function (e) {
+      // console.log(e.target.closest('.measure.overlay'))
+      const elem = e.target.closest('.measure.overlay')
+      const measureID = elem.getAttribute('data-measure-id')
+      const mei = elem.getAttribute('data-mei-uri')
+      console.log('clicked measure', e, mei + '#' + measureID)
+      this.$store.dispatch('clickMeasure', mei + '#' + measureID)
+      if (elem.hasAttribute('data-selections')) {
+        const selectionID = elem.getAttribute('data-selections').split(' ')[0]
+        const extracts = this.$store.getters.parentIDsByTypeAndId(bithTypes.selection, selectionID)
+
+        if (extracts.length > 0) {
+          this.$store.dispatch('activateThing', { id: extracts[0], type: bithTypes.extract })
+        }
+        this.$store.dispatch('activateThing', { id: selectionID, type: bithTypes.selection })
+      }
+    },
+
+    /**
      * a function that is called whenever pages are turned. Calls the preparePage() function
      * @param  {[type]} obj               [description]
      * @return {[type]}     [description]
@@ -290,7 +400,7 @@ export default {
       const currentPage = this.viewer.currentPage()
       this.currentImageUri = this.facsimileInfo[currentPage].imageUri.replace('/info.json', '')
       this.$store.dispatch('announceCurrentPage', { viewIndex: this.index, pageUri: this.currentImageUri, pageN: currentPage })
-
+      this.anno.clearAnnotations()
       this.preparePage()
     },
 
@@ -339,6 +449,7 @@ export default {
 
       this.$store.dispatch('addFacsimileSelection', targetUri)
       console.log('storing ' + targetUri)
+      this.anno.clearAnnotations()
 
       // this.$store.dispatch('createZone', annotation)
       // this.$store.dispatch('selectZone', null)
@@ -462,13 +573,13 @@ export default {
           console.log(element)
         })
 
-        this.$store.watch((state, getters) => getters.problem1(this.index),
-          (newVal, oldVal) => {
-            console.log('PROBLEM WATCHER CALLING ' + newVal)
-          })
-
         this.unwatchSelectionsOnPage = this.$store.watch((state, getters) => getters.facsimileSelectionsByViewIndex(this.index), // this.currentImageUri),
           (newArr, oldArr) => {
+            this.preparePage()
+          })
+
+        this.unwatchAllMeasureSelectionsOnCurrentFacsimilePage = this.$store.watch((state, getters) => getters.allMeasureSelectionsOnCurrentFacsimilePage(this.index),
+          (newObj, oldObj) => {
             this.preparePage()
           })
 
@@ -482,6 +593,7 @@ export default {
   },
   beforeUnmount () {
     this.unwatchSelectionsOnPage()
+    this.unwatchAllMeasureSelectionsOnCurrentFacsimilePage()
   }
 }
 </script>
@@ -553,10 +665,39 @@ export default {
     position: relative;
   }
 
+  .overlay.measure {
+    // background-color: #ffffff11;
+    // z-index: 1;
+    &:hover {
+      background-color: $measureHighlightColor;
+    }
+
+    .lc {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      top: calc(50% - .35rem);
+      line-height: .7rem;
+      font-size: .7rem;
+
+      .measureNum {
+        display: inline;
+        z-index: 1;
+        cursor: pointer;
+        &:hover {
+          font-weight: 900;
+        }
+      }
+    }
+  }
+
   .overlay.selection {
     background-color: transparentize($svgSelection, .6);
     z-index: 1;
-    cursor: pointer;
+
+    &:not(.measure) {
+      cursor: pointer;
+    }
 
     &.activeExtract {
       background-color: transparentize($svgCurrentExtract, .6);
