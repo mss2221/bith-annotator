@@ -13,7 +13,7 @@ import {
   setThing
 } from '@inrupt/solid-client'
 
-import { getPublicIdFromDataStructure, getAnnotDS, getMusMatDS, getExtractDS, getSelectionDS, resetActivations, populateActivations, emptyCurrentAnnot, populateCurrentAnnot, getChildren, getParents } from '@/store/tools/solidHelpers.js'
+import { getPublicIdFromDataStructure, getAnnotDS, getMusMatDS, getExtractDS, getSelectionDS, resetActivations, populateActivations, emptyCurrentAnnot, populateCurrentAnnot, getChildren, getParents, getPredicateByType, getTypeById } from '@/store/tools/solidHelpers.js'
 
 const parser = new DOMParser()
 
@@ -103,6 +103,12 @@ export const solidModule = {
         state.annotStore[type][id] = undefined
       }
     },
+
+    /**
+     * used for changes to current annot
+     * @param {[type]} state    [description]
+     * @param {[type]} payload  [description]
+     */
     ADD_TO_CURRENT_ANNOT (state, payload) {
       const type = payload.type
       const id = payload.id
@@ -322,6 +328,17 @@ export const solidModule = {
       state.activated.musicalMaterial = musMatId
     },
 
+    ADD_OBSERVATION (state, user) {
+      const observation = getAnnotDS(user)
+      const observationId = getPublicIdFromDataStructure(observation)
+
+      emptyCurrentAnnot(state)
+      resetActivations(state)
+
+      state.currentAnnot.observation[observationId] = observation
+      state.activated.observation = observationId
+    },
+
     ACTIVATE_THING (state, { type, id }) {
       if (type in bithTypes) {
         state.activated[type] = id
@@ -392,6 +409,12 @@ export const solidModule = {
         selectionDS = setThing(selectionDS, thing)
         state.currentAnnot.selection[selectionId] = selectionDS
       }
+    },
+    ADD_TO_CURRENT_THING (state, { type, id }) {
+      //
+    },
+    REMOVE_FROM_CURRENT_THING (state, { type, id }) {
+      // const target
     }
   },
   actions: {
@@ -408,6 +431,13 @@ export const solidModule = {
       // TODO: should we ask to save unsaved changes first?
       commit('ADD_MUSMAT', webId)
     },
+    addObservation ({ commit, rootState }) {
+      const userState = rootState.user
+      const webId = userState.solidSession.info.webId
+
+      // TODO: should we ask to save unsaved changes first?
+      commit('ADD_OBSERVATION', webId)
+    },
     setActiveObservation ({ commit }, id) {
       commit('ACTIVATE_THING', { type: bithTypes.observation, id })
     },
@@ -423,8 +453,28 @@ export const solidModule = {
       commit('ACTIVATE_THING', { type, id })
     },
 
+    /**
+     * startEditing will copy the provided _and all linked things_ to
+     * currentAnnot
+     * @param  {[type]} commit               [description]
+     * @param  {[type]} type                 [description]
+     * @param  {[type]} id                   [description]
+     * @return {[type]}        [description]
+     */
     startEditing ({ commit }, { type, id }) {
       commit('START_EDITING', { type, id })
+    },
+
+    /**
+     * makeCurrent will copy the provided thing only, but _no linked things
+     * to currentAnnot
+     * @param  {[type]} commit               [description]
+     * @param  {[type]} type                 [description]
+     * @param  {[type]} id                   [description]
+     * @return {[type]}        [description]
+     */
+    makeCurrent ({ commit }, { type, object }) {
+      commit('MOVE_TO_CURRENT_ANNOT', { type, object })
     },
 
     // todo?
@@ -637,6 +687,52 @@ export const solidModule = {
           console.error('could not upload to ' + uri, err)
         }
       }
+    },
+
+    /**
+     * adds or removes extracts, musMats or observations to either musMats or observations.
+     * assumes the target to be the only thing in currentAnnot.
+     * @param {[type]} commit   [description]
+     * @param {[type]} payload  [description]
+     */
+    toggleUriAtCurrentThing ({ commit, state, dispatch }, { target, operation }) {
+      if (operation !== 'add' && operation !== 'remove') {
+        console.error('unknown operation: ' + operation)
+        return false
+      }
+
+      const curObKeys = Object.keys(state.currentAnnot.observation)
+      const curMmKeys = Object.keys(state.currentAnnot.musicalMaterial)
+
+      let thingId
+      let thingType
+      if (curObKeys.length > 0) {
+        thingId = curObKeys[0]
+        thingType = bithTypes.observation
+      } else if (curMmKeys.length > 0) {
+        thingId = curMmKeys[0]
+        thingType = bithTypes.musicalMaterial
+      }
+
+      if (thingType === bithTypes.observation) {
+        const method = (operation === 'add') ? 'setUrl' : 'removeUrl' // TODO: Can an observation have multiple targets?
+        dispatch('changeCurrentDataObject', {
+          type: thingType,
+          id: thingId,
+          prop: pref.oa + 'hasTarget',
+          method,
+          val: target
+        })
+      } else if (thingType === bithTypes.musicalMaterial) {
+        const method = (operation === 'add') ? 'addUrl' : 'removeUrl'
+        dispatch('changeCurrentDataObject', {
+          type: thingType,
+          id: thingId,
+          prop: pref.frbr + 'embodiment',
+          method,
+          val: target
+        })
+      }
     }
   },
   getters: {
@@ -653,9 +749,28 @@ export const solidModule = {
         Object.entries(state.currentAnnot[type]).forEach(entry => {
           if (keys.indexOf(entry[0]) === -1) {
             arr.push(entry[1])
+          } else {
+            const pos = keys.indexOf(entry[0])
+            arr[pos] = entry[1]
           }
         })
 
+        arr.sort((a, b) => {
+          const thingA = getThingAll(a)[0]
+          const dateA = getDate(thingA, pref.dct + 'created')
+          const thingB = getThingAll(b)[0]
+          const dateB = getDate(thingB, pref.dct + 'created')
+
+          const dateCompare = new Date(dateB) - new Date(dateA)
+          if (dateCompare === 0) {
+            const idA = getPublicIdFromDataStructure(a) // getStringNoLocale(thingA, pref.rdfs + 'label')
+            const idB = getPublicIdFromDataStructure(b) // getStringNoLocale(thingB, pref.rdfs + 'label')
+            const idCompare = (idA < idB) ? -1 : (idA > idB) ? 1 : 0
+            return idCompare
+          } else {
+            return dateCompare
+          }
+        })
         return arr
       } else {
         console.error('Unknown type ' + type)
@@ -1035,7 +1150,9 @@ export const solidModule = {
     },
 
     /**
-     * retrieves all extracts that have selections affecting the currently shown arrangements, plus the active extract (necessary for creating new extracts)
+     * retrieves all extracts that have selections affecting the currently shown
+     * arrangements, plus the active extract (necessary for creating new
+     * extracts). Returned array is ordered
      * @param  {[type]} state                   [description]
      * @param  {[type]} getters                 [description]
      * @param  {[type]} rootState               [description]
@@ -1115,6 +1232,7 @@ export const solidModule = {
         })
       })
 
+      // order extracts
       const arr = Object.values(extracts)
       arr.sort((a, b) => {
         const thingA = getThingAll(a)[0]
@@ -1395,17 +1513,13 @@ export const solidModule = {
           return true
         }
 
+        // get references by facsimile rectangles
         let iiifHit = false
-        let count = 0
         if (tileSources[i] !== undefined && tileSources[i].length > 0) {
           fileUrls.forEach(url => {
             tileSources[i].forEach(tileSource => {
               if (url.replace('http://', 'https://').startsWith(tileSource.replace('http://', 'https://'))) {
                 iiifHit = true
-                if (count < 3) {
-                  // console.log('HIT:', url.replace('http://', 'https://'), tileSource.replace('http://', 'https://'))
-                  count++
-                }
               }
             })
           })
@@ -1415,6 +1529,173 @@ export const solidModule = {
       })
       // console.log('found arrangement: ', arrangement)
       return arrangement
+    },
+
+    /**
+     * in annotationMode, returns arrays with IDs of things which are linked
+     * from the currentAnnot
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} getters                 [description]
+     * @param  {[type]} rootState               [description]
+     * @return {[type]}           [description]
+     */
+    affectedByCurrentAnnot: (state, getters, rootState) => {
+      const obj = { observation: [], musicalMaterial: [], extract: [], selection: [] }
+      if (!rootState.app.annotationTool.visible) {
+        return obj
+      }
+
+      const current = []
+      let type
+      Object.keys(state.currentAnnot.observation).forEach(id => {
+        current.push(id)
+        type = bithTypes.observation
+      })
+      Object.keys(state.currentAnnot.musicalMaterial).forEach(id => {
+        current.push(id)
+        type = bithTypes.musicalMaterial
+      })
+      Object.keys(state.currentAnnot.extract).forEach(id => {
+        current.push(id)
+        type = bithTypes.extract
+      })
+
+      // if there are too many or too few things, return empty arrays
+      if (current.length !== 1) {
+        return obj
+      }
+
+      const mainDS = state.currentAnnot[type][current[0]]
+      const mainThing = getThingAll(mainDS)[0]
+
+      if (type === bithTypes.observation) {
+        const predicate = getPredicateByType(type)
+        console.log(57, predicate)
+        const allTargets = getUrlAll(mainThing, predicate)
+
+        allTargets.forEach(target => {
+          const type = getTypeById(state, target)
+          if (type !== null) {
+            console.log('-- target ' + target + ' is of type ' + type)
+            obj[type].push(target)
+          } else {
+            console.error('Unable to retrieve type of ' + target)
+          }
+        })
+        console.log(58)
+      } else if (type === bithTypes.musicalMaterial) {
+        const predicate = getPredicateByType(type)
+        console.log(67)
+        // const children = getChildren(state, mainDS, type)
+        // console.log(children)
+        obj.extract = getUrlAll(mainThing, predicate)
+        console.log(68)
+      }
+
+      return obj
+    },
+
+    /**
+     * in annotationMode, returns arrays with IDs of things which are linked
+     * from the active annot
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} getters                 [description]
+     * @param  {[type]} rootState               [description]
+     * @return {[type]}           [description]
+     */
+    affectedByActiveAnnot: (state, getters, rootState) => {
+      const obj = { observation: [], musicalMaterial: [], extract: [], selection: [] }
+      if (!rootState.app.annotationTool.visible) {
+        return obj
+      }
+
+      const current = []
+      let type
+      if (state.activated.observation !== null) {
+        current.push(state.activated.observation)
+        type = bithTypes.observation
+      }
+
+      if (state.activated.musicalMaterial !== null) {
+        current.push(state.activated.musicalMaterial)
+        type = bithTypes.musicalMaterial
+      }
+
+      if (state.activated.extract !== null) {
+        current.push(state.activated.extract)
+        type = bithTypes.extract
+      }
+
+      // if there are too many or too few things, return empty arrays
+      if (current.length !== 1) {
+        return obj
+      }
+
+      const mainDS = state.annotStore[type][current[0]]
+      const mainThing = getThingAll(mainDS)[0]
+
+      if (type === bithTypes.observation) {
+        const predicate = getPredicateByType(type)
+        const allTargets = getUrlAll(mainThing, predicate)
+
+        allTargets.forEach(target => {
+          const type = getTypeById(state, target)
+          if (type !== null) {
+            obj[type].push(target)
+          } else {
+            console.error('Unable to retrieve type of ' + target)
+          }
+        })
+      } else if (type === bithTypes.musicalMaterial) {
+        const predicate = getPredicateByType(type)
+        obj.extract = getUrlAll(mainThing, predicate)
+      }
+
+      return obj
+    },
+
+    /**
+     * in annotationMode, returns info which things can be edited
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} getters                 [description]
+     * @param  {[type]} rootState               [description]
+     * @return {[type]}           [description]
+     */
+    ableToBeEdited: (state, getters, rootState) => {
+      const obj = { observation: false, musicalMaterial: false, extract: false }
+      if (!rootState.app.annotationTool.visible) {
+        return obj
+      }
+
+      const current = []
+      let type
+      Object.keys(state.currentAnnot.observation).forEach(id => {
+        current.push(id)
+        type = bithTypes.observation
+      })
+      Object.keys(state.currentAnnot.musicalMaterial).forEach(id => {
+        current.push(id)
+        type = bithTypes.musicalMaterial
+      })
+      Object.keys(state.currentAnnot.extract).forEach(id => {
+        current.push(id)
+        type = bithTypes.extract
+      })
+
+      // if there are too many or too few things, return empty arrays
+      if (current.length !== 1) {
+        return obj
+      }
+
+      if (type === bithTypes.observation) {
+        obj.observation = true
+        obj.musicalMaterial = true
+        obj.extract = true
+      } else if (type === bithTypes.musicalMaterial) {
+        obj.musicalMaterial = true
+        obj.extract = true
+      }
+      return obj
     }
   }
 }

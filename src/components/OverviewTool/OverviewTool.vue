@@ -50,11 +50,11 @@
         <splitpanes horizontal class="default-theme annotPanes">
           <pane min-size="10">
             <div class="scrollBox">
-              <h1>Observations</h1>
+              <h1>Observations  <span class="float-right addThing"><i class="icon icon-plus" title="New Observation" @click="newObservation"></i></span></h1>
               <div class="scrollable">
                 <table class="table table-striped">
                   <tbody>
-                    <GraphEntryDetailed v-for="(o, oI) in observations" :key="oI" :file="o" :level="1" :type="bithTypes.observation"/>
+                    <ObservationEntryDetailed v-for="(o, oI) in observations" :key="oI" :file="o" :level="1" :type="bithTypes.observation"/>
                   </tbody>
                 </table>
               </div>
@@ -100,7 +100,8 @@
 
 <script>
 import GraphEntry from '@/components/OverviewTool/GraphEntry.vue'
-import GraphEntryDetailed from '@/components/OverviewTool/GraphEntryDetailed.vue'
+// import GraphEntryDetailed from '@/components/OverviewTool/GraphEntryDetailed.vue'
+import ObservationEntryDetailed from '@/components/OverviewTool/ObservationEntryDetailed.vue'
 import MusMatEntryDetailed from '@/components/OverviewTool/MusMatEntryDetailed.vue'
 import ExtractEntryDetailed from '@/components/OverviewTool/ExtractEntryDetailed.vue'
 import { Splitpanes, Pane } from 'splitpanes'
@@ -113,9 +114,10 @@ export default {
   name: 'OverviewTool',
   components: {
     GraphEntry,
-    GraphEntryDetailed,
+    // GraphEntryDetailed,
     ExtractEntryDetailed,
     MusMatEntryDetailed,
+    ObservationEntryDetailed,
     Splitpanes,
     Pane
   },
@@ -158,6 +160,9 @@ export default {
     },
     newMusMat: function () {
       this.$store.dispatch('addMusMat')
+    },
+    newObservation: function () {
+      this.$store.dispatch('addObservation')
     }
   }
 }

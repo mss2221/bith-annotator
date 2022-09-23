@@ -221,6 +221,10 @@ export const populateCurrentAnnot = (state, observation, musicalMaterial, extrac
  * @return {[type]}      [description]
  */
 export const getPredicateByType = (type) => {
+  if (type === bithTypes.observation) {
+    return pref.oa + 'hasTarget'
+  }
+
   if (type === bithTypes.musicalMaterial) {
     return pref.frbr + 'embodiment'
   }
@@ -343,4 +347,47 @@ export const getParents = (state, ds, type) => {
   })
 
   return Object.values(parents)
+}
+
+/**
+ * returns the type of a thing by examining its ID. Returns null if no type can
+ * be found
+ * @param  {[type]} state               [description]
+ * @param  {[type]} id               [description]
+ * @return {[type]}    [description]
+ */
+export const getTypeById = (state, id) => {
+  if (Object.keys(state.annotStore.selection).indexOf(id) !== -1) {
+    return bithTypes.selection
+  }
+
+  if (Object.keys(state.annotStore.extract).indexOf(id) !== -1) {
+    return bithTypes.extract
+  }
+
+  if (Object.keys(state.annotStore.musicalMaterial).indexOf(id) !== -1) {
+    return bithTypes.musicalMaterial
+  }
+
+  if (Object.keys(state.annotStore.observation).indexOf(id) !== -1) {
+    return bithTypes.observation
+  }
+
+  if (Object.keys(state.currentAnnot.selection).indexOf(id) !== -1) {
+    return bithTypes.selection
+  }
+
+  if (Object.keys(state.currentAnnot.extract).indexOf(id) !== -1) {
+    return bithTypes.extract
+  }
+
+  if (Object.keys(state.currentAnnot.musicalMaterial).indexOf(id) !== -1) {
+    return bithTypes.musicalMaterial
+  }
+
+  if (Object.keys(state.currentAnnot.observation).indexOf(id) !== -1) {
+    return bithTypes.observation
+  }
+
+  return null
 }

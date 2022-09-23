@@ -1,12 +1,12 @@
 <template>
   <tr class="graphEntryDetailed" :class="{'active': activated}" :data-level="this.level" :title="type + ': ' + id" :data-id="id">
     <td class="thingLabel" @click="activateThing">
-      <template v-if="isCurrent && activated">
+      <!-- <template v-if="isCurrent && activated">
         <input type="text" v-model.trim="label"/>
       </template>
-      <template v-else>
-        <span class="itemLabel" @dblclick="startEditing">{{ label }}</span>
-      </template>
+      <template v-else> -->
+      <span class="itemLabel">{{ label }}</span> <!--  @dblclick="startEditing" -->
+      <!-- </template> -->
     </td>
     <td class="resp" :title="resp">
       <i class="icon icon-people"></i>
@@ -124,11 +124,11 @@ export default {
         this.$store.dispatch('activateThing', { type: this.type, id: null })
       }
     },
-    startEditing: function () {
+    /* startEditing: function () {
       if (this.level === 1) {
         this.$store.dispatch('startEditing', { type: this.type, id: this.id })
       }
-    },
+    }, */
     saveChanges: function () {
       this.$store.dispatch('saveChanges')
     },

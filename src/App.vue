@@ -10,6 +10,7 @@
     <AppFooter/>
     <LibraryModal/>
     <LdDetailOverlay/>
+    <InitialLoading/>
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import WorkBench from '@/components/WorkBench.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import LibraryModal from '@/components/SelectionTool/LibraryModal.vue'
 import LdDetailOverlay from '@/components/LdDetailOverlay.vue'
+import InitialLoading from '@/components/InitialLoading.vue'
 
 export default {
   name: 'App',
@@ -29,7 +31,8 @@ export default {
     WorkBench,
     AppFooter,
     LibraryModal,
-    LdDetailOverlay
+    LdDetailOverlay,
+    InitialLoading
   },
   computed: {
     landingPageVisible: function () {

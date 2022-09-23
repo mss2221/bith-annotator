@@ -1,11 +1,11 @@
 <template>
-  <tr class="musMatEntryDetailed" @click="activateThing" :class="{'active': activated}" :data-level="this.level" :title="type + ': ' + id" :data-id="id">
+  <tr class="musMatEntryDetailed" @click="activateThing" :class="{'active': activated, 'affectedCurrent': affectedByCurrentAnnot, 'affectedActive': affectedByActiveAnnot}" :data-level="this.level" :title="type + ': ' + id" :data-id="id">
     <td class="thingLabel">
       <template v-if="isCurrent && activated">
         <input type="text" v-model.trim="label"/>
       </template>
       <template v-else>
-        <span class="itemLabel" @dblclick="startEditing">{{ label }}</span>
+        <span class="itemLabel">{{ label }}</span>
       </template>
     </td>
     <!--<td class="arrTitle">
@@ -15,8 +15,11 @@
       {{arranger}}
     </td>-->
     <td class="actions">
-      <i class="icon icon-cross" @click.stop="discardChanges" title="cancel changes"></i>
-      <i class="icon icon-check" @click.stop="saveChanges" title="save changes"></i>
+      <i class="icon icon-plus" v-if="!isCurrent && ableToBeEdited && !affectedByCurrentAnnot" @click.stop="add" title="add"></i>
+      <i class="icon icon-minus" v-if="!isCurrent && ableToBeEdited && affectedByCurrentAnnot" @click.stop="remove" title="remove"></i>
+      <i class="icon icon-edit" v-if="!isCurrent && activated" @click.stop="startEditing" title="edit musical material"></i>
+      <i class="icon icon-cross" v-if="isCurrent" @click.stop="discardChanges" title="cancel changes"></i>
+      <i class="icon icon-check" v-if="isCurrent" @click.stop="saveChanges" title="save changes"></i>
     </td>
     <td class="resp" :title="resp">
       <i class="icon icon-people"></i>
@@ -54,7 +57,7 @@ import {
 } from '@inrupt/solid-client'
 import { prefix as pref } from '@/meld/prefixes.js'
 import { getChildType } from '@/store/tools/solidHelpers.js'
-// import { bithTypes } from '@/meld/constants.js'
+import { bithTypes } from '@/meld/constants.js'
 
 export default {
   name: 'MusMatEntryDetailed',
@@ -125,22 +128,43 @@ export default {
       const thing = getThingAll(file)[0]
       const user = getStringNoLocale(thing, pref.dct + 'creator')
       return user
+    },
+    affectedByCurrentAnnot: function () {
+      const affectedArr = this.$store.getters.affectedByCurrentAnnot[bithTypes.musicalMaterial]
+      console.log('allAffected:')
+      console.log(this.$store.getters.affectedByCurrentAnnot)
+      return affectedArr.indexOf(this.id) !== -1
+    },
+    affectedByActiveAnnot: function () {
+      const affectedArr = this.$store.getters.affectedByActiveAnnot[bithTypes.musicalMaterial]
+      return affectedArr.indexOf(this.id) !== -1
+    },
+    ableToBeEdited: function () {
+      const obj = this.$store.getters.ableToBeEdited
+      const bool = obj[bithTypes.musicalMaterial]
+      return bool
     }
   },
   methods: {
-    activateThing: function () {
+    activateThing: function (e) {
       console.log('activating ' + this.type + ' ' + this.id)
-      this.$store.dispatch('activateThing', { type: this.type, id: this.id })
-    },
-    deactivateThing: function () {
-      if (this.activated) {
+
+      if (e.target.localName === 'input') {
+        return
+      }
+
+      if (!this.activated) {
+        this.$store.dispatch('activateThing', { type: this.type, id: this.id })
+      } else {
         this.$store.dispatch('activateThing', { type: this.type, id: null })
       }
+      this.$store.dispatch('activateThing', { type: bithTypes.observation, id: null })
+      this.$store.dispatch('activateThing', { type: bithTypes.extract, id: null })
+      this.$store.dispatch('activateThing', { type: bithTypes.selection, id: null })
     },
     startEditing: function () {
-      if (this.level === 1) {
-        this.$store.dispatch('startEditing', { type: this.type, id: this.id })
-      }
+      this.$store.dispatch('activateThing', { type: this.type, id: this.id })
+      this.$store.dispatch('makeCurrent', { type: this.type, object: this.file })
     },
     saveChanges: function () {
       this.$store.dispatch('saveChanges')
@@ -148,11 +172,14 @@ export default {
     discardChanges: function () {
       this.$store.dispatch('discardChanges')
     },
-    /* select: function () {
-      if (this.type === bithTypes.extract) {
-        this.$store.dispatch('setActiveExtract', this.id)
-      }
-    }, */
+    add: function () {
+      console.log('add this to current thing')
+      this.$store.dispatch('toggleUriAtCurrentThing', { target: this.id, operation: 'add' })
+    },
+    remove: function () {
+      console.log('remove this from current thing')
+      this.$store.dispatch('toggleUriAtCurrentThing', { target: this.id, operation: 'remove' })
+    },
     showLD: async function (e) {
       const ttl = await solidDatasetAsTurtle(this.file, { prefixes: pref })
       // console.log(this.id + ' (' + ttl.length + ')')
@@ -166,7 +193,15 @@ export default {
 @import '@/css/_variables.scss';
 
 .table tbody tr.active, .table.table-striped tbody tr.active {
-  background-color: #9fc5ff;
+  background-color: #6aa4fc;
+}
+
+.table tbody tr.active, .table.table-striped tbody tr.affectedActive {
+  background-color: #bad3f9;
+}
+
+.table tbody tr.active, .table.table-striped tbody tr.affectedCurrent {
+  background-color: #a8c9fb;
 }
 
 .musMatEntryDetailed {
@@ -177,6 +212,7 @@ export default {
 
   td {
     padding: .2rem .3rem;
+    vertical-align: top;
 
     &.showDetails, &.resp {
       width: .5rem;
@@ -184,6 +220,14 @@ export default {
 
     &.actions {
       width: 2.5rem;
+
+      i {
+        cursor: pointer;
+      }
+
+      i + i {
+        margin-left: .2rem;
+      }
     }
   }
 

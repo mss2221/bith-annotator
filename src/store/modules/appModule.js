@@ -13,7 +13,8 @@ export const appModule = {
     landingPageVisible: true,
     views: [],
     ldDetails: '',
-    meiCache: {}
+    meiCache: {},
+    initialLoading: false
   }),
   mutations: {
     SHOW_SELECTION_TOOL (state, bool) {
@@ -50,6 +51,9 @@ export const appModule = {
     },
     CACHE_MEI (state, { uri, mei }) {
       state.meiCache[uri] = mei
+    },
+    SET_INITIAL_LOADING (state, bool) {
+      state.initialLoading = bool
     }
   },
   actions: {
@@ -98,6 +102,9 @@ export const appModule = {
             })
         }
       })
+    },
+    setInitialLoading ({ commit }, bool) {
+      commit('SET_INITIAL_LOADING', bool)
     }
   },
   getters: {
@@ -136,6 +143,9 @@ export const appModule = {
     },
     mei: state => uri => {
       return state.meiCache[uri]
+    },
+    initialLoading: state => {
+      return state.initialLoading
     }
   }
 }

@@ -65,7 +65,7 @@ export default {
         this.$store.dispatch('setSolidSession', session)
         main(session)
       }
-
+      this.$store.dispatch('setInitialLoading', true)
       this.$store.dispatch('initMeld')
       this.$store.dispatch('setTraversalObjectives')
       this.$store.dispatch('traverseGraph')
