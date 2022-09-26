@@ -131,8 +131,8 @@ export default {
     },
     affectedByCurrentAnnot: function () {
       const affectedArr = this.$store.getters.affectedByCurrentAnnot[bithTypes.musicalMaterial]
-      console.log('allAffected:')
-      console.log(this.$store.getters.affectedByCurrentAnnot)
+      // console.log('allAffected:')
+      // console.log(this.$store.getters.affectedByCurrentAnnot)
       return affectedArr.indexOf(this.id) !== -1
     },
     affectedByActiveAnnot: function () {
@@ -147,7 +147,7 @@ export default {
   },
   methods: {
     activateThing: function (e) {
-      console.log('activating ' + this.type + ' ' + this.id)
+      // console.log('activating ' + this.type + ' ' + this.id)
 
       if (e.target.localName === 'input') {
         return
