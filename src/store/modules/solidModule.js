@@ -1375,6 +1375,10 @@ export const solidModule = {
     allMeasureSelectionsOnCurrentFacsimilePage: (state, getters, rootState) => (index) => {
       const view = rootState.app.views[index]
 
+      if (view === undefined || !('arrangement' in view)) {
+        return {}
+      }
+
       const arrangement = view.arrangement
       let meiUri
 

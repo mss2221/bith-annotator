@@ -16,8 +16,11 @@
 			"ldp:Container"
 		],
 		"ldp:contains": [
-			{"@id": "./rdf/haslingerTrio93.nq"},
-			{"@id": "./rdf/klvaus93.nq"}
+			{"@id": "https://api.domestic-beethoven.eu/lod/tb3f3ff06-d1cd-4889-af26-6d064337e3ed.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t631b5f6a-4ad7-4d86-a16d-b7d2fb58ccc7.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t31eb6b86-a57b-40ca-8a17-dbd72fac768e.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/tbfcb377a-67b5-4096-9b27-36a43eb49a1e.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/tc8577096-53c4-44ff-b9a6-5268a745bd93.nq"}
 		]
 	}
 }

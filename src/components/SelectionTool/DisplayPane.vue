@@ -4,8 +4,7 @@
       <Facsimile :idSeed="'facs_' + index" :uri="arr.iiif" :index="index"/>
     </template>
     <template v-if="perspective==='render'">
-      <div class="title">{{ shortTitle}}</div>
-      <Verovio :idSeed="'pane_' + index" :uri="arr.MEI" settings="fullScore"/>
+      <Verovio :idSeed="'pane_' + index" :uri="arr.MEI" settings="fullScore" :index="index" :title="shortTitle"/>
     </template>
 
   </div>
@@ -36,12 +35,8 @@ export default {
 </script>
 
 <style>
-
 .root {
   width: 100%;
   height: 100%;
 }
-.title {
-  font-weight: bold;
-  }
 </style>

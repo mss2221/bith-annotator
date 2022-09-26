@@ -163,12 +163,13 @@ export const graphHasChanged = (graph, commit) => {
       }
     })
     worklist = [...workMap.values()]
+    // console.error('\n\n\nHELLO POLLY!!! ONCE?', arrangements)
     commit('SET_INITIAL_LOADING', false)
   }
   // 1. convert this.graph.outcomes[0] into this.state.worklist
   commit('SET_ARRANGEMENTS', arrangements)
   commit('SET_WORKLIST', worklist)
-  // console.error('\n\n\nHELLO POLLY!!! ONCE?', arrangements)
+  // console.error('\n\n\nHELLO POLLY!!! multiple times?', arrangements)
   // console.log(graph.traversalPool.running)
   // console.log(Object.keys(graph.traversalPool.pool))
 }

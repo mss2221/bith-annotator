@@ -1,7 +1,25 @@
 <template>
-  <div v-bind:id="'meiContainer_' + idSeed" class="meiContainer" ref="mei">
-    <span v-bind:id="'activity_' + idSeed">Loading</span> MEI Data
-    <div class="loading loading-lg"></div>
+  <div>
+    <div class="verovioPaneTitle">
+      <span>{{ title}}</span>
+      <div class="dropdown">
+        <div class="btn-group">
+          <a href="#" ref="activeMovement" class="btn btn-link">
+            movement
+          </a>
+          <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
+            <i class="icon icon-caret"></i>
+          </a>
+
+          <!-- menu component -->
+          <ul ref="movementList" class="menu"></ul>
+        </div>
+      </div>
+    </div>
+    <div v-bind:id="'meiContainer_' + idSeed" class="meiContainer" ref="mei">
+      <span v-bind:id="'activity_' + idSeed">Loading</span> MEI Data
+      <div class="loading loading-lg"></div>
+    </div>
   </div>
 </template>
 
@@ -10,6 +28,8 @@ import verovio from 'verovio'
 // import svgDragSelect from "svg-drag-select"
 import { vrvPresets, vrvSelectables } from '@/config/verovio.config.js'
 import { bithTypes } from '@/meld/constants.js'
+
+const parser = new DOMParser()
 
 let selectables = []
 vrvSelectables.forEach(elem => {
@@ -43,7 +63,9 @@ export default {
   props: {
     uri: String,
     idSeed: String,
-    settings: String
+    settings: String,
+    title: String,
+    index: Number
   },
   computed: {
     selectionModeActive: function () {
@@ -66,32 +88,37 @@ export default {
     },
     allSelectionsForActiveSelection: function () {
       return this.$store.getters.allSelectionsForActiveSelection(this.uri)
+    },
+    currentMdiv: function () {
+      return this.$store.getters.verovioCurrentMdivIndex(this.index)
     }
   },
   methods: {
     clickListenerSVG: function (e) {
       const target = e.target
-      console.log('target:', target)
+      // console.log('target:', target)
       const closest = (e.shiftKey) ? target.closest('.measure:not(.bounding-box)') : target.closest(selectables)
 
-      console.log('clicked', closest)
+      // console.log('clicked', closest)
 
       e.stopPropagation()
       if (!this.selectionModeActive) {
-        console.log('a')
+        // console.log('a')
         return false
       }
 
+      /*
       if (closest.classList.contains('staff') || closest.classList.contains('measure')) {
-        console.log('selected a staff or measure')
+        // console.log('selected a staff or measure')
         const children = closest.querySelectorAll(selectables)
-        console.log('found children:')
-        console.log(children)
+        // console.log('found children:')
+        // console.log(children)
       }
+      */
 
-      console.log('clicked ', target, closest)
+      // console.log('clicked ', target, closest)
       this.$store.dispatch('selectionToggle', this.uri + '#' + closest.getAttribute('data-id'))
-      console.log('dispatched selectionToggle')
+      // console.log('dispatched selectionToggle')
     },
 
     highlightSelections: function (newSelections, oldSelections, className) {
@@ -138,10 +165,22 @@ export default {
       return false
     }
 
+    this.unwatchers.push(
+      this.$store.watch(
+        (state, getters) => getters.verovioCurrentMdivIndex(this.index), (newIndex, oldIndex) => {
+          // this.renderMei()
+        }
+      )
+    )
+
     this.$store.dispatch('loadMEI', this.uri)
       .then(() => {
         const mei = this.$store.getters.mei(this.uri)
         vrvToolkit.loadData(mei)
+        const pos = this.currentMdiv + 2
+        options.mdivXPathQuery = '.[position() = ' + pos + ']'
+        vrvToolkit.setOptions(options)
+        console.log('here')
         const svg = vrvToolkit.renderToSVG(1, {})
         // document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
         this.$refs.mei.innerHTML = svg
@@ -191,7 +230,39 @@ export default {
             )
           )
           this.highlightSelections(this.allSelectionsForActiveSelection, [], 'activeSelection')
+
+          this.unwatchers.push(
+
+          )
         }
+
+        // set up navigation
+        const meiDom = parser.parseFromString(mei, 'application/xml')
+
+        meiDom.querySelectorAll('mdiv').forEach((mdiv, i) => {
+          const id = (mdiv.hasAttribute('xml:id')) ? mdiv.getAttribute('xml:id') : (null)
+          const num = i + 1
+          const label = (mdiv.hasAttribute('label')) ? mdiv.getAttribute('label') : ('Movement ' + num)
+          const measures = []
+          mdiv.querySelectorAll('measure').forEach((measure, n) => {
+            const mnum = (measure.hasAttribute('label')) ? measure.getAttribute('label') : measure.getAttribute('n')
+            measures.push(mnum)
+          })
+
+          const changeFunc = () => {
+            this.$store.dispatch('announceCurrentMdiv', { viewIndex: this.index, mdivIndex: i })
+          }
+
+          const li = document.createElement('li')
+          li.setAttribute('data-mdiv-id', id)
+          li.setAttribute('data-measureCount', measures.length)
+          li.addEventListener('click', changeFunc)
+          li.textContent = label
+          this.$refs.movementList.append(li)
+
+          // mdivs.push(obj)
+        })
+        // console.log('\n\n\nmdivs: ', mdivs)
       })
     /* fetch(this.uri)
       .then(res => {
@@ -208,6 +279,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 @import '@/css/_variables.scss';
+
+.verovioPaneTitle {
+  padding: 0 .3rem;
+  font-weight: 700;
+}
 
 .meiContainer {
   overflow: auto;

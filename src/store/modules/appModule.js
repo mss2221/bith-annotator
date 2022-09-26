@@ -49,6 +49,10 @@ export const appModule = {
     SET_FACSIMILE_VIEW_CURRENT_PAGE (state, { viewIndex, pageN, pageUri }) {
       state.views[viewIndex].state = { pageN, pageUri }
     },
+    SET_VEROVIO_VIEW_CURRENT_MDIV (state, { viewIndex, mdivIndex }) {
+      console.log('viewIndex: ' + viewIndex + ' mdivIndex: ' + mdivIndex)
+      state.views[viewIndex].state = { mdivIndex }
+    },
     CACHE_MEI (state, { uri, mei }) {
       state.meiCache[uri] = mei
     },
@@ -84,6 +88,9 @@ export const appModule = {
     },
     announceCurrentPage ({ commit }, { viewIndex, pageN, pageUri }) {
       commit('SET_FACSIMILE_VIEW_CURRENT_PAGE', { viewIndex, pageN, pageUri })
+    },
+    announceCurrentMdiv ({ commit }, { viewIndex, mdivIndex }) {
+      commit('SET_VEROVIO_VIEW_CURRENT_MDIV', { viewIndex, mdivIndex })
     },
     loadMEI ({ commit, state }, uri) {
       return new Promise((resolve, reject) => {
@@ -146,6 +153,14 @@ export const appModule = {
     },
     initialLoading: state => {
       return state.initialLoading
+    },
+    verovioCurrentMdivIndex: state => (viewIndex) => {
+      const view = state.views[viewIndex]
+      if (view.state === undefined) {
+        return 0
+      }
+
+      return parseInt(view.state.mdivIndex)
     }
   }
 }
