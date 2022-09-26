@@ -2,10 +2,10 @@
   <div>
     <div class="verovioPaneTitle">
       <span>{{ title }}</span>
-      <div class="dropdown">
+      <div class="dropdown movementSelection">
         <div class="btn-group">
           <a href="#" ref="activeMovement" class="btn btn-link">
-            movement
+            Movement
           </a>
           <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
             <i class="icon icon-caret"></i>
@@ -265,6 +265,13 @@ export default {
           li.setAttribute('data-measureCount', measures.length)
           li.addEventListener('click', changeFunc)
           li.textContent = label
+
+          if (i === 0) {
+            this.$refs.activeMovement.textContent = label
+          } else {
+            li.classList.add('disabled')
+          }
+
           this.$refs.movementList.append(li)
 
           // mdivs.push(obj)
@@ -290,6 +297,23 @@ export default {
 .verovioPaneTitle {
   padding: 0 .3rem;
   font-weight: 700;
+
+  .movementSelection {
+    a {
+      font-weight: 400;
+      margin-left: .4rem;
+      color: #000000;
+
+      &:first-child {
+        padding-right: 0;
+      }
+    }
+
+    .disabled {
+      cursor: not-allowed;
+      font-weight: 300;
+    }
+  }
 }
 
 .meiContainer {

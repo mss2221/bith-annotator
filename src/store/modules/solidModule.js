@@ -398,7 +398,7 @@ export const solidModule = {
         console.log(urls)
         if (urls.indexOf(uri) === -1) {
           thing = buildThing(thing)
-            .addUrl(pref.frbr + 'part', uri)
+            .setUrl(pref.frbr + 'part', uri) // should it be possible to have multiple rects?
             .build()
         } else {
           thing = buildThing(thing)
@@ -715,7 +715,7 @@ export const solidModule = {
       }
 
       if (thingType === bithTypes.observation) {
-        const method = (operation === 'add') ? 'setUrl' : 'removeUrl' // TODO: Can an observation have multiple targets?
+        const method = (operation === 'add') ? 'addUrl' : 'removeUrl' // TODO: Can an observation have multiple targets?
         dispatch('changeCurrentDataObject', {
           type: thingType,
           id: thingId,
@@ -1287,7 +1287,7 @@ export const solidModule = {
         const thing = getThingAll(selectionDS)[0]
         const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
 
-        selectionUrls.forEach(idRef => {
+        selectionUrls.forEach((idRef, index) => {
           const selectionUrl = idRef.replace('http://', 'https://')
           if (selectionUrl.startsWith(pageUri)) {
             const xywh = getXywh(selectionUrl)
@@ -1298,6 +1298,7 @@ export const solidModule = {
               y: parseInt(xywh[1]),
               w: parseInt(xywh[2]),
               h: parseInt(xywh[3]),
+              index,
               classList: [],
               extracts: {}
             }
@@ -1324,23 +1325,24 @@ export const solidModule = {
         const thing = getThingAll(selectionDS)[0]
         const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
 
-        selectionUrls.forEach(idRef => {
+        selectionUrls.forEach((idRef, index) => {
           const selectionUrl = idRef.replace('http://', 'https://')
           if (selectionUrl.startsWith(pageUri)) {
             if (foundSelections[selectionID] === undefined) {
               foundSelections[selectionID] = {
                 id: selectionID,
                 uri: selectionUrl,
+                index,
                 classList: [],
                 extracts: {}
               }
             }
 
             const xywh = getXywh(selectionUrl)
-            foundSelections[selectionID].x = xywh[0]
-            foundSelections[selectionID].y = xywh[1]
-            foundSelections[selectionID].w = xywh[2]
-            foundSelections[selectionID].h = xywh[3]
+            foundSelections[selectionID].x = parseInt(xywh[0])
+            foundSelections[selectionID].y = parseInt(xywh[1])
+            foundSelections[selectionID].w = parseInt(xywh[2])
+            foundSelections[selectionID].h = parseInt(xywh[3])
             foundSelections[selectionID].classList.push('current')
 
             if (state.activeSelection === selectionID && foundSelections[selectionID].classList.indexOf('activeSelection') === -1) {
@@ -1574,26 +1576,26 @@ export const solidModule = {
 
       if (type === bithTypes.observation) {
         const predicate = getPredicateByType(type)
-        console.log(57, predicate)
+        // console.log(57, predicate)
         const allTargets = getUrlAll(mainThing, predicate)
 
         allTargets.forEach(target => {
           const type = getTypeById(state, target)
           if (type !== null) {
-            console.log('-- target ' + target + ' is of type ' + type)
+            // console.log('-- target ' + target + ' is of type ' + type)
             obj[type].push(target)
           } else {
             console.error('Unable to retrieve type of ' + target)
           }
         })
-        console.log(58)
+        // console.log(58)
       } else if (type === bithTypes.musicalMaterial) {
         const predicate = getPredicateByType(type)
-        console.log(67)
+        // console.log(67)
         // const children = getChildren(state, mainDS, type)
         // console.log(children)
         obj.extract = getUrlAll(mainThing, predicate)
-        console.log(68)
+        // console.log(68)
       }
 
       return obj
@@ -1636,6 +1638,10 @@ export const solidModule = {
       }
 
       const mainDS = state.annotStore[type][current[0]]
+      // if this is a newly created thing, not yet stored to the Pod
+      if (mainDS === undefined) {
+        return obj
+      }
       const mainThing = getThingAll(mainDS)[0]
 
       if (type === bithTypes.observation) {
@@ -1696,7 +1702,6 @@ export const solidModule = {
         obj.musicalMaterial = true
         obj.extract = true
       } else if (type === bithTypes.musicalMaterial) {
-        obj.musicalMaterial = true
         obj.extract = true
       }
       return obj

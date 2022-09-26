@@ -5,7 +5,18 @@
         <div class="facsButton zoomOut" :id="'zoomOut_' + idSeed"><i class="icon icon-minus"></i></div>
         <div class="facsButton zoomIn" :id="'zoomIn_' + idSeed"><i class="icon icon-plus"></i></div>
         <div class="facsButton prevPage" :id="'prevPage_' + idSeed"><i class="icon icon-arrow-left"></i></div>
+        <div class="facsButton pageNum" ref="pageNum"></div>
         <div class="facsButton nextPage" :id="'nextPage_' + idSeed"><i class="icon icon-arrow-right"></i></div>
+      </div>
+      <div class="navigationButtons buttonRow">
+        <div class="dropdown movementSelection">
+          <div class="btn-group">
+            <a href="#" class="btn btn-link dropdown-toggle facsButton" tabindex="0"><i class="icon icon-message"></i></a>
+            <!-- menu component -->
+            <ul ref="movementList" class="menu"></ul>
+          </div>
+        </div>
+
       </div>
       <div class="extraButtons buttonRow" :class="{'invis': !isLoggedIn}" :id="'toolbar_' + idSeed"></div>
     </div>
@@ -161,6 +172,9 @@ export default {
      */
     preparePage: function () {
       const currentPage = this.viewer.currentPage()
+
+      this.$refs.pageNum.textContent = currentPage + 1
+
       this.currentImageUri = this.facsimileInfo[currentPage].imageUri.replace('/info.json', '')
       // console.log('calling facsimile:preparePage on page ' + this.currentImageUri + ' at ' + this.index)
       const view = this.$store.getters.views[this.index]
@@ -182,6 +196,41 @@ export default {
 
             if (meiString !== undefined) {
               const mei = parser.parseFromString(meiString, 'application/xml')
+
+              this.$refs.movementList.textContent = ''
+              mei.querySelectorAll('mdiv').forEach((mdiv, i) => {
+                const id = (mdiv.hasAttribute('xml:id')) ? mdiv.getAttribute('xml:id') : (null)
+                const num = i + 1
+                const label = (mdiv.hasAttribute('label')) ? mdiv.getAttribute('label') : ('Movement ' + num)
+
+                const obj = { id, num, label }
+
+                const firstMeasure = mdiv.querySelector('measure')
+                const zoneID = firstMeasure.hasAttribute('facs') ? firstMeasure.getAttribute('facs').replace('#', '').split(' ')[0] : null
+                if (zoneID !== null) {
+                  const zone = [...mei.querySelectorAll('zone')].find(zone => zone.getAttribute('xml:id') === zoneID)
+                  const surface = zone.closest('surface')
+                  let count = 0
+                  let lookup = surface
+                  while (lookup.previousElementSibling?.localName === 'surface') {
+                    count++
+                    lookup = lookup.previousElementSibling
+                  }
+                  obj.pageN = count
+                  console.log('Movement ' + num + ' starts on page ' + count, obj)
+                  const func = () => {
+                    this.viewer.goToPage(count)
+                  }
+
+                  const li = document.createElement('li')
+                  li.textContent = label
+                  li.setAttribute('title', 'Go to beginning of ' + label)
+                  li.classList.add('mdivLink')
+                  li.addEventListener('click', func)
+                  this.$refs.movementList.append(li)
+                }
+              })
+
               const surface = [...mei.querySelectorAll('surface')].find(surface => {
                 return surface.querySelector('graphic').getAttribute('target') === this.currentImageUri
               })
@@ -636,9 +685,13 @@ export default {
       background-color: rgba(255,255,255,.6);
       backdrop-filter: blur(5px);
 
-      &.userButtons {
+      &.userButtons, &.navigationButtons {
         position: relative;
         top: -6px;
+      }
+
+      .mdivLink {
+        cursor: pointer;
       }
 
       &.extraButtons {
