@@ -179,7 +179,7 @@ export default {
       // console.log('calling facsimile:preparePage on page ' + this.currentImageUri + ' at ' + this.index)
       const view = this.$store.getters.views[this.index]
 
-      if (view.perspective !== 'facsimile' || view?.arrangement?.iiif !== this.uri) {
+      if (view === undefined || view.perspective !== 'facsimile' || view?.arrangement?.iiif !== this.uri) {
         // console.error('\n\nSOMETHING HAPPENED!')
         return false
       }
