@@ -156,7 +156,7 @@ export const appModule = {
     },
     verovioCurrentMdivIndex: state => (viewIndex) => {
       const view = state.views[viewIndex]
-      if (view.state === undefined) {
+      if (view === undefined || view.state === undefined || view.state.mdivIndex === undefined) {
         return 0
       }
 

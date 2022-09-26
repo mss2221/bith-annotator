@@ -1390,7 +1390,7 @@ export const solidModule = {
       const pageUri = view?.state?.pageUri
 
       const meiString = rootState.app?.meiCache[meiUri]
-      if (meiString === undefined) {
+      if (meiString === undefined || pageUri === undefined) {
         return {}
       }
 

@@ -162,8 +162,15 @@ export default {
     preparePage: function () {
       const currentPage = this.viewer.currentPage()
       this.currentImageUri = this.facsimileInfo[currentPage].imageUri.replace('/info.json', '')
-      console.log('calling preparePage on page ' + this.currentImageUri + ' at ' + this.index)
+      // console.log('calling facsimile:preparePage on page ' + this.currentImageUri + ' at ' + this.index)
+      const view = this.$store.getters.views[this.index]
 
+      if (view.perspective !== 'facsimile' || view?.arrangement?.iiif !== this.uri) {
+        // console.error('\n\nSOMETHING HAPPENED!')
+        return false
+      }
+
+      // console.log('views:', this.$store.getters.views)
       this.viewer.clearOverlays()
 
       // deal with measure zones
@@ -592,8 +599,12 @@ export default {
       })
   },
   beforeUnmount () {
-    this.unwatchSelectionsOnPage()
-    this.unwatchAllMeasureSelectionsOnCurrentFacsimilePage()
+    try {
+      this.unwatchSelectionsOnPage()
+      this.unwatchAllMeasureSelectionsOnCurrentFacsimilePage()
+    } catch (err) {
+      console.log('Unable to properly unmount: ' + err)
+    }
   }
 }
 </script>

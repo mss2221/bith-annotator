@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="verovioPaneTitle">
-      <span>{{ title}}</span>
+      <span>{{ title }}</span>
       <div class="dropdown">
         <div class="btn-group">
           <a href="#" ref="activeMovement" class="btn btn-link">
@@ -145,13 +145,21 @@ export default {
   },
   beforeUnmount () {
     this.unwatchers.forEach(unwatch => {
-      unwatch()
+      try {
+        unwatch()
+      } catch (err) {
+        console.log('unable to unwatch verovio changes: ' + err)
+      }
     })
 
     document.querySelector('#meiContainer_' + this.idSeed + ' > svg').removeEventListener('click', this.clickListenerSVG)
     document.querySelector('#meiContainer_' + this.idSeed).innerHTML = 'empty'
   },
+  beforeUpdate: function () {
+    // console.log('things are updating, so I may want to respond!!!')
+  },
   mounted: function () {
+    // console.log('mounted verovio (again)?!', this.$refs.mei)
     // eslint-disable-next-line
     const vrvToolkit = new verovio.toolkit()
     const options = (typeof vrvPresets[this.settings] === 'object') ? vrvPresets[this.settings] : vrvPresets.fullScore
@@ -177,10 +185,9 @@ export default {
       .then(() => {
         const mei = this.$store.getters.mei(this.uri)
         vrvToolkit.loadData(mei)
-        const pos = this.currentMdiv + 2
+        /* const pos = this.currentMdiv + 2
         options.mdivXPathQuery = '.[position() = ' + pos + ']'
-        vrvToolkit.setOptions(options)
-        console.log('here')
+        vrvToolkit.setOptions(options) */
         const svg = vrvToolkit.renderToSVG(1, {})
         // document.querySelector('#meiContainer_' + this.idSeed).innerHTML = svg
         this.$refs.mei.innerHTML = svg
