@@ -5,6 +5,7 @@
       <ViewTab v-for="(view, v) in views" v-bind:key="v" v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="v"/>
     </span>
     <button class="customButton" @click="openLibrary"><i class="icon icon-plus"></i></button>
+    <button class="customButton float-right" :class="{'vertical': vertical}" @click="toggleOrientation"><i class="icon icon-menu"></i></button>
   </header>
 </template>
 
@@ -19,11 +20,17 @@ export default {
   computed: {
     views: function () {
       return this.$store.getters.views
+    },
+    vertical: function () {
+      return this.$store.getters.selectionToolOrientation === 'vertical'
     }
   },
   methods: {
     openLibrary: function () {
       this.$store.dispatch('toggleLibraryModal')
+    },
+    toggleOrientation: function () {
+      this.$store.dispatch('toggleSelectionToolOrientation')
     }
   }
 }
@@ -51,6 +58,16 @@ header {
     position: relative;
     top: .2rem;
     margin: 0 .3rem 0 .6rem;
+
+    &.float-right i {
+      position: relative;
+      top: -.25rem;
+      left: -.01rem;
+    }
+
+    &.vertical {
+      transform: rotate(90deg);
+    }
 
     &:hover {
       background: linear-gradient(to bottom, lighten($mainBackgroundColor, 10%), darken($mainBackgroundColor, 5%));

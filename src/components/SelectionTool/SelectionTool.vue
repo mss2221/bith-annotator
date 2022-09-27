@@ -1,15 +1,24 @@
 <template>
   <div>
     <SelectionToolHeader/>
-    <Splitpanes horizontal class="default-theme views">
-      <pane v-for="(view, x) in views" v-bind:key="x" v-bind:view="view">
+    <Splitpanes v-if="orientation === 'horizontal'" horizontal class="default-theme views">
+      <pane v-for="(view, x) in views" :key="x" :view="view">
         <div class="view">
           <div class="content">
-            <DisplayPane v-bind:perspective="view.perspective" v-bind:arr="view.arrangement" v-bind:index="x"/>
+            <DisplayPane :perspective="view.perspective" :arr="view.arrangement" :index="x"/>
           </div>
         </div>
       </pane>
-    </splitpanes>
+    </Splitpanes>
+    <Splitpanes v-else vertical class="default-theme views">
+      <pane v-for="(view, x) in views" :key="x" :view="view">
+        <div class="view">
+          <div class="content">
+            <DisplayPane :perspective="view.perspective" :arr="view.arrangement" :index="x"/>
+          </div>
+        </div>
+      </pane>
+    </Splitpanes>
   </div>
 </template>
 
@@ -31,6 +40,9 @@ export default {
   computed: {
     views: function () {
       return this.$store.getters.views
+    },
+    orientation: function () {
+      return this.$store.getters.selectionToolOrientation
     }
   },
   methods: {

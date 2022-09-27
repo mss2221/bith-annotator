@@ -1,7 +1,8 @@
 export const appModule = {
   state: () => ({
     selectionTool: {
-      visible: true
+      visible: true,
+      orientation: 'horizontal'
     },
     overviewTool: {
       visible: true
@@ -19,6 +20,9 @@ export const appModule = {
   mutations: {
     SHOW_SELECTION_TOOL (state, bool) {
       state.selectionTool.visible = bool
+    },
+    TOGGLE_SELECTION_ORIENTATION (state) {
+      state.selectionTool.orientation = state.selectionTool.orientation === 'horizontal' ? 'vertical' : 'horizontal'
     },
     SHOW_OVERVIEW_TOOL (state, bool) {
       state.overviewTool.visible = bool
@@ -65,6 +69,9 @@ export const appModule = {
       commit('SHOW_SELECTION_TOOL', true)
       commit('SHOW_OVERVIEW_TOOL', true)
       commit('SHOW_ANNOTATION_TOOL', false)
+    },
+    toggleSelectionToolOrientation ({ commit }) {
+      commit('TOGGLE_SELECTION_ORIENTATION')
     },
     setAnnotationMode ({ commit }) {
       commit('SHOW_SELECTION_TOOL', false)
@@ -120,6 +127,9 @@ export const appModule = {
         return false
       }
       return state.selectionTool.visible
+    },
+    selectionToolOrientation: state => {
+      return state.selectionTool.orientation
     },
     overviewToolVisible: state => {
       if (state.landingPageVisible) {
