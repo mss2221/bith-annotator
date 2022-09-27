@@ -1171,7 +1171,7 @@ export const solidModule = {
           })
           // arrangementUris.push(view.arrangement.iiif)
         }
-        if ('MEI' in view?.arrangement) {
+        if ('MEI' in view?.arrangement && view.arrangement.MEI !== false) {
           if (arrangementUris.indexOf(view.arrangement.MEI) === -1) {
             arrangementUris.push(view.arrangement.MEI.replace('http://', 'https://'))
           }

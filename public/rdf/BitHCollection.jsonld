@@ -20,7 +20,12 @@
 			{"@id": "https://api.domestic-beethoven.eu/lod/t631b5f6a-4ad7-4d86-a16d-b7d2fb58ccc7.nq"},
 			{"@id": "https://api.domestic-beethoven.eu/lod/t31eb6b86-a57b-40ca-8a17-dbd72fac768e.nq"},
 			{"@id": "https://api.domestic-beethoven.eu/lod/tbfcb377a-67b5-4096-9b27-36a43eb49a1e.nq"},
-			{"@id": "https://api.domestic-beethoven.eu/lod/tc8577096-53c4-44ff-b9a6-5268a745bd93.nq"}
+			{"@id": "https://api.domestic-beethoven.eu/lod/tc8577096-53c4-44ff-b9a6-5268a745bd93.nq"},
+
+			{"@id": "https://api.domestic-beethoven.eu/lod/tc5bc743c-bf05-48e9-8666-b38e8d52a25f.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t0da96e98-2e50-4d64-9ab7-8a195bdd7d16.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t54e4f616-df2b-4d65-adfb-56340bfcae16.nq"}
+
 		]
 	}
 }
