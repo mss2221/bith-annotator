@@ -500,7 +500,7 @@ export default {
       const w = Math.round(xywh[2])
       const h = Math.round(xywh[3])
 
-      const imageApiCall = '/' + x + ',' + y + ',' + w + ',' + h + '/full/0/default.jpg'
+      const imageApiCall = '#xywh=' + x + ',' + y + ',' + w + ',' + h// '/' + x + ',' + y + ',' + w + ',' + h + '/full/0/default.jpg'
       const targetUri = imageUri + imageApiCall
 
       this.$store.dispatch('addFacsimileSelection', targetUri)

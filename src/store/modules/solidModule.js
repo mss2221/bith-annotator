@@ -1276,7 +1276,7 @@ export const solidModule = {
 
       const pageUri = uri.replace('http://', 'https://')
       const getXywh = (selectionUrl) => {
-        return selectionUrl.split('/').at(-4).split(',')
+        return selectionUrl.split('#xywh=').at(-1).split(',') // selectionUrl.split('/').at(-4).split(',')
       }
 
       // console.log('searching for ' + pageUri)
