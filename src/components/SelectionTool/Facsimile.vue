@@ -299,63 +299,44 @@ export default {
       }
 
       const selections = this.$store.getters.facsimileSelectionsByViewIndex(this.index)
-      // console.log(selections)
 
       // This is a working (!) way to render the selections with Annotorious
       // However, as we need to render measures differently anyway, we use a
       // different approach
 
-      /*
-      const annots = []
-      selections.forEach(selection => {
+      selections.forEach(selectionArray => {
+        selectionArray.forEach(selection => {
+          const elem = document.createElement('div')
+          elem.setAttribute('data-selection-id', selection.id)
+          const extracts = Object.keys(selection.extracts)
+          elem.setAttribute('data-extracts', extracts.join(' '))
 
-        const annot = {
-          type: 'Annotation',
-          body: [{
-            type: 'TextualBody',
-            purpose: 'tagging',
-            value: 'measure'
-          }],
-          target: {
-            source: this.currentImageUri,
-            selector: {
-              type: 'FragmentSelector',
-              conformsTo: 'http://www.w3.org/TR/media-frags/',
-              value: 'xywh=pixel:' + selection.x + ',' + selection.y + ',' + selection.w + ',' + selection.h
-            }
-          },
-          '@context': 'http://www.w3.org/ns/anno.jsonld',
-          id: selection.id
-        }
-        annots.push(annot)
+          elem.classList.add('overlay')
+          elem.classList.add('selection')
+          selection.classList.forEach(cl => {
+            elem.classList.add(cl)
+          })
 
-      })
-      this.anno.setAnnotations(annots)
-      */
+          const delBtn = document.createElement('div')
+          delBtn.classList.add('delBtn')
+          delBtn.classList.add('icon')
+          delBtn.classList.add('icon-cross')
+          delBtn.setAttribute('title', 'remove this selected rectangle')
+          delBtn.setAttribute('data-uri', selection.uri)
+          delBtn.addEventListener('click', this.deleteIiifSelectionListener)
+          elem.append(delBtn)
 
-      selections.forEach(selection => {
-        const elem = document.createElement('div')
-        elem.setAttribute('data-selection-id', selection.id)
-        const extracts = Object.keys(selection.extracts)
-        elem.setAttribute('data-extracts', extracts.join(' '))
+          elem.addEventListener('click', this.overlayClickListener)
 
-        elem.classList.add('overlay')
-        elem.classList.add('selection')
-        selection.classList.forEach(cl => {
-          elem.classList.add(cl)
-        })
+          const rect = new OpenSeadragon.Rect(selection.x, selection.y, selection.w, selection.h)
 
-        elem.addEventListener('click', this.overlayClickListener)
-
-        const rect = new OpenSeadragon.Rect(selection.x, selection.y, selection.w, selection.h)
-
-        // append the new element as overlay, apply scaling factor to dimensions
-        this.viewer.addOverlay({
-          element: elem,
-          location: rect
+          // append the new element as overlay, apply scaling factor to dimensions
+          this.viewer.addOverlay({
+            element: elem,
+            location: rect
+          })
         })
       })
-
       // this.anno.selectAnnotation(newZone)
       /* {
         "type": "Annotation",
@@ -406,6 +387,23 @@ export default {
             })
           })
       } */
+    },
+
+    /**
+     * called when the user clicks on the delete button of a IIIF selection rectangle
+     * @param  {[type]} e                 [description]
+     * @param  {[type]} uri               [description]
+     * @return {[type]}     [description]
+     */
+    deleteIiifSelectionListener: function (e) {
+      // const elem = e.target.closest('.selection')
+      const uri = e.target.getAttribute('data-uri')
+      // const selectionID = elem.getAttribute('data-selection-id')
+      e.stopPropagation()
+      e.preventDefault()
+      this.$store.dispatch('addFacsimileSelection', uri)
+
+      // console.log('need to remove URI ' + uri + ' from ' + selectionID)
     },
 
     /**
@@ -759,6 +757,10 @@ export default {
     background-color: transparentize($svgSelection, .6);
     z-index: 1;
 
+    .delBtn {
+      display: none;
+    }
+
     &:not(.measure) {
       cursor: pointer;
     }
@@ -790,6 +792,16 @@ export default {
     }
 
     &.activeSelection {
+
+      .icon.delBtn {
+        display: block;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        font-weight: bold;
+        width: 1em;
+        height: 1em;
+      }
 
       &:not(.staff):not(.measure) {
         fill: $svgActiveSelectionEvents;

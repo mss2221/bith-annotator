@@ -398,7 +398,7 @@ export const solidModule = {
         console.log(urls)
         if (urls.indexOf(uri) === -1) {
           thing = buildThing(thing)
-            .setUrl(pref.frbr + 'part', uri) // should it be possible to have multiple rects?
+            .addUrl(pref.frbr + 'part', uri) // should it be possible to have multiple rects?
             .build()
         } else {
           thing = buildThing(thing)
@@ -1291,7 +1291,7 @@ export const solidModule = {
           const selectionUrl = idRef.replace('http://', 'https://')
           if (selectionUrl.startsWith(pageUri)) {
             const xywh = getXywh(selectionUrl)
-            foundSelections[selectionID] = {
+            const hit = {
               id: selectionID,
               uri: selectionUrl,
               x: parseInt(xywh[0]),
@@ -1302,17 +1302,22 @@ export const solidModule = {
               classList: [],
               extracts: {}
             }
+            if (selectionID in foundSelections) {
+              foundSelections[selectionID].push(hit)
+            } else {
+              foundSelections[selectionID] = [hit]
+            }
 
             if (state.activated.selection === selectionID) {
-              foundSelections[selectionID].classList.push('activeSelection')
+              foundSelections[selectionID][index].classList.push('activeSelection')
             }
 
             const extracts = getParents(state, selectionDS, bithTypes.selection)
             extracts.forEach(extractDS => {
               const extractID = getPublicIdFromDataStructure(extractDS)
-              foundSelections[selectionID].extracts[extractID] = true
+              foundSelections[selectionID][index].extracts[extractID] = true
               if (state.activated.extract === extractID) {
-                foundSelections[selectionID].classList.push('activeExtract')
+                foundSelections[selectionID][index].classList.push('activeExtract')
               }
             })
           }
@@ -1329,32 +1334,40 @@ export const solidModule = {
           const selectionUrl = idRef.replace('http://', 'https://')
           if (selectionUrl.startsWith(pageUri)) {
             if (foundSelections[selectionID] === undefined) {
-              foundSelections[selectionID] = {
+              foundSelections[selectionID] = [{
                 id: selectionID,
                 uri: selectionUrl,
                 index,
                 classList: [],
                 extracts: {}
-              }
+              }]
+            } else {
+              foundSelections[selectionID].push({
+                id: selectionID,
+                uri: selectionUrl,
+                index,
+                classList: [],
+                extracts: {}
+              })
             }
 
             const xywh = getXywh(selectionUrl)
-            foundSelections[selectionID].x = parseInt(xywh[0])
-            foundSelections[selectionID].y = parseInt(xywh[1])
-            foundSelections[selectionID].w = parseInt(xywh[2])
-            foundSelections[selectionID].h = parseInt(xywh[3])
-            foundSelections[selectionID].classList.push('current')
+            foundSelections[selectionID][index].x = parseInt(xywh[0])
+            foundSelections[selectionID][index].y = parseInt(xywh[1])
+            foundSelections[selectionID][index].w = parseInt(xywh[2])
+            foundSelections[selectionID][index].h = parseInt(xywh[3])
+            foundSelections[selectionID][index].classList.push('current')
 
-            if (state.activeSelection === selectionID && foundSelections[selectionID].classList.indexOf('activeSelection') === -1) {
-              foundSelections[selectionID].classList.push('activeSelection')
+            if (state.activeSelection === selectionID && foundSelections[selectionID][index].classList.indexOf('activeSelection') === -1) {
+              foundSelections[selectionID][index].classList.push('activeSelection')
             }
 
             const extracts = getParents(state, selectionDS, bithTypes.selection)
             extracts.forEach(extractDS => {
               const extractID = getPublicIdFromDataStructure(extractDS)
-              foundSelections[selectionID].extracts[extractID] = true
+              foundSelections[selectionID][index].extracts[extractID] = true
               if (state.activated.extract === extractID) {
-                foundSelections[selectionID].classList.push('activeExtract')
+                foundSelections[selectionID][index].classList.push('activeExtract')
               }
             })
           }
