@@ -23,7 +23,20 @@ export const transformArrangement = (graphObject) => {
   obj.id = graphObject['@id']
   obj.shortTitle = graphObject[prefix.bibo + 'shortTitle']
   obj.genre = prefix.dbpedia + 'genre' in graphObject ? graphObject[prefix.dbpedia + 'genre']['@id'] : false
-  obj.arranger = graphObject[prefix.gndo + 'arranger'] // Change so we have name, not URL
+
+  const arr = graphObject[prefix.gndo + 'arranger']
+  if (arr === undefined) {
+    obj.arranger = '-'
+  } else if (typeof arr === 'string') {
+    obj.arranger = arr
+  } else if ('label' in arr) {
+    obj.arranger = arr.label
+  } else if (arr['@id']) {
+    obj.arranger = arr['@id']
+  } else {
+    obj.arranger = '-'
+  } // todo: add support for arrays of arrangers
+  // obj.arranger = graphObject[prefix.gndo + 'arranger'] // Change so we have name, not URL
   obj.publisher = graphObject[prefix.dce + 'publisher'] // Change so we have name, not URL
   obj.date = graphObject[prefix.gndo + 'dateOfPublication']
 

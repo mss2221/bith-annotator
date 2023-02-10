@@ -25,7 +25,17 @@ export default {
       return this.arr.shortTitle
     },
     arranger: function () {
-      return this.arr.arranger[pref.rdfs + 'label']
+      if (this.arr.arranger) {
+        if (typeof this.arr.arranger === 'string') {
+          return this.arr.arranger
+        } else if (this.arr.arranger[pref.rdfs + 'label']) {
+          return this.arr.arranger[pref.rdfs + 'label']
+        } else if (this.arr.arranger['@id']) {
+          return this.arr.arranger['@id']
+        }
+        return undefined
+      }
+      return undefined
     },
     publisher: function () {
       return this.arr.publisher[pref.rdfs + 'label']
