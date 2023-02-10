@@ -1234,7 +1234,7 @@ export const solidModule = {
 
       // order extracts
       const arr = Object.values(extracts)
-      arr.sort((a, b) => {
+      /* arr.sort((a, b) => {
         const thingA = getThingAll(a)[0]
         const dateA = getDate(thingA, pref.dct + 'created')
         const thingB = getThingAll(b)[0]
@@ -1249,7 +1249,7 @@ export const solidModule = {
         } else {
           return dateCompare
         }
-      })
+     }) */
 
       return arr
     },
