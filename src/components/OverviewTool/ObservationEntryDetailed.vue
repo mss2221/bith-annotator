@@ -1,5 +1,5 @@
 <template>
-  <tr class="observationEntryDetailed" @click="activateThing" :class="{'active': activated, 'affectedCurrent': affectedByCurrentAnnot, 'affectedActive': affectedByActiveAnnot}" :data-level="this.level" :title="type + ': ' + id" :data-id="id">
+  <tr class="observationEntryDetailed" @click="activateThing" :class="{'active': activated, 'affectedCurrent': affectedByCurrentAnnot, 'affectedActive': affectedByActiveAnnot}" :data-level="this.level" :title="type + ': ' + uri" :data-id="uri">
     <td class="content">
       <template v-if="!activated || !isCurrent">
         <span class="plain">{{body}}</span>
@@ -26,13 +26,15 @@
 
 <script>
 import {
-  getThingAll,
+  asUrl,
+  createSolidDataset,
+  setThing,
   getStringNoLocale,
   solidDatasetAsTurtle
 } from '@inrupt/solid-client'
 import { prefix as pref } from '@/meld/prefixes.js'
 import { getChildType } from '@/store/tools/solidHelpers.js'
-import { bithTypes } from '@/meld/constants.js'
+import { bithTypes, displayPrefixes } from '@/meld/constants.js'
 
 export default {
   name: 'ObservationEntryDetailed',
@@ -40,26 +42,21 @@ export default {
 
   },
   props: {
-    file: Object,
+    thing: Object,
     type: String,
     level: Number
   },
   computed: {
-    id: function () {
-      const url = getThingAll(this.file)[0].url
-      if (url.indexOf('.well-known/sdk-local-node/') !== -1) {
-        return url.split('.well-known/sdk-local-node/')[1]
-      } else if (url.indexOf('#') !== -1) {
-        return url.split('#')[0]
-      } else {
-        return url
-      }
+    uri: function () {
+      const baseUrl = this.$store.getters.dataBaseUrl
+      const url = asUrl(this.thing, baseUrl)
+      return url
     },
     activated: function () {
-      return this.$store.getters.activeThingIDByType(this.type) === this.id
+      return this.$store.getters.activeThingIDByType(this.type) === this.uri
     },
     currentThing: function () {
-      const thing = this.$store.getters.currentThingByTypeAndID(this.type, this.id)
+      const thing = this.$store.getters.currentThingByTypeAndID(this.type, this.uri)
 
       if (thing === undefined) {
         return null
@@ -73,20 +70,19 @@ export default {
       return getChildType(this.type)
     },
     children: function () {
-      const children = this.$store.getters.childrenByTypeAndID(this.type, this.id)
+      const children = this.$store.getters.childrenByTypeAndID(this.type, this.uri)
       return children
     },
     body: {
       get () {
-        const thing = getThingAll(this.file)[0]
-        const body = getStringNoLocale(thing, pref.oa + 'bodyValue')
+        const body = getStringNoLocale(this.thing, pref.oa + 'bodyValue')
 
         return body
       },
       set (val) {
         this.$store.dispatch('changeCurrentDataObject', {
           type: 'observation',
-          id: this.id,
+          uri: this.uri,
           prop: pref.oa + 'bodyValue',
           method: 'setStringNoLocale',
           val
@@ -94,44 +90,42 @@ export default {
       }
     },
     resp: function () {
-      const file = (this.isCurrent) ? this.$store.getters.currentThingByTypeAndID(this.type, this.id) : this.file
-      const thing = getThingAll(file)[0]
-      const user = getStringNoLocale(thing, pref.dct + 'creator')
+      const user = getStringNoLocale(this.thing, pref.dct + 'creator')
       return user
     },
     affectedByCurrentAnnot: function () {
-      const affectedArr = this.$store.getters.affectedByCurrentAnnot[bithTypes.observation]
-      return affectedArr.indexOf(this.id) !== -1
+      const affectedArr = this.$store.getters.affectedByCurrentAnnot.observation
+      return affectedArr.indexOf(this.uri) !== -1
     },
     affectedByActiveAnnot: function () {
-      const affectedArr = this.$store.getters.affectedByActiveAnnot[bithTypes.observation]
-      return affectedArr.indexOf(this.id) !== -1
+      const affectedArr = this.$store.getters.affectedByActiveAnnot.observation
+      return affectedArr.indexOf(this.uri) !== -1
     },
     ableToBeEdited: function () {
       const obj = this.$store.getters.ableToBeEdited
-      const bool = obj[bithTypes.observation]
+      const bool = obj.observation
       return bool
     }
   },
   methods: {
     activateThing: function (e) {
-      console.log('activating ' + this.type + ' ' + this.id, e)
+      console.log('activating ' + this.type + ' ' + this.uri, e)
       if (e.target.localName === 'textarea') {
         return
       }
 
       if (!this.activated) {
-        this.$store.dispatch('activateThing', { type: this.type, id: this.id })
+        this.$store.dispatch('activateThing', this.uri)
       } else {
-        this.$store.dispatch('activateThing', { type: this.type, id: null })
+        this.$store.dispatch('deActivateThing', bithTypes.observation)
       }
-      this.$store.dispatch('activateThing', { type: bithTypes.musicalMaterial, id: null })
-      this.$store.dispatch('activateThing', { type: bithTypes.extract, id: null })
-      this.$store.dispatch('activateThing', { type: bithTypes.selection, id: null })
+      this.$store.dispatch('deActivateThing', bithTypes.musicalMaterial)
+      this.$store.dispatch('deActivateThing', bithTypes.extract)
+      this.$store.dispatch('deActivateThing', bithTypes.selection)
     },
     startEditing: function () {
-      this.$store.dispatch('activateThing', { type: this.type, id: this.id })
-      this.$store.dispatch('makeCurrent', { type: this.type, object: this.file })
+      this.$store.dispatch('activateThing', this.uri)
+      this.$store.dispatch('makeCurrent', this.thing) // { type: this.type, object: this.file })
     },
     saveChanges: function () {
       this.$store.dispatch('saveChanges')
@@ -141,14 +135,17 @@ export default {
     },
     add: function () {
       console.log('add this to current thing')
-      this.$store.dispatch('toggleUriAtCurrentThing', { target: this.id, operation: 'add' })
+      this.$store.dispatch('toggleUriAtCurrentThing', { uri: this.uri, operation: 'add' })
     },
     remove: function () {
       console.log('remove this from current thing')
-      this.$store.dispatch('toggleUriAtCurrentThing', { target: this.id, operation: 'remove' })
+      this.$store.dispatch('toggleUriAtCurrentThing', { uri: this.uri, operation: 'remove' })
     },
     showLD: async function (e) {
-      const ttl = await solidDatasetAsTurtle(this.file, { prefixes: pref })
+      let ds = createSolidDataset()
+      ds = setThing(ds, this.thing)
+
+      const ttl = await solidDatasetAsTurtle(ds, { prefixes: displayPrefixes })
       // console.log(this.id + ' (' + ttl.length + ')')
       this.$store.dispatch('setLdDetails', ttl)
     }

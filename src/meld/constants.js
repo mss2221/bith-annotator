@@ -72,8 +72,20 @@ const constants = {
 export default constants
 
 export const bithTypes = {
-  observation: 'observation',
-  musicalMaterial: 'musicalMaterial',
-  extract: 'extract',
-  selection: 'selection'
+  observation: 'Annotation',
+  musicalMaterial: 'https://domestic-beethoven.eu/Terms/MusicalMaterial',
+  extract: 'https://domestic-beethoven.eu/Terms/Extract',
+  selection: 'https://domestic-beethoven.eu/Terms/Selection',
+  Annotation: 'Annotation',
+  'https://domestic-beethoven.eu/Terms/MusicalMaterial': 'https://domestic-beethoven.eu/Terms/MusicalMaterial',
+  'https://domestic-beethoven.eu/Terms/Extract': 'https://domestic-beethoven.eu/Terms/Extract',
+  'https://domestic-beethoven.eu/Terms/Selection': 'https://domestic-beethoven.eu/Terms/Selection'
+}
+
+export const displayPrefixes = {
+  rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+  dct: 'http://purl.org/dc/terms/',
+  frbr: 'http://purl.org/vocab/frbr/core#',
+  bithTerms: 'https://domestic-beethoven.eu/Terms/',
+  xsd: 'http://www.w3.org/2001/XMLSchema#'
 }

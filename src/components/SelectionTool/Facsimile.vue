@@ -64,7 +64,6 @@ export default {
       if (this.viewer === undefined || this.facsimileInfo === undefined) {
         return {}
       }
-
       return this.$store.getters.allMeasureSelectionsOnCurrentFacsimilePage(this.index)
     }
   },
@@ -217,7 +216,7 @@ export default {
                     lookup = lookup.previousElementSibling
                   }
                   obj.pageN = count
-                  console.log('Movement ' + num + ' starts on page ' + count, obj)
+                  // console.log('Movement ' + num + ' starts on page ' + count, obj)
                   const func = () => {
                     this.viewer.goToPage(count)
                   }
@@ -237,9 +236,7 @@ export default {
 
               if (surface !== undefined) {
                 const zones = surface.querySelectorAll('zone')
-
                 const allSelectedMeasures = this.$store.getters.allMeasureSelectionsOnCurrentFacsimilePage(this.index)
-
                 zones.forEach(zone => {
                   const zoneId = zone.getAttribute('xml:id')
                   const measure = mei.querySelector('measure[facs~="#' + zoneId + '"]')
@@ -416,9 +413,9 @@ export default {
       const elem = e.target
       const extractID = elem.getAttribute('data-extracts').split(' ')[0]
       const selectionID = elem.getAttribute('data-selection-id')
-      console.log('extract: ' + extractID)
-      this.$store.dispatch('activateThing', { id: extractID, type: bithTypes.extract })
-      this.$store.dispatch('activateThing', { id: selectionID, type: bithTypes.selection })
+
+      this.$store.dispatch('activateThing', extractID)
+      this.$store.dispatch('activateThing', selectionID)
     },
 
     /**

@@ -35,13 +35,16 @@
 
 <script>
 import {
+  asUrl,
+  createSolidDataset,
+  setThing,
   getThingAll,
   getStringNoLocale,
   solidDatasetAsTurtle
 } from '@inrupt/solid-client'
 import { prefix as pref } from '@/meld/prefixes.js'
 import { getChildType } from '@/store/tools/solidHelpers.js'
-// import { bithTypes } from '@/meld/constants.js'
+import { displayPrefixes } from '@/meld/constants.js'
 
 export default {
   name: 'GraphEntryDetailed',
@@ -55,14 +58,9 @@ export default {
   },
   computed: {
     id: function () {
-      const url = getThingAll(this.file)[0].url
-      if (url.indexOf('.well-known/sdk-local-node/') !== -1) {
-        return url.split('.well-known/sdk-local-node/')[1]
-      } else if (url.indexOf('#') !== -1) {
-        return url.split('#')[0]
-      } else {
-        return url
-      }
+      const baseUrl = this.$store.getters.dataBaseUrl
+      const url = asUrl(this.thing, baseUrl)
+      return url
     },
     activated: function () {
       return this.$store.getters.activeThingIDByType(this.type) === this.id
@@ -87,9 +85,7 @@ export default {
     },
     label: {
       get () {
-        const file = (this.isCurrent) ? this.$store.getters.currentThingByTypeAndID(this.type, this.id) : this.file
-        const thing = getThingAll(file)[0]
-        let label = getStringNoLocale(thing, pref.rdfs + 'label')
+        let label = getStringNoLocale(this.thing, pref.rdfs + 'label')
 
         if (label === '') {
           label = '[no label]'
@@ -100,7 +96,7 @@ export default {
       set (val) {
         this.$store.dispatch('changeCurrentDataObject', {
           type: this.type,
-          id: this.id,
+          uri: this.uri,
           prop: pref.rdfs + 'label',
           method: 'setStringNoLocale',
           val
@@ -141,7 +137,10 @@ export default {
       }
     }, */
     showLD: async function (e) {
-      const ttl = await solidDatasetAsTurtle(this.file, { prefixes: pref })
+      let ds = createSolidDataset()
+      ds = setThing(ds, this.thing)
+
+      const ttl = await solidDatasetAsTurtle(ds, { prefixes: displayPrefixes })
       // console.log(this.id + ' (' + ttl.length + ')')
       this.$store.dispatch('setLdDetails', ttl)
     }

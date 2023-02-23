@@ -1,10 +1,13 @@
 import {
   buildThing,
-  createSolidDataset,
+  // createSolidDataset,
   createThing,
   getThingAll,
   getUrlAll,
-  setThing
+  getUrl,
+  getStringNoLocale,
+  // setThing,
+  asUrl
 } from '@inrupt/solid-client'
 
 import { prefix as pref } from '@/meld/prefixes'
@@ -35,28 +38,25 @@ export const getPublicIdFromDataStructure = (ds) => {
   }
 }
 
-// creates an annotation stub
-export const getAnnotDS = (user) => {
+/**
+ * generates a new annotation / observation thing in its final place
+ * @param  {[type]} user                      the webId of the user
+ * @param  {[type]} userPodPath               the uri of the file containing all things
+ * @return {[type]}             [description]
+ */
+export const getAnnotThing = (user, userPodPath) => {
   const date = new Date()
-  // const date = d.toISOString()
-  const plainId = uuidv4()
-  const id = user.split('/profile/')[0] + '/public/bith/annotations/' + plainId + '.ttl'
+  const id = uuidv4()
 
-  let ds = createSolidDataset()
-
-  const thing = buildThing(createThing({ name: id }))
+  const thing = buildThing(createThing({ name: id, uri: userPodPath }))
     .addStringNoLocale(pref.rdf + 'type', 'Annotation')
     .addDate(pref.dct + 'created', date)
     .addUrl(pref.dct + 'creator', user)
     .addStringNoLocale(pref.oa + 'Motivation', 'describing')
     .addStringNoLocale(pref.oa + 'bodyValue', '')
-    // .addUrl(pref.frbr + 'embodiment','http://test1.com/ads')
-    // .addUrl(pref.frbr + 'embodiment','http://test2.com/sad')
     .build()
 
-  ds = setThing(ds, thing)
-
-  return ds
+  return thing
 
   /* const anno = {
     "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -73,49 +73,44 @@ export const getAnnotDS = (user) => {
   } */
 }
 
-// creates a musicalMaterial stub
-export const getMusMatDS = (user) => {
+/**
+ * generates a new musical Material thing in its final place
+ * @param  {[type]} user               [description]
+ * @param  {[type]} userPodPath               the uri of the file containing all things
+ * @return {[type]}      [description]
+ */
+export const getMusMatThing = (user, userPodPath) => {
   const date = new Date()
-  // const date = d.toISOString()
-  const plainId = uuidv4()
-  const id = user.split('/profile/')[0] + '/public/bith/musicalMaterials/' + plainId + '.ttl'
+  const id = uuidv4()
 
-  let ds = createSolidDataset()
-
-  const thing = buildThing(createThing({ name: id }))
+  const thing = buildThing(createThing({ name: id, uri: userPodPath }))
     .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
     .addDate(pref.dct + 'created', date)
     .addUrl(pref.dct + 'creator', user)
     .addStringNoLocale(pref.rdfs + 'label', '')
-    // .addUrl(pref.frbr + 'embodiment','http://test1.com/ads')
-    // .addUrl(pref.frbr + 'embodiment','http://test2.com/sad')
     .build()
 
-  ds = setThing(ds, thing)
-
-  return ds
+  return thing
 }
 
-export const getExtractDS = (user) => {
+/**
+ * generates a new extract thing in its final place
+ * @param  {[type]} user                      the webId of the user
+ * @param  {[type]} userPodPath               the uri of the file containing all things
+ * @return {[type]}             [description]
+ */
+export const getExtractThing = (user, userPodPath) => {
   const date = new Date()
-  // const date = d.toISOString()
-  const plainId = uuidv4()
-  const id = user.split('/profile/')[0] + '/public/bith/extracts/' + plainId + '.ttl'
+  const id = uuidv4()
 
-  let ds = createSolidDataset()
-
-  const thing = buildThing(createThing({ name: id }))
+  const thing = buildThing(createThing({ name: id, uri: userPodPath }))
     .addUrl(pref.rdf + 'type', pref.bithTerms + 'Extract')
     .addDate(pref.dct + 'created', date)
     .addUrl(pref.dct + 'creator', user)
     .addStringNoLocale(pref.rdfs + 'label', '[new extract]')
-    // * .addUrl(pref.frbr + 'member','http://test1.com/ads')
-    // * .addUrl(pref.frbr + 'member','http://test2.com/sad')
     .build()
 
-  ds = setThing(ds, thing)
-
-  return ds
+  return thing
 
   /* const extract = {
     "@type": "https://example.com/Terms/Extract",
@@ -131,26 +126,24 @@ export const getExtractDS = (user) => {
   } */
 }
 
-export const getSelectionDS = (user) => {
+/**
+ * generates a new selection thing in its final place
+ * @param  {[type]} user                      the webId of the user
+ * @param  {[type]} userPodPath               the uri of the file containing all things
+ * @return {[type]}             [description]
+ */
+export const getSelectionThing = (user, userPodPath) => {
   const date = new Date()
-  // const date = d.toISOString()
-  const plainId = uuidv4()
-  const id = user.split('/profile/')[0] + '/public/bith/selections/' + plainId + '.ttl'
+  const id = uuidv4()
 
-  let ds = createSolidDataset()
-
-  const thing = buildThing(createThing({ name: id }))
+  const thing = buildThing(createThing({ name: id, uri: userPodPath }))
     .addUrl(pref.rdf + 'type', pref.bithTerms + 'Selection')
     .addDate(pref.dct + 'created', date)
     .addUrl(pref.dct + 'creator', user)
     .addStringNoLocale(pref.rdfs + 'label', '[new selection]')
-    // .addUrl(pref.frbr + 'part','http://test1.com/ads')
-    // .addUrl(pref.frbr + 'part','http://test2.com/sad')
     .build()
 
-  ds = setThing(ds, thing)
-
-  return ds
+  return thing
 
   /* const selection = {
     "@type": "https://example.com/Terms/Selection",
@@ -189,30 +182,25 @@ export const populateActivations = (state, observation, musicalMaterial, extract
 }
 
 /**
- * empties the currentAnnot object
+ * empties the currentThings object
  * @param  {[type]} state               [description]
  * @return {[type]}       [description]
  */
-export const emptyCurrentAnnot = (state) => {
-  populateCurrentAnnot(state, {}, {}, {}, {})
+export const emptyCurrentThings = (state) => {
+  state.currentThings = {}
 }
 
 /**
- * populates the currentAnnot object
- * @param  {[type]} state                         [description]
- * @param  {[type]} observation                   [description]
- * @param  {[type]} musicalMaterial               [description]
- * @param  {[type]} extract                       [description]
- * @param  {[type]} selection                     [description]
- * @return {[type]}                 [description]
+ * loads an array of things into the currentThings object
+ * @param  {[type]} state                [description]
+ * @param  {[type]} things               the sold things
+ * @return {[type]}        [description]
  */
-export const populateCurrentAnnot = (state, observation, musicalMaterial, extract, selection) => {
-  state.currentAnnot = {
-    observation,
-    musicalMaterial,
-    extract,
-    selection
-  }
+export const makeThingsCurrent = (state, things, userPodPath) => {
+  things.forEach(thing => {
+    const uri = asUrl(thing, userPodPath)
+    state.currentThings[uri] = thing
+  })
 }
 
 /**
@@ -273,31 +261,22 @@ export const getChildType = (type) => {
 /**
  * get all children
  * @param  {[type]} state               [description]
- * @param  {[type]} ds                  [description]
- * @param  {[type]} type                [description]
+ * @param  {[type]} uri                  [description]
  * @return {[type]}       [description]
  */
-export const getChildren = (state, ds, type) => {
-  const thing = getThingAll(ds)[0]
+export const getChildren = (state, uri) => {
+  const thing = state.currentThings[uri] !== undefined ? state.currentThings[uri] : state.thingStore[uri]
+  const type = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
   const predicate = getPredicateByType(type)
 
   const arr = []
 
-  const types = [bithTypes.observation, bithTypes.musicalMaterial, bithTypes.extract, bithTypes.selection]
-  const nextIndex = types.indexOf(type) + 1
-
-  if (nextIndex > types.length - 1) {
-    // console.log('An item of type ' + type + ' has no children')
-    return []
-  }
-
-  const childType = types[nextIndex]
-
-  const childrenIDs = getUrlAll(thing, predicate)
-  childrenIDs.forEach(childID => {
-    const currentChildDS = state.currentAnnot[childType][childID]
-    const childDS = currentChildDS !== undefined ? currentChildDS : state.annotStore[childType][childID]
-    arr.push(childDS)
+  const childrenUris = getUrlAll(thing, predicate)
+  childrenUris.forEach(childUri => {
+    const childThing = state.currentThings[childUri] !== undefined ? state.currentThings[childUri] : state.thingStore[childUri]
+    if (childThing !== undefined) {
+      arr.push(childThing)
+    }
   })
 
   return arr
@@ -306,88 +285,93 @@ export const getChildren = (state, ds, type) => {
 /**
  * get all parents from selections (-> extracts) or extracts (-> musicalMaterials)
  * @param  {[type]} state               [description]
- * @param  {[type]} ds                  [description]
- * @param  {[type]} type                [description]
+ * @param  {[type]} uri                  [description]
  * @return {[type]}       [description]
  */
-export const getParents = (state, ds, type) => {
-  const id = getPublicIdFromDataStructure(ds)
+export const getParents = (state, uri) => {
+  const thing = state.currentThings[uri] !== undefined ? state.currentThings[uri] : state.thingStore[uri]
+  const type = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
   const predicate = getParentPredicateByType(type)
-
-  const parents = {}
 
   const types = [bithTypes.observation, bithTypes.musicalMaterial, bithTypes.extract, bithTypes.selection]
   const parentIndex = types.indexOf(type) - 1
+  const parentType = types[parentIndex]
 
   if (parentIndex <= 0) {
     // console.log('An item of type ' + type + ' has no children')
     return []
   }
 
-  const parentType = types[parentIndex]
+  const arr = []
+  const map = new Map()
 
-  Object.values(state.annotStore[parentType]).forEach(parentDS => {
-    const parentId = getPublicIdFromDataStructure(parentDS)
-    const thing = getThingAll(parentDS)[0]
-    const childrenIDs = getUrlAll(thing, predicate)
+  Object.entries(state.thingStore).forEach(object => {
+    const iteratedType = getUrl(object[1], pref.rdf + 'type')
 
-    if (childrenIDs.indexOf(id) !== -1) {
-      parents[parentId] = parentDS
+    if (iteratedType === parentType) {
+      const childrenIDs = getUrlAll(object[1], predicate)
+
+      if (childrenIDs.indexOf(uri) !== -1) {
+        map.set(object[0], object[1])
+      }
     }
   })
 
-  Object.values(state.currentAnnot[parentType]).forEach(parentDS => {
-    const parentId = getPublicIdFromDataStructure(parentDS)
-    const thing = getThingAll(parentDS)[0]
-    const childrenIDs = getUrlAll(thing, predicate)
+  Object.entries(state.currentThings).forEach(object => {
+    const iteratedType = getUrl(object[1], pref.rdf + 'type')
 
-    if (childrenIDs.indexOf(id) !== -1) {
-      parents[parentId] = parentDS
+    if (iteratedType === parentType) {
+      const childrenIDs = getUrlAll(object[1], predicate)
+
+      if (childrenIDs.indexOf(uri) !== -1) {
+        map.set(object[0], object[1])
+      }
     }
   })
 
-  return Object.values(parents)
+  map.forEach((thing, uri) => {
+    arr.push(thing)
+  })
+
+  return arr
 }
 
 /**
  * returns the type of a thing by examining its ID. Returns null if no type can
  * be found
  * @param  {[type]} state               [description]
- * @param  {[type]} id               [description]
+ * @param  {[type]} uri                 [description]
  * @return {[type]}    [description]
  */
-export const getTypeById = (state, id) => {
-  if (Object.keys(state.annotStore.selection).indexOf(id) !== -1) {
-    return bithTypes.selection
-  }
+export const getTypeById = (state, uri) => {
+  const thing = state.currentThings[uri] !== undefined ? state.currentThings[uri] : state.thingStore[uri]
+  const type = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
 
-  if (Object.keys(state.annotStore.extract).indexOf(id) !== -1) {
-    return bithTypes.extract
-  }
-
-  if (Object.keys(state.annotStore.musicalMaterial).indexOf(id) !== -1) {
-    return bithTypes.musicalMaterial
-  }
-
-  if (Object.keys(state.annotStore.observation).indexOf(id) !== -1) {
+  if (type === 'Annotation') {
     return bithTypes.observation
+  } else if (type in bithTypes) {
+    return type
+  } else {
+    return null
   }
+}
 
-  if (Object.keys(state.currentAnnot.selection).indexOf(id) !== -1) {
-    return bithTypes.selection
+/**
+ * helper method to retrieve simplified type from bithType
+ * @param  {[type]} type               [description]
+ * @return {[type]}      [description]
+ */
+export const simplifiedTypeByType = (type) => {
+  if (type === bithTypes.observation) {
+    return 'observation'
+  } else if (type === bithTypes.musicalMaterial) {
+    return 'musicalMaterial'
+  } else
+  if (type === bithTypes.extract) {
+    return 'extract'
+  } else
+  if (type === bithTypes.selection) {
+    return 'selection'
   }
-
-  if (Object.keys(state.currentAnnot.extract).indexOf(id) !== -1) {
-    return bithTypes.extract
-  }
-
-  if (Object.keys(state.currentAnnot.musicalMaterial).indexOf(id) !== -1) {
-    return bithTypes.musicalMaterial
-  }
-
-  if (Object.keys(state.currentAnnot.observation).indexOf(id) !== -1) {
-    return bithTypes.observation
-  }
-
-  return null
+  return type
 }

@@ -5,7 +5,7 @@
         <input type="text" v-model.trim="label"/>
       </template>
       <template v-else> -->
-      <span class="itemLabel">{{ label }}</span> <!--  @dblclick="startEditing" -->
+      <span class="itemLabel">{{ label }}</span>
       <!-- </template> -->
     </td>
     <td class="arrTitle">
@@ -41,20 +41,23 @@
 
     </div>
     <div v-if="activated && this.level === 1" class="contents">
-      <GraphEntry v-for="(c, cI) in children" :key="cI" :file="c" :level="this.level + 1" :type="childType"/>
+      <GraphEntry v-for="(c, cI) in children" :key="cI" :thing="c" :level="this.level + 1" :type="childType"/>
     </div>-->
   </tr>
 </template>
 
 <script>
 import {
-  getThingAll,
+  setThing,
+  createSolidDataset,
   getStringNoLocale,
-  solidDatasetAsTurtle
+  solidDatasetAsTurtle,
+  asUrl
 } from '@inrupt/solid-client'
 import { prefix as pref } from '@/meld/prefixes.js'
+import { displayPrefixes } from '@/meld/constants.js'
 import { getChildType } from '@/store/tools/solidHelpers.js'
-import { bithTypes } from '@/meld/constants.js'
+// import { bithTypes } from '@/meld/constants.js'
 
 export default {
   name: 'ExtractEntryDetailed',
@@ -62,20 +65,15 @@ export default {
 
   },
   props: {
-    file: Object,
+    thing: Object,
     type: String,
     level: Number
   },
   computed: {
     id: function () {
-      const url = getThingAll(this.file)[0].url
-      if (url.indexOf('.well-known/sdk-local-node/') !== -1) {
-        return url.split('.well-known/sdk-local-node/')[1]
-      } else if (url.indexOf('#') !== -1) {
-        return url.split('#')[0]
-      } else {
-        return url
-      }
+      const baseUrl = this.$store.getters.dataBaseUrl
+      const url = asUrl(this.thing, baseUrl)
+      return url
     },
     /* activated: function () {
       return this.$store.getters.activeThingIDByType(this.type) === this.id
@@ -100,9 +98,7 @@ export default {
     },
     label: {
       get () {
-        const file = (this.isCurrent) ? this.$store.getters.currentThingByTypeAndID(this.type, this.id) : this.file
-        const thing = getThingAll(file)[0]
-        let label = getStringNoLocale(thing, pref.rdfs + 'label')
+        let label = getStringNoLocale(this.thing, pref.rdfs + 'label')
 
         if (label === '') {
           label = '[no label]'
@@ -113,7 +109,7 @@ export default {
       set (val) {
         this.$store.dispatch('changeCurrentDataObject', {
           type: this.type,
-          id: this.id,
+          uri: this.id,
           prop: pref.rdfs + 'label',
           method: 'setStringNoLocale',
           val
@@ -121,16 +117,14 @@ export default {
       }
     },
     resp: function () {
-      const file = (this.isCurrent) ? this.$store.getters.currentThingByTypeAndID(this.type, this.id) : this.file
-      const thing = getThingAll(file)[0]
-      const user = getStringNoLocale(thing, pref.dct + 'creator')
+      const user = getStringNoLocale(this.thing, pref.dct + 'creator')
       return user
     },
     arrangement: function () {
-      return this.$store.getters.arrangementByExtract(this.file)
+      return this.$store.getters.arrangementByExtract(this.id)
     },
     arranger: function () {
-      const arrangement = this.$store.getters.arrangementByExtract(this.file)
+      const arrangement = this.$store.getters.arrangementByExtract(this.id)
       const arranger = arrangement?.arranger
       if (arranger !== undefined) {
         const label = arranger[pref.rdfs + 'label']
@@ -141,16 +135,16 @@ export default {
       return ''
     },
     affectedByCurrentAnnot: function () {
-      const affectedArr = this.$store.getters.affectedByCurrentAnnot[bithTypes.extract]
+      const affectedArr = this.$store.getters.affectedByCurrentAnnot.extract
       return affectedArr.indexOf(this.id) !== -1
     },
     affectedByActiveAnnot: function () {
-      const affectedArr = this.$store.getters.affectedByActiveAnnot[bithTypes.extract]
+      const affectedArr = this.$store.getters.affectedByActiveAnnot.extract
       return affectedArr.indexOf(this.id) !== -1
     },
     ableToBeEdited: function () {
       const obj = this.$store.getters.ableToBeEdited
-      const bool = obj[bithTypes.extract]
+      const bool = obj.extract
       return bool
     }
   },
@@ -176,10 +170,10 @@ export default {
       this.$store.dispatch('discardChanges')
     }, */
     add: function () {
-      this.$store.dispatch('toggleUriAtCurrentThing', { target: this.id, operation: 'add' })
+      this.$store.dispatch('toggleUriAtCurrentThing', { uri: this.id, operation: 'add' })
     },
     remove: function () {
-      this.$store.dispatch('toggleUriAtCurrentThing', { target: this.id, operation: 'remove' })
+      this.$store.dispatch('toggleUriAtCurrentThing', { uri: this.id, operation: 'remove' })
     },
     /* select: function () {
       if (this.type === bithTypes.extract) {
@@ -187,7 +181,10 @@ export default {
       }
     }, */
     showLD: async function (e) {
-      const ttl = await solidDatasetAsTurtle(this.file, { prefixes: pref })
+      let ds = createSolidDataset()
+      ds = setThing(ds, this.thing)
+
+      const ttl = await solidDatasetAsTurtle(ds, { prefixes: displayPrefixes })
       // console.log(this.id + ' (' + ttl.length + ')')
       this.$store.dispatch('setLdDetails', ttl)
     }

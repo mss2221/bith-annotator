@@ -22,18 +22,23 @@
       </template>
     </div>
     <div v-if="activated && this.level === 1" class="contents">
-      <GraphEntry v-for="(c, cI) in children" :key="cI" :file="c" :level="this.level + 1" :type="childType"/>
+      <GraphEntry v-for="(c, cI) in children" :key="cI" :thing="c" :level="this.level + 1" :type="childType"/>
     </div>
   </div>
 </template>
 
 <script>
 import {
-  getThingAll,
   getStringNoLocale,
-  solidDatasetAsTurtle
+  createSolidDataset,
+  setThing,
+  // isThing,
+  // isThingLocal,
+  solidDatasetAsTurtle,
+  asUrl
 } from '@inrupt/solid-client'
 import { prefix as pref } from '@/meld/prefixes.js'
+import { displayPrefixes } from '@/meld/constants.js'
 import { getChildType } from '@/store/tools/solidHelpers.js'
 // import { bithTypes } from '@/meld/constants.js'
 
@@ -43,20 +48,15 @@ export default {
 
   },
   props: {
-    file: Object,
+    thing: Object,
     type: String,
     level: Number
   },
   computed: {
     id: function () {
-      const url = getThingAll(this.file)[0].url
-      if (url.indexOf('.well-known/sdk-local-node/') !== -1) {
-        return url.split('.well-known/sdk-local-node/')[1]
-      } else if (url.indexOf('#') !== -1) {
-        return url.split('#')[0]
-      } else {
-        return url
-      }
+      const baseUrl = this.$store.getters.dataBaseUrl
+      const url = asUrl(this.thing, baseUrl)
+      return url
     },
     activated: function () {
       return this.$store.getters.activeThingIDByType(this.type) === this.id
@@ -81,9 +81,7 @@ export default {
     },
     label: {
       get () {
-        const file = (this.isCurrent) ? this.$store.getters.currentThingByTypeAndID(this.type, this.id) : this.file
-        const thing = getThingAll(file)[0]
-        let label = getStringNoLocale(thing, pref.rdfs + 'label')
+        let label = getStringNoLocale(this.thing, pref.rdfs + 'label')
 
         if (label === '') {
           label = '[no label]'
@@ -94,7 +92,7 @@ export default {
       set (val) {
         this.$store.dispatch('changeCurrentDataObject', {
           type: this.type,
-          id: this.id,
+          uri: this.id,
           prop: pref.rdfs + 'label',
           method: 'setStringNoLocale',
           val
@@ -104,17 +102,19 @@ export default {
   },
   methods: {
     activateThing: function () {
-      console.log('activating ' + this.type + ' ' + this.id)
-      this.$store.dispatch('activateThing', { type: this.type, id: this.id })
+      console.log('activating ' + this.id)
+      this.$store.dispatch('activateThing', this.id)
     },
     deactivateThing: function () {
       if (this.activated) {
-        this.$store.dispatch('activateThing', { type: this.type, id: null })
+        this.$store.dispatch('deActivateThing', this.type)
       }
     },
     startEditing: function () {
       if (this.level === 1) {
-        this.$store.dispatch('startEditing', { type: this.type, id: this.id })
+        // TODO: different signature: startEditing(uri)
+
+        this.$store.dispatch('startEditing', this.id)
       }
     },
     saveChanges: function () {
@@ -129,9 +129,12 @@ export default {
       }
     }, */
     showLD: async function (e) {
-      const ttl = await solidDatasetAsTurtle(this.file, { prefixes: pref })
+      let ds = createSolidDataset()
+      ds = setThing(ds, this.thing)
+
+      const ttl = await solidDatasetAsTurtle(ds, { prefixes: displayPrefixes })
       // console.log(this.id + ' (' + ttl.length + ')')
-      this.$store.dispatch('setLdDetails', ttl)
+      this.$store.dispatch('setLdDetails', ttl.trim())
     }
   }
 }

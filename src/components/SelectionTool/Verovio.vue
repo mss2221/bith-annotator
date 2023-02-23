@@ -99,7 +99,7 @@ export default {
       // console.log('target:', target)
       const closest = (e.shiftKey) ? target.closest('.measure:not(.bounding-box)') : target.closest(selectables)
 
-      // console.log('clicked', closest)
+      console.log('clicked', closest)
 
       e.stopPropagation()
       if (!this.selectionModeActive) {
@@ -116,7 +116,7 @@ export default {
       }
       */
 
-      // console.log('clicked ', target, closest)
+      console.log('clicked ', target, closest)
       this.$store.dispatch('selectionToggle', this.uri + '#' + closest.getAttribute('data-id'))
       // console.log('dispatched selectionToggle')
     },
@@ -127,6 +127,8 @@ export default {
       const removedVals = oldSelections.filter(val => newSelections.indexOf(val) === -1)
 
       addedVals.forEach(val => {
+        console.log('val:', val)
+
         const id = val.split('#')[1]
         try {
           const elem = document.querySelector('#meiContainer_' + this.idSeed + ' *[data-id=' + id + ']')

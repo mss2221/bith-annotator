@@ -1,8 +1,8 @@
-import { prefix as pref } from '@/meld/prefixes'// 'meld-clients-core/lib/library/prefixes'
+import { prefix as pref } from '@/meld/prefixes' // 'meld-clients-core/lib/library/prefixes'
 import { bithTypes } from '@/meld/constants.js'
 
 import {
-  addUrl,
+  // addUrl,
   buildThing,
   getDate,
   getStringNoLocale,
@@ -10,27 +10,42 @@ import {
   getUrl,
   getUrlAll,
   saveSolidDatasetAt,
-  setThing
+  setThing,
+  getSolidDataset,
+  solidDatasetAsTurtle,
+  asUrl,
+  createSolidDataset
+  // isThing
+  // isThingLocal
+  // createThing
 } from '@inrupt/solid-client'
 
-import { getPublicIdFromDataStructure, getAnnotDS, getMusMatDS, getExtractDS, getSelectionDS, resetActivations, populateActivations, emptyCurrentAnnot, populateCurrentAnnot, getChildren, getParents, getPredicateByType, getTypeById } from '@/store/tools/solidHelpers.js'
+import {
+  // getPublicIdFromDataStructure,
+  getAnnotThing,
+  getMusMatThing,
+  getExtractThing,
+  getSelectionThing,
+  resetActivations,
+  populateActivations,
+  emptyCurrentThings,
+  makeThingsCurrent,
+  getChildren,
+  getParents,
+  getPredicateByType,
+  getTypeById,
+  simplifiedTypeByType
+} from '@/store/tools/solidHelpers.js'
 
+import { loadPod } from '@/store/modules/userModule.js'
+
+// eslint-disable-next-line
 const parser = new DOMParser()
 
 export const solidModule = {
   state: () => ({
-    annotStore: {
-      observation: {},
-      musicalMaterial: {},
-      extract: {},
-      selection: {}
-    },
-    currentAnnot: {
-      observation: {},
-      musicalMaterial: {},
-      extract: {},
-      selection: {}
-    },
+    thingStore: {},
+    currentThings: {},
     activated: {
       observation: null,
       musicalMaterial: null,
@@ -39,85 +54,74 @@ export const solidModule = {
     }
   }),
   mutations: {
-    SET_SOLID_FILE_LISTING (state, listing) {
-      state.solidFileListing = listing
-    },
-    SET_SOLID_LISTING_PATH (state, listingPath) {
-      state.solidFileListingPath = listingPath
-    },
-    ADD_FILE_TO_SOLID_FILE_LISTING (state, uri) {
-      console.log('trying to add ' + uri)
-      const existingIndex = state.solidFileListing[pref.ldp + 'contains'].findIndex(item => {
-        return item['@id'] === uri
-      })
-      console.log('index is ' + existingIndex)
-      if (existingIndex === -1) {
-        const obj = {}
-        obj['@id'] = uri
-        state.solidFileListing[pref.ldp + 'contains'].push(obj)
-      }
-      console.log(state.solidFileListing)
-    },
-    REMOVE_FILE_FROM_SOLID_FILE_LISTING (state, uri) {
-      const existingIndex = state.solidFileListing[pref.ldp + 'contains'].findIndex(item => {
-        return item['@id'] === uri
-      })
-      if (existingIndex !== -1) {
-        state.solidFileListing[pref.ldp + 'contains'].splice(existingIndex, 1)
-      }
-    },
-
-    ADD_TO_ANNOTSTORE (state, payload) {
-      const type = payload.type
-      const obj = payload.object
-      const id = getPublicIdFromDataStructure(obj)
-
-      if (type in state.annotStore) {
-        state.annotStore[type][id] = obj
-      }
-    },
-    MOVE_TO_CURRENT_ANNOT (state, payload) {
-      const type = payload.type
-      const obj = payload.object
-      const id = getPublicIdFromDataStructure(obj)
-
-      if (type in state.annotStore && !(id in state.currentAnnot[type])) {
-        state.currentAnnot[type][id] = obj
-      }
-    },
-    REMOVE_FROM_CURRENT_ANNOT (state, payload) {
-      const type = payload.type
-      const obj = payload.object
-      const id = getPublicIdFromDataStructure(obj)
-
-      if (type in state.annotStore && id in state.currentAnnot[type]) {
-        state.currentAnnot[type][id] = undefined
-      }
-    },
-    REMOVE_FROM_ANNOTSTORE (state, payload) {
-      const type = payload.type
-      const obj = payload.object
-      const id = getPublicIdFromDataStructure(obj)
-
-      if (type in state.annotStore) {
-        state.annotStore[type][id] = undefined
-      }
+    /**
+     * this empties the thingStore and resets currentThings before loading new data
+     * @param {[type]} state  [description]
+     */
+    EMPTY_THINGSTORE (state) {
+      state.thingStore = {}
+      state.currentThings = {}
     },
 
     /**
-     * used for changes to current annot
+     * empties the currentThings
+     * @param {[type]} state  [description]
+     */
+    EMPTY_CURRENT_THINGS (state) {
+      emptyCurrentThings(state)
+    },
+
+    /**
+     * store thing in thingStore by ID
+     * @param {[type]} state  [description]
+     * @param {[type]} thing  the Solid thing
+     */
+    ADD_TO_THINGSTORE (state, { thing, userPodPath }) {
+      const uri = asUrl(thing, userPodPath)
+      state.thingStore[uri] = thing
+    },
+    /**
+     * keep thing in currentThings by ID
+     * @param {[type]} state  [description]
+     * @param {[type]} thing  the Solid thing
+     */
+    MOVE_TO_CURRENT_THINGS (state, { thing, userPodPath }) {
+      const uri = asUrl(thing, userPodPath)
+      state.currentThings[uri] = thing
+    },
+    /**
+     * remove thing from thingStore – this is currently not used
+     * @param {[type]} state    [description]
+     * @param {[type]} thing  the Solid thing
+     */
+    /* REMOVE_FROM_THINGSTORE (state, { thing, userPodPath }) {
+      const uri = asUrl(thing, userPodPath)
+      state.thingStore[uri] = undefined
+    }, */
+
+    /**
+     * remove thing from currentThings after editing – this is currently not used
+     * @param {[type]} state  [description]
+     * @param {[type]} thing  [description]
+     */
+    /* REMOVE_FROM_CURRENT_THINGS (state, { thing, userPodPath }) {
+      const uri = asUrl(thing, userPodPath)
+      state.currentThings[uri] = undefined
+    }, */
+
+    /**
+     * used for changes to current thing
      * @param {[type]} state    [description]
      * @param {[type]} payload  [description]
      */
-    ADD_TO_CURRENT_ANNOT (state, payload) {
-      const type = payload.type
-      const id = payload.id
+    CHANGE_CURRENT_THING (state, payload) {
+      // const type = payload.type
+      const uri = payload.uri
       const prop = payload.prop
       const method = payload.method
       const val = payload.val
 
-      let ds = state.currentAnnot[type][id]
-      let thing = getThingAll(ds)[0]
+      let thing = state.currentThings[uri]
 
       if (method === 'addStringNoLocale') {
         thing = buildThing(thing)
@@ -147,29 +151,30 @@ export const solidModule = {
         console.error('Unknown operation: ' + method)
       }
 
-      ds = setThing(ds, thing)
-      state.currentAnnot[type][id] = ds
+      state.currentThings[uri] = thing
     },
 
-    SET_EDITING (state, mode) {
+    // TODO: Is this used at all?
+    /* SET_EDITING (state, mode, solidUserPodPath) {
+      console.log('\n\nIS THIS USED AT ALL???')
       // already there
       if (state.editing === mode) {
         return true
       }
 
       if (mode === null) {
-        emptyCurrentAnnot(state)
+        emptyCurrentThings(state)
         resetActivations(state)
       } else if (mode === 'parallelPassage') {
         // starting new parallel passage
         if (state.activated.musicalMaterial === null) {
-          const ds = getMusMatDS(state)
+          const ds = getMusMatThing(state)
           const id = getPublicIdFromDataStructure(ds)
 
           const musMat = {}
           musMat[id] = ds
 
-          populateCurrentAnnot(state, {}, musMat, {}, {})
+          makeThingsCurrent(state, {}, musMat, {}, {})
           populateActivations(state, null, id, null, null)
         } else {
           // opening existing parallel passage
@@ -178,7 +183,7 @@ export const solidModule = {
           const sel = {}
 
           const id = state.activated.musicalMaterial
-          const ds = state.annotStore.musicalMaterial[id]
+          const ds = state.thingStore.musicalMaterial[id]
 
           mm[id] = ds
 
@@ -186,7 +191,7 @@ export const solidModule = {
           const extracts = getUrlAll(thing, pref.frbr + 'embodiment')
 
           extracts.forEach(extractId => {
-            const extract = state.annotStore.extract[extractId]
+            const extract = state.thingStore.extract[extractId]
 
             ex[extractId] = extract
 
@@ -194,24 +199,24 @@ export const solidModule = {
             const selections = getUrlAll(exThing, pref.frbr + 'embodiment')
 
             selections.forEach(selectionId => {
-              const selection = state.annotStore.selection[selectionId]
+              const selection = state.thingStore.selection[selectionId]
               sel[selectionId] = selection
             })
           })
 
-          populateCurrentAnnot(state, {}, mm, ex, sel)
+          makeThingsCurrent(state, {}, mm, ex, sel)
           populateActivations(state, null, id, null, null)
         }
       } else if (mode === 'observation') {
         // starting new observation
         if (state.currentObservation === null) {
-          const ds = getAnnotDS(state)
+          const ds = getAnnotThing(state)
           const id = getPublicIdFromDataStructure(ds)
 
           const observation = {}
           observation[id] = ds
 
-          populateCurrentAnnot(state, observation, {}, {}, {})
+          makeThingsCurrent(state, observation, {}, {}, {})
           populateActivations(state, id, null, null, null)
         } else {
           // opening existing observation
@@ -221,21 +226,21 @@ export const solidModule = {
           const sel = {}
 
           const id = state.activated.observation
-          const ds = state.annotStore.observation[id]
+          const ds = state.thingStore.observation[id]
 
           ob[id] = ds
 
           const thing = getThingAll(ds)[0]
 
           const musMatId = getUrl(thing, pref.oa + 'hasTarget')
-          const musMat = state.annotStore.musicalMaterial[musMatId]
+          const musMat = state.thingStore.musicalMaterial[musMatId]
 
           mm[musMatId] = musMat
           const mmThing = getThingAll(musMat)[0]
           const extracts = getUrlAll(mmThing, pref.frbr + 'embodiment')
 
           extracts.forEach(extractId => {
-            const extract = state.annotStore.extract[extractId]
+            const extract = state.thingStore.extract[extractId]
 
             ex[extractId] = extract
 
@@ -243,160 +248,229 @@ export const solidModule = {
             const selections = getUrlAll(exThing, pref.frbr + 'embodiment')
 
             selections.forEach(selectionId => {
-              const selection = state.annotStore.selection[selectionId]
+              const selection = state.thingStore.selection[selectionId]
               sel[selectionId] = selection
             })
           })
 
-          populateCurrentAnnot(state, ob, mm, ex, sel)
+          makeThingsCurrent(state, ob, mm, ex, sel)
           populateActivations(state, id, null, null, null)
         }
-
-        /*
-         * stop it here
-         */
       }
-    },
+    }, */
 
-    START_EDITING (state, { type, id }) {
-      const ds = state.annotStore[type][id]
-      // const initialType = type
+    /**
+     * start editing with one specific object and all its children
+     * @param {[type]} state        [description]
+     * @param {[type]} uri          [description]
+     * @param {[type]} userPodPath  [description]
+     */
+    START_EDITING (state, { uri, userPodPath }) {
+      // console.log('\nSTART_EDITING ' + uri + ' – ' + userPodPath)
+      emptyCurrentThings(state)
+      // console.log(1)
+      const thing = state.thingStore[uri]
+      // console.log(2, thing)
+      makeThingsCurrent(state, [thing], userPodPath)
+      // console.log(3)
 
+      // get type of current thing and determine position in hierarchy
+      const type = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
       const types = [bithTypes.observation, bithTypes.musicalMaterial, bithTypes.extract, bithTypes.selection]
       const currentIndex = types.indexOf(type)
 
-      const prefills = [{}, {}, {}, {}]
+      // set activations value according to index
       const activations = [null, null, null, null]
+      activations[currentIndex] = uri
+      populateActivations(state, activations[0], activations[1], activations[2], activations[3])
 
-      prefills[currentIndex][id] = ds
-      activations[currentIndex] = id
+      // recursive function to also put children to currentThings
+      const resolveChildren = (thing, parentIndex) => {
+        const uri = asUrl(thing, userPodPath)
+        makeThingsCurrent(state, [thing], userPodPath)
 
-      const children = getChildren(state, ds, type)
-
-      const resolveChildren = (ds, parentIndex) => {
-        const id = getPublicIdFromDataStructure(ds)
         const nextIndex = parentIndex + 1
 
         if (nextIndex < types.length) {
-          prefills[nextIndex][id] = ds
-          const nextType = types[nextIndex]
-          const children = getChildren(state, ds, nextType)
-          /*
-          if (initialType === bithTypes.extract
-            && nextType === bithTypes.selection
-            && children.length > 0) {
-            activations[]
-          }
-          */
-          children.forEach((childDS) => {
-            resolveChildren(childDS, currentIndex)
+          // const nextType = types[nextIndex]
+
+          const children = getChildren(state, uri)
+
+          children.forEach(childThing => {
+            resolveChildren(childThing, currentIndex)
           })
         }
       }
 
-      children.forEach((childDS) => {
-        resolveChildren(childDS, currentIndex)
+      // identify children and run function on them
+      const children = getChildren(state, uri)
+      children.forEach(childThing => {
+        resolveChildren(childThing, currentIndex)
       })
-
-      populateCurrentAnnot(state, prefills[0], prefills[1], prefills[2], prefills[3])
-      populateActivations(state, activations[0], activations[1], activations[2], activations[3])
     },
 
-    DISCARD_CHANGES (state) {
-      populateCurrentAnnot(state, {}, {}, {}, {})
-      // populateActivations(state, null, null, null, null)
-    },
+    /**
+     * creates a new extract and adds it to the list of current things
+     * @param {[type]} state        [description]
+     * @param {[type]} user         [description]
+     * @param {[type]} userPodPath  [description]
+     */
+    ADD_EXTRACT (state, { user, userPodPath }) {
+      const extract = getExtractThing(user, userPodPath)
+      const uri = asUrl(extract, userPodPath)
+      emptyCurrentThings(state)
+      resetActivations(state)
 
-    ADD_EXTRACT (state, user) {
-      const extract = getExtractDS(user)
-      const extractId = getPublicIdFromDataStructure(extract)
+      makeThingsCurrent(state, [extract], userPodPath)
 
-      state.currentAnnot.extract[extractId] = extract
-      state.activated.extract = extractId
-
+      state.activated.extract = uri
       state.activated.selection = null
     },
 
-    ADD_MUSMAT (state, user) {
-      const musMat = getMusMatDS(user)
-      const musMatId = getPublicIdFromDataStructure(musMat)
+    /**
+     * creates a new musicalMaterial and adds it to the list of current things
+     * @param {[type]} state        [description]
+     * @param {[type]} user         [description]
+     * @param {[type]} userPodPath  [description]
+     */
+    ADD_MUSMAT (state, { user, userPodPath }) {
+      const musMat = getMusMatThing(user, userPodPath)
+      const uri = asUrl(musMat, userPodPath)
 
-      emptyCurrentAnnot(state)
+      emptyCurrentThings(state)
       resetActivations(state)
 
-      state.currentAnnot.musicalMaterial[musMatId] = musMat
-      state.activated.musicalMaterial = musMatId
+      makeThingsCurrent(state, [musMat], userPodPath)
+
+      state.activated.musicalMaterial = uri
     },
 
-    ADD_OBSERVATION (state, user) {
-      const observation = getAnnotDS(user)
-      const observationId = getPublicIdFromDataStructure(observation)
+    /**
+     * creates a new observation / annotation and adds it to the list of current things
+     * @param {[type]} state        [description]
+     * @param {[type]} user         [description]
+     * @param {[type]} userPodPath  [description]
+     */
+    ADD_OBSERVATION (state, { user, userPodPath }) {
+      const observation = getAnnotThing(user, userPodPath)
+      const uri = asUrl(observation, userPodPath)
+      console.log('\nHERE')
+      console.log(observation)
 
-      emptyCurrentAnnot(state)
+      emptyCurrentThings(state)
       resetActivations(state)
 
-      state.currentAnnot.observation[observationId] = observation
-      state.activated.observation = observationId
+      makeThingsCurrent(state, [observation], userPodPath)
+
+      state.activated.observation = uri
     },
 
-    ACTIVATE_THING (state, { type, id }) {
+    /**
+     * activate the given thing
+     * @param {[type]} state  [description]
+     * @param {[type]} uri  [description]
+     */
+    ACTIVATE_THING (state, uri) {
+      console.log('ACTIVATE_THING with uri ' + typeof uri + ': ' + uri)
+      console.log(uri)
+      const thing = state.currentThings[uri] !== undefined ? state.currentThings[uri] : state.thingStore[uri]
+      console.log(thing)
+      // console.log(state.currentThings)
+      // console.log(state.thingStore)
+      const type = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
+
       if (type in bithTypes) {
-        state.activated[type] = id
-
-        if (type === bithTypes.extract) {
-          state.activated[bithTypes.selection] = null
+        if (type === bithTypes.observation) {
+          state.activated.observation = uri
+        } else if (type === bithTypes.musicalMaterial) {
+          state.activated.musicalMaterial = uri
+        } else if (type === bithTypes.extract) {
+          state.activated.extract = uri
+          state.activated.selection = null
+        } else if (type === bithTypes.selection) {
+          state.activated.selection = uri
         }
       }
     },
-    ADD_NEW_SELECTION_TO_CURRENT_EXTRACT (state, user) {
-      const selection = getSelectionDS(user)
-      const selectionId = getPublicIdFromDataStructure(selection)
 
-      state.currentAnnot.selection[selectionId] = selection
-      state.activated[bithTypes.selection] = selectionId
+    /**
+     * deactivates the given type
+     * @param {[type]} state  [description]
+     * @param {[type]} type   [description]
+     */
+    DEACTIVATE_THING (state, type) {
+      state.activated[type] = null
+    },
 
-      let extractDS = state.currentAnnot.extract[state.activated[bithTypes.extract]]
-      const extractId = getPublicIdFromDataStructure(extractDS)
-      let thing = getThingAll(extractDS)[0]
+    /**
+     * adds a new selection thing to the current extract thing
+     * @param {[type]} state        [description]
+     * @param {[type]} user         [description]
+     * @param {[type]} userPodPath  [description]
+     */
+    ADD_NEW_SELECTION_TO_CURRENT_EXTRACT (state, { user, userPodPath }) {
+      const selection = getSelectionThing(user, userPodPath)
+      const selectionUri = asUrl(selection, userPodPath)
 
-      thing = buildThing(thing)
-        .addUrl(pref.frbr + 'embodiment', selectionId)
+      makeThingsCurrent(state, [selection], userPodPath)
+      state.activated.selection = selectionUri
+
+      const extractUri = state.activated.extract
+      let extract = state.currentThings[extractUri]
+
+      extract = buildThing(extract)
+        .addUrl(pref.frbr + 'embodiment', selectionUri)
         .build()
 
-      extractDS = setThing(extractDS, thing)
-      state.currentAnnot.extract[extractId] = extractDS
+      state.currentThings[extractUri] = extract
     },
-    TOGGLE_SELECTION (state, id) {
-      let selectionDS = state.currentAnnot.selection[state.activated[bithTypes.selection]]
-      const selectionId = getPublicIdFromDataStructure(selectionDS)
-      let thing = getThingAll(selectionDS)[0]
-      console.log('toggling selection')
-      const urls = getUrlAll(thing, pref.frbr + 'part')
-      console.log(urls)
-      if (urls.indexOf(id) === -1) {
-        thing = buildThing(thing)
-          .addUrl(pref.frbr + 'part', id)
+
+    /**
+     * toggle a selection by a given URI in the selection thing
+     * @param {[type]} state  [description]
+     * @param {[type]} uri    [description]
+     */
+    TOGGLE_SELECTION (state, uri) {
+      const selectionThingUri = state.activated.selection
+      let selectionThing = state.currentThings[selectionThingUri]
+
+      const urls = getUrlAll(selectionThing, pref.frbr + 'part')
+
+      if (urls.indexOf(uri) === -1) {
+        selectionThing = buildThing(selectionThing)
+          .addUrl(pref.frbr + 'part', uri)
           .build()
       } else {
-        thing = buildThing(thing)
-          .removeUrl(pref.frbr + 'part', id)
+        selectionThing = buildThing(selectionThing)
+          .removeUrl(pref.frbr + 'part', uri)
           .build()
       }
 
-      selectionDS = setThing(selectionDS, thing)
-      state.currentAnnot.selection[selectionId] = selectionDS
-    },
-    TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION (state, uri) {
-      if (state.activated[bithTypes.extract] !== null &&
-        state.activated[bithTypes.selection]) {
+      state.currentThings[selectionThingUri] = selectionThing
+    }
+
+    /**
+     * toggles a facsimile URI at the activated selection
+     * @param {[type]} state  [description]
+     * @param {[type]} uri    [description]
+     */
+    /* TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION (state, uri) {
+      if (state.activated.extract !== null &&
+        state.activated.selection) {
         //
-        let selectionDS = state.currentAnnot.selection[state.activated[bithTypes.selection]]
+        let selectionDS = state.currentThings.selection[state.activated.selection]
         const selectionId = getPublicIdFromDataStructure(selectionDS)
         let thing = getThingAll(selectionDS)[0]
+
+        console.log('HELLO HIER')
+        console.log(selectionDS)
+        console.log(selectionId)
+        console.log(thing)
 
         const urls = getUrlAll(thing, pref.frbr + 'part')
         console.log(urls)
         if (urls.indexOf(uri) === -1) {
+          console.log('----> adding url ' + uri)
           thing = buildThing(thing)
             .addUrl(pref.frbr + 'part', uri) // should it be possible to have multiple rects?
             .build()
@@ -407,83 +481,151 @@ export const solidModule = {
         }
 
         selectionDS = setThing(selectionDS, thing)
-        state.currentAnnot.selection[selectionId] = selectionDS
+        state.currentThings.selection[selectionId] = selectionDS
       }
-    },
-    ADD_TO_CURRENT_THING (state, { type, id }) {
-      //
-    },
-    REMOVE_FROM_CURRENT_THING (state, { type, id }) {
-      // const target
-    }
+    } */
   },
   actions: {
+    /**
+     * adds a new extract thing
+     * @param {[type]} commit     [description]
+     * @param {[type]} rootState  [description]
+     */
     addExtract ({ commit, rootState }) {
       const userState = rootState.user
-      const webId = userState.solidSession.info.webId
-      commit('ADD_EXTRACT', webId)
-      commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', webId)
+      const user = userState.solidSession.info.webId
+      const userPodPath = userState.solidUserPodPath
+
+      commit('ADD_EXTRACT', { user, userPodPath })
+      commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', { user, userPodPath })
     },
+
+    /**
+     * adds a new musical material thing
+     * @param {[type]} commit     [description]
+     * @param {[type]} rootState  [description]
+     */
     addMusMat ({ commit, rootState }) {
       const userState = rootState.user
-      const webId = userState.solidSession.info.webId
+      const user = userState.solidSession.info.webId
+      const userPodPath = userState.solidUserPodPath
 
-      // TODO: should we ask to save unsaved changes first?
-      commit('ADD_MUSMAT', webId)
+      commit('ADD_MUSMAT', { user, userPodPath })
     },
+
+    /**
+     * adds a new observation / annotation thing
+     * @param {[type]} commit     [description]
+     * @param {[type]} rootState  [description]
+     */
     addObservation ({ commit, rootState }) {
       const userState = rootState.user
-      const webId = userState.solidSession.info.webId
-
+      const user = userState.solidSession.info.webId
+      const userPodPath = userState.solidUserPodPath
       // TODO: should we ask to save unsaved changes first?
-      commit('ADD_OBSERVATION', webId)
+      commit('ADD_OBSERVATION', { user, userPodPath })
     },
-    setActiveObservation ({ commit }, id) {
-      commit('ACTIVATE_THING', { type: bithTypes.observation, id })
+
+    /**
+     * activates an observation given by its uri
+     * @param {[type]} commit  [description]
+     * @param {[type]} uri     [description]
+     */
+    setActiveObservation ({ commit }, uri) {
+      commit('ACTIVATE_THING', uri)
     },
-    setActiveMusMat ({ commit }, id) {
-      commit('ACTIVATE_THING', { type: bithTypes.extract, id })
+
+    /**
+     * activates a musicalMaterial given by its uri
+     * @param {[type]} commit  [description]
+     * @param {[type]} uri     [description]
+     */
+    setActiveMusMat ({ commit }, uri) {
+      commit('ACTIVATE_THING', uri)
     },
-    setActiveExtract ({ commit, state, dispatch }, id) {
-      commit('ACTIVATE_THING', { type: bithTypes.extract, id })
+
+    /**
+     * activates an extract given by its uri, also activates selection mode
+     * @param {[type]} commit  [description]
+     * @param {[type]} uri     [description]
+     */
+    setActiveExtract ({ commit }, uri) {
+      commit('ACTIVATE_THING', uri)
       commit('SET_SELECTION_MODE_ACTIVE', true)
     },
 
-    activateThing ({ commit }, { type, id }) {
-      commit('ACTIVATE_THING', { type, id })
+    /**
+     * generic function to activate a thing by its uri
+     * @param  {[type]} commit               [description]
+     * @param  {[type]} uri                  [description]
+     * @return {[type]}        [description]
+     */
+    activateThing ({ commit }, uri) {
+      console.log('activating ', uri)
+      commit('ACTIVATE_THING', uri)
     },
 
+    /**
+     * removes the activation of a given type
+     * @param  {[type]} commit               [description]
+     * @param  {[type]} type                 [description]
+     * @return {[type]}        [description]
+     */
+    deActivateThing ({ commit }, type) {
+      let activationType = null
+      if (type === bithTypes.observation) {
+        activationType = 'observation'
+      } else if (type === bithTypes.musicalMaterial) {
+        activationType = 'musicalMaterial'
+      } else if (type === bithTypes.extract) {
+        activationType = 'extract'
+      } else if (type === bithTypes.selection) {
+        activationType = 'selection'
+      }
+
+      if (activationType !== null) {
+        commit('DEACTIVATE_THING', activationType)
+      } else {
+        console.log('ERROR: deactivation for thing of type ' + type + ' impossible.')
+      }
+    },
+
+    // TODO: Is this really used???
     /**
      * startEditing will copy the provided _and all linked things_ to
-     * currentAnnot
+     * currentThings
      * @param  {[type]} commit               [description]
      * @param  {[type]} type                 [description]
      * @param  {[type]} id                   [description]
      * @return {[type]}        [description]
      */
-    startEditing ({ commit }, { type, id }) {
-      commit('START_EDITING', { type, id })
+    startEditing ({ commit, rootState }, uri) {
+      const userState = rootState.user
+      const userPodPath = userState.solidUserPodPath
+
+      commit('START_EDITING', { uri, userPodPath })
     },
 
     /**
-     * makeCurrent will copy the provided thing only, but _no linked things
-     * to currentAnnot
+     * will move the provided thing to currentThings, potential children are ignored
      * @param  {[type]} commit               [description]
-     * @param  {[type]} type                 [description]
-     * @param  {[type]} id                   [description]
+     * @param  {[type]} thing                [description]
      * @return {[type]}        [description]
      */
-    makeCurrent ({ commit }, { type, object }) {
-      commit('MOVE_TO_CURRENT_ANNOT', { type, object })
+    makeCurrent ({ commit, rootState }, thing) {
+      const userState = rootState.user
+      const userPodPath = userState.solidUserPodPath
+
+      commit('MOVE_TO_CURRENT_THINGS', { thing, userPodPath })
     },
 
-    // todo?
-    setAnnotationTarget ({ commit, state, dispatch }, id) {
-      const observations = Object.values(state.currentAnnot.observation)
+    // not used
+    /* setAnnotationTarget ({ commit, state, dispatch }, id) {
+      const observations = Object.values(state.currentThings.observation)
       if (observations.length === 0) {
         return null
       }
-      const currentObservationId = Object.keys(state.currentAnnot.observation)[0]
+      const currentObservationId = Object.keys(state.currentThings.observation)[0]
 
       const observationDS = observations[0]
       const thing = getThingAll(observationDS)[0]
@@ -507,7 +649,7 @@ export const solidModule = {
         })
         dispatch('removeCurrentDataObject', {
           type: 'musicalMaterial',
-          object: state.currentAnnot.musicalMaterial[existingMusMat]
+          object: state.currentThings.musicalMaterial[existingMusMat]
         })
       }
       // add new one
@@ -520,41 +662,39 @@ export const solidModule = {
       })
       dispatch('addCurrentDataObject', {
         type: 'musicalMaterial',
-        object: state.annotStore.musicalMaterial[id]
+        object: state.thingStore.musicalMaterial[id]
       })
-    },
+    }, */
 
     /**
      * used by Verovio to toggle selections
-     * @param  {[type]} commit               [description]
-     * @param  {[type]} state                [description]
-     * @param  {[type]} id                   [description]
-     * @return {[type]}        [description]
+     * @param  {[type]} commit                  [description]
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} rootState               [description]
+     * @param  {[type]} id                      the MEI @xml:id which is to be added to the current selection
+     * @return {[type]}           [description]
      */
-    selectionToggle ({ commit, state }, id) {
+    selectionToggle ({ commit, state, rootState }, id) {
       if (state.activated.selection === null) {
-        console.log(1)
-        const extractDS = state.currentAnnot.extract[state.activated[bithTypes.extract]]
+        const extractThing = state.currentThings[state.activated.extract]
 
-        if (extractDS === undefined) {
-          console.log('1b')
+        if (extractThing === undefined) {
           return false
         }
 
-        const thing = getThingAll(extractDS)[0]
-
-        const urls = getUrlAll(thing, pref.frbr + 'rdfs')
+        const urls = getUrlAll(extractThing, pref.frbr + 'rdfs')
 
         if (urls.length > 0) {
-          console.log('trying to activate selection. following thing should be an ID / uri: ', urls[0])
-          commit('ACTIVATE_THING', { type: bithTypes.selection, id: urls[0] })
+          // console.log('trying to activate selection. following thing should be an ID / uri: ', urls[0])
+          commit('ACTIVATE_THING', urls[0])
         } else {
-          commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT')
+          const userState = rootState.user
+          const user = userState.solidSession.info.webId
+          const userPodPath = userState.solidUserPodPath
+          commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', { user, userPodPath })
         }
       }
-      console.log(2)
       commit('TOGGLE_SELECTION', id)
-      console.log(3)
       // console.log('selectionToggle for ' + id)
     },
 
@@ -562,112 +702,119 @@ export const solidModule = {
      * used by OpenSeadragon to create new selections
      * @param  {[type]} commit               [description]
      * @param  {[type]} state                [description]
-     * @param  {[type]} uri                  [description]
+     * @param  {[type]} uri                  the IIIF link (including media fragment) that's to be toggled
      * @return {[type]}        [description]
      */
     addFacsimileSelection ({ commit, state, rootState }, uri) {
       // const userState = rootState.user
       // const webId = userState.solidSession.info.webId
-      // commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', webId)
-      commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
+      // const podPath = userState.solidUserPodPath
+      // commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', { webId, podPath })
+      commit('TOGGLE_SELECTION', uri)
+      // commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
     },
 
     /**
      * used by OpenSeadragon when a user clicks on a measure
      * @param  {[type]} commit               [description]
+     * @param  {[type]} state                [description]
+     * @param  {[type]} rootState            [description]
      * @param  {[type]} uri                  fileURI + '#' + measureID
      * @return {[type]}        [description]
      */
     clickMeasure ({ commit, state, rootState }, uri) {
-      if (state.activated.selection !== null && state.currentAnnot.selection[state.activated.selection] !== undefined) {
+      if (state.activated.selection !== null && state.currentThings[state.activated.selection] !== undefined) {
         // console.log('toggle measure selection')
-        commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
+        commit('TOGGLE_SELECTION', uri)
+        // commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
       } else {
         console.log('ignoring measure click')
       }
     },
 
+    /**
+     * changes a property in a specified thing
+     * @param  {[type]} commit                [description]
+     * @param  {[type]} state                 [description]
+     * @param  {[type]} payload               [description]
+     * @return {[type]}         [description]
+     */
     changeCurrentDataObject ({ commit, state }, payload) {
-      if (payload.type in bithTypes && payload.id && payload.prop && payload.method && payload.val) {
-        commit('ADD_TO_CURRENT_ANNOT', payload)
+      console.log('changeCurrentDataObject', payload)
+      if (payload.type in bithTypes && payload.uri && payload.prop && payload.method && payload.val) {
+        console.log('committing')
+        commit('CHANGE_CURRENT_THING', payload)
       }
     },
 
-    saveChanges ({ commit, state, dispatch, rootState }) {
-      const uris = []
+    /**
+     * saves changes by uploading them to the user's pod and retrieving an updated copy
+     * @param  {[type]} commit                  [description]
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} dispatch                [description]
+     * @param  {[type]} rootState               [description]
+     * @return {[type]}           [description]
+     */
+    async saveChanges ({ commit, state, dispatch, rootState }) {
       const userState = rootState.user
-
-      const observations = Object.values(state.currentAnnot.observation)
-      observations.forEach(observation => {
-        uris.push(getPublicIdFromDataStructure(observation))
-        dispatch('createDataObject', { type: 'observation', object: observation })
-      })
-
-      const musMats = Object.values(state.currentAnnot.musicalMaterial)
-      musMats.forEach(musMat => {
-        uris.push(getPublicIdFromDataStructure(musMat))
-        dispatch('createDataObject', { type: 'musicalMaterial', object: musMat })
-      })
-
-      const extracts = Object.values(state.currentAnnot.extract)
-      extracts.forEach(extract => {
-        uris.push(getPublicIdFromDataStructure(extract))
-        dispatch('createDataObject', { type: 'extract', object: extract })
-      })
-
-      const selections = Object.values(state.currentAnnot.selection)
-      selections.forEach(selection => {
-        uris.push(getPublicIdFromDataStructure(selection))
-        dispatch('createDataObject', { type: 'selection', object: selection })
-      })
-
-      let listing = userState.solidFileListing
-      const listingPath = userState.solidFileListingPath
-
+      // const user = userState.solidSession.info.webId
+      // const userPod = userState.solidUserPod // this could be used instead
+      const userPodPath = userState.solidUserPodPath
       const authFetch = userState.solidSession.fetch
-      let thing = getThingAll(listing)[0]
-      const existingUris = getUrlAll(thing, pref.ldp + 'contains')
 
-      uris.forEach(uri => {
-        if (existingUris.indexOf(uri) === -1) {
-          thing = addUrl(thing, pref.ldp + 'contains', uri)
-        }
+      const allThings = new Map()
+      let ds = createSolidDataset()
+
+      Object.entries(state.thingStore).forEach(object => {
+        allThings.set(object[0], object[1])
+      })
+      Object.entries(state.currentThings).forEach(object => {
+        allThings.set(object[0], object[1])
       })
 
-      listing = setThing(listing, thing)
+      allThings.forEach((thing, uri) => {
+        ds = setThing(ds, thing)
+      })
 
-      console.log('\nNeed to update listing. Should be like so now:', uris)
-
+      // first try to save data
       try {
         saveSolidDatasetAt(
-          listingPath,
-          listing,
-          {
-            fetch: authFetch
-          }
+          userPodPath,
+          ds,
+          { fetch: authFetch }
         ).then(res => {
-          console.log('updated index with ' + uris.length + ' entries')
-          commit('SET_SOLID_FILE_LISTING', listing)
+          console.log('uploaded dataset at ' + userPodPath + ' with ' + allThings.size + ' things')
+
+          // if successful, retrieve updated data and replace local info
+          // (as recommended by https://docs.inrupt.com/developer-tools/api/javascript/solid-client/modules/resource_solidDataset.html#savesoliddatasetat)
+          loadPod(userPodPath, commit, authFetch, true)
+          commit('EMPTY_CURRENT_THINGS')
+          console.log('storing data complete')
         }).catch(resErr => {
           console.log('ERRORED: ' + resErr)
         })
       } catch (err) {
-        console.log('ERROR: Unable to update index at ' + listingPath + ' for strange errors: ' + err)
+        console.log('ERROR: Unable to save data at ' + userPodPath + ' for strange errors: ' + err)
       }
-      console.log('done updating')
-      commit('DISCARD_CHANGES')
     },
 
+    /**
+     * discards changes by reverting currentThings
+     * @param  {[type]} commit               [description]
+     * @return {[type]}        [description]
+     */
     discardChanges ({ commit }) {
-      commit('DISCARD_CHANGES')
+      commit('EMPTY_CURRENT_THINGS')
     },
 
-    createDataObject ({ commit, state, rootState }, payload) {
+    // unused
+    /* createDataObject ({ commit, state, rootState }, payload) {
       const userState = rootState.user
 
-      if (payload.type in state.annotStore && payload.object) {
+      if (payload.type in state.thingStore && payload.object) {
         const authFetch = userState.solidSession.fetch
         const ds = payload.object
+        // const uri = getThingAll(ds)[0].url
         const uri = getPublicIdFromDataStructure(ds)
 
         // console.log('trying to create object: ', payload.object)
@@ -681,56 +828,189 @@ export const solidModule = {
           ).then(res => {
             console.log('successfully uploaded ' + uri)
             // after upload to SolidPod store in Vuex
-            commit('ADD_TO_ANNOTSTORE', payload)
+            commit('ADD_TO_THINGSTORE', payload)
           })
         } catch (err) {
           console.error('could not upload to ' + uri, err)
         }
       }
+    }, */
+
+    // this is to explore multi uploads
+    testMultiUpload ({ commit, state, rootState }) {
+      const userState = rootState.user
+      const authFetch = userState.solidSession.fetch
+      const webId = userState.solidSession.info.webId
+
+      /* const uuidv4 = () => {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+          const r = Math.random() * 16 | 0
+          const v = c === 'x' ? r : (r & 0x3 | 0x8)
+          return v.toString(16)
+        })
+     } */
+
+      // const date = new Date()
+      // const date = d.toISOString()
+      // const plainId = uuidv4()
+
+      const uri = webId.split('/profile/')[0] + '/public/bith/test/multiFile.ttl'
+
+      getSolidDataset(
+        uri, // File in Pod to Read
+        { fetch: authFetch } // fetch from authenticated session
+      ).then(ds => {
+        const things = getThingAll(ds)
+        console.log('received ID thing1: ' + things[0].url)
+        console.log(things[0])
+
+        console.log('received ID thing2: ' + things[1].url)
+        console.log(things[1])
+
+        solidDatasetAsTurtle(ds, { prefixes: { local: 'https://kepper2.solidcommunity.net/public/bith/test/multiFile.ttl' } })
+          .then(ttl => {
+            console.log('\n\n' + typeof ttl)
+            console.log(ttl)
+          })
+      })
+
+      /* let ds = createSolidDataset()
+
+      const thing = buildThing(createThing({ name: 'firstThing', uri }))
+        .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
+        .addUrl(pref.dct + 'test', uri + '#secondThing')
+        // .addStringNoLocale(pref.rdfs + 'label', '')
+        .build()
+
+      console.log('received ID thing1: ' + thing.url)
+      console.log(thing)
+
+      const thing2 = buildThing(createThing({ name: 'secondThing', uri }))
+        .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
+        // .addDate(pref.dct + 'created', date)
+        // .addUrl(pref.dct + 'creator', webId)
+        .addUrl(pref.dct + 'test', thing)
+        // .addStringNoLocale(pref.rdfs + 'label', '')
+        .build()
+
+      console.log('received ID thing2: ' + thing2.url)
+      console.log(thing2)
+
+      ds = setThing(ds, thing)
+      ds = setThing(ds, thing2)
+      */
+
+      /*
+      saveSolidDatasetAt(
+        uri,
+        ds,
+        {
+          fetch: authFetch
+        }
+      ).then(res => {
+        console.log('successfully uploaded ' + uri)
+      })
+      */
+
+      // file 2
+      /* const uri2 = webId.split('/profile/')[0] + '/public/bith/test/multiFile2.ttl'
+
+      let ds2 = createSolidDataset()
+
+      const thing3 = buildThing(createThing({ name: 'third', uri2 }))
+        .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
+        .addUrl(pref.dct + 'test', thing)
+        // .addStringNoLocale(pref.rdfs + 'label', '')
+        .build()
+
+      const thing4 = buildThing(createThing({ name: 'fourth', uri2 }))
+        .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
+        // .addDate(pref.dct + 'created', date)
+        // .addUrl(pref.dct + 'creator', webId)
+        .addUrl(pref.dct + 'test', thing3)
+        .addUrl(pref.dct + 'test', thing)
+        // .addStringNoLocale(pref.rdfs + 'label', '')
+        .build()
+
+      ds2 = setThing(ds2, thing3)
+      ds2 = setThing(ds2, thing4)
+
+      saveSolidDatasetAt(
+        uri2,
+        ds2,
+        {
+          fetch: authFetch
+        }
+      ).then(res => {
+        console.log('successfully uploaded ' + uri2)
+     }) */
     },
 
     /**
      * adds or removes extracts, musMats or observations to either musMats or observations.
-     * assumes the target to be the only thing in currentAnnot.
-     * @param {[type]} commit   [description]
-     * @param {[type]} payload  [description]
+     * assumes the target uri to be the only thing in currentThings.
+     * @param  {[type]} commit                  [description]
+     * @param  {[type]} state                   [description]
+     * @param  {[type]} dispatch                [description]
+     * @param  {[type]} uri                     the uri of the thing that's supposed to be added or removed
+     * @param  {[type]} operation               whether to add or remove the uri
+     * @return {[type]}           [description]
      */
-    toggleUriAtCurrentThing ({ commit, state, dispatch }, { target, operation }) {
+    toggleUriAtCurrentThing ({ commit, state, dispatch, rootState }, { uri, operation }) {
       if (operation !== 'add' && operation !== 'remove') {
         console.error('unknown operation: ' + operation)
         return false
       }
 
-      const curObKeys = Object.keys(state.currentAnnot.observation)
-      const curMmKeys = Object.keys(state.currentAnnot.musicalMaterial)
+      const curObKeys = []
+      const curMmKeys = []
 
-      let thingId
+      const userPodPath = rootState.user.solidUserPodPath
+
+      console.log('trying to add to ' + userPodPath)
+
+      Object.values(state.currentThings).forEach(thing => {
+        const type = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
+
+        if (type === bithTypes.observation) {
+          curObKeys.push(asUrl(thing, userPodPath))
+        } else if (type === bithTypes.musicalMaterial) {
+          curMmKeys.push(asUrl(thing, userPodPath))
+        }
+      })
+
+      let thingUri
       let thingType
+
       if (curObKeys.length > 0) {
-        thingId = curObKeys[0]
+        thingUri = curObKeys[0]
         thingType = bithTypes.observation
       } else if (curMmKeys.length > 0) {
-        thingId = curMmKeys[0]
+        thingUri = curMmKeys[0]
         thingType = bithTypes.musicalMaterial
       }
 
+      console.log('thingUri: ' + thingUri + ' | thingType: ' + thingType)
+
       if (thingType === bithTypes.observation) {
         const method = (operation === 'add') ? 'addUrl' : 'removeUrl' // TODO: Can an observation have multiple targets?
+        console.log('dispatch addition on observation')
         dispatch('changeCurrentDataObject', {
           type: thingType,
-          id: thingId,
+          uri: thingUri, // TODO: uri
           prop: pref.oa + 'hasTarget',
           method,
-          val: target
+          val: uri
         })
       } else if (thingType === bithTypes.musicalMaterial) {
+        console.log('dispatch addition on musMat')
         const method = (operation === 'add') ? 'addUrl' : 'removeUrl'
         dispatch('changeCurrentDataObject', {
           type: thingType,
-          id: thingId,
+          uri: thingUri,
           prop: pref.frbr + 'embodiment',
           method,
-          val: target
+          val: uri
         })
       }
     }
@@ -741,30 +1021,38 @@ export const solidModule = {
      * @param  {[type]} state               [description]
      * @return {[type]}       [description]
      */
-    allThingsByType: (state) => (type) => {
+    allThingsByType: (state, getters, rootState) => (type) => {
+      const userPodPath = rootState.user.solidUserPodPath
       if (type in bithTypes) {
-        const arr = Object.values(state.annotStore[type])
-        const keys = Object.keys(state.annotStore[type])
+        const arr = []
+        const map = new Map()
 
-        Object.entries(state.currentAnnot[type]).forEach(entry => {
-          if (keys.indexOf(entry[0]) === -1) {
-            arr.push(entry[1])
-          } else {
-            const pos = keys.indexOf(entry[0])
-            arr[pos] = entry[1]
+        Object.entries(state.thingStore).forEach(object => {
+          const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
+          if (iteratedType === type) {
+            map.set(object[0], object[1])
           }
         })
 
+        Object.entries(state.currentThings).forEach(object => {
+          const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
+          if (iteratedType === type) {
+            map.set(object[0], object[1])
+          }
+        })
+
+        map.forEach((thing, uri) => {
+          arr.push(thing)
+        })
+
         arr.sort((a, b) => {
-          const thingA = getThingAll(a)[0]
-          const dateA = getDate(thingA, pref.dct + 'created')
-          const thingB = getThingAll(b)[0]
-          const dateB = getDate(thingB, pref.dct + 'created')
+          const dateA = getDate(a, pref.dct + 'created')
+          const dateB = getDate(b, pref.dct + 'created')
 
           const dateCompare = new Date(dateB) - new Date(dateA)
           if (dateCompare === 0) {
-            const idA = getPublicIdFromDataStructure(a) // getStringNoLocale(thingA, pref.rdfs + 'label')
-            const idB = getPublicIdFromDataStructure(b) // getStringNoLocale(thingB, pref.rdfs + 'label')
+            const idA = asUrl(a, userPodPath) // getStringNoLocale(thingA, pref.rdfs + 'label')
+            const idB = asUrl(b, userPodPath) // getStringNoLocale(thingB, pref.rdfs + 'label')
             const idCompare = (idA < idB) ? -1 : (idA > idB) ? 1 : 0
             return idCompare
           } else {
@@ -785,13 +1073,28 @@ export const solidModule = {
      */
     allThingIDsByType: (state) => (type) => {
       if (type in bithTypes) {
-        const arr = Object.keys(state.annotStore[type])
-        Object.keys(state.currentAnnot[type]).forEach(key => {
-          if (arr.indexOf(key) === -1) {
-            arr.push(key)
+        const arr = []
+        const map = new Map()
+
+        Object.entries(state.thingStore).forEach(object => {
+          const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
+
+          if (iteratedType === type) {
+            map.set(object[0], object[1])
           }
         })
-        return arr
+
+        Object.entries(state.currentThings).forEach(object => {
+          const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
+
+          if (iteratedType === type) {
+            map.set(object[0], object[1])
+          }
+        })
+
+        map.forEach((thing, uri) => {
+          arr.push(uri)
+        })
       } else {
         console.error('Unknown type ' + type)
         return []
@@ -805,96 +1108,57 @@ export const solidModule = {
      */
     thingByTypeAndID: (state) => (type, id) => {
       if (type in bithTypes) {
-        return state.annotStore[type][id]
+        const thing = state.thingStore[id]
+        if (getUrl(thing, pref.rdf + 'type') === type) {
+          return thing
+        } else {
+          return null
+        }
       } else {
         console.error('Unknown type ' + type)
         return null
       }
     },
-
-    /* observationLabel: (state) => (observationId) => {
-      // console.log('searching ' + observationId)
-      const observationDS = state.annotStore.observation[observationId]
-      const thing = getThingAll(observationDS)[0]
-
-      const target = getUrl(thing, pref.oa + 'hasTarget')
-
-      const musMatDS = state.annotStore.musicalMaterial[target]
-      const musMatThing = getThingAll(musMatDS)[0]
-
-      const label = getStringNoLocale(musMatThing, pref.rdfs + 'label')
-
-      return label
-    }, */
-
-    /* musicalMaterialLabel: (state) => (musMatId) => {
-      console.log('searching ' + musMatId)
-      const musMatDS = state.annotStore.musicalMaterial[musMatId]
-      const thing = getThingAll(musMatDS)[0]
-      const label = getStringNoLocale(thing, pref.rdfs + 'label')
-
-      return label
-    }, */
-
-    /* currentAnnot: state => {
-      return state.currentAnnot
-    }, */
-
-    /* currentObservations: state => {
-      return Object.values(state.currentAnnot.observation)
-    }, */
-
-    /* currentObservationId: state => {
-      return Object.keys(state.currentAnnot.observation)[0]
-    }, */
-
-    /* currentObservationBody: state => {
-      const observations = Object.values(state.currentAnnot.observation)
-      if (observations.length === 0) {
-        return null
-      }
-
-      const observationDS = observations[0]
-      const thing = getThingAll(observationDS)[0]
-      const body = getStringNoLocale(thing, pref.oa + 'bodyValue')
-
-      return body
-    }, */
 
     /**
      * returns current things by type
      * @param  {[type]} state               [description]
      * @return {[type]}       [description]
      */
-    currentThingsByType: (state) => (type) => {
+    currentThingsByType: (state, getters, rootState) => (type) => {
+      // const userPodPath = rootState.user.solidUserPodPath
+
       if (type in bithTypes) {
-        return Object.values(state.currentAnnot[type])
+        const arr = []
+
+        Object.values(state.currentThings).forEach(thing => {
+          const iteratedType = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
+
+          if (iteratedType === type) {
+            arr.push(thing)
+          }
+        })
+
+        /* arr.sort((a, b) => {
+          const dateA = getDate(a, pref.dct + 'created')
+          const dateB = getDate(b, pref.dct + 'created')
+
+          const dateCompare = new Date(dateB) - new Date(dateA)
+          if (dateCompare === 0) {
+            const idA = asUrl(a, userPodPath) // getStringNoLocale(thingA, pref.rdfs + 'label')
+            const idB = asUrl(b, userPodPath) // getStringNoLocale(thingB, pref.rdfs + 'label')
+            const idCompare = (idA < idB) ? -1 : (idA > idB) ? 1 : 0
+            return idCompare
+          } else {
+            return dateCompare
+          }
+        }) */
+        return arr
       } else {
         console.error('Unknown type ' + type)
         return []
       }
     },
-
-    /* currentMusicalMaterialId: state => {
-      return Object.keys(state.currentAnnot.musicalMaterial)[0]
-    }, */
-
-    /* currentMusicalMaterialLabel: state => {
-      const musMats = Object.values(state.currentAnnot.musicalMaterial)
-      if (musMats.length === 0) {
-        return null
-      }
-
-      const musMatDS = musMats[0]
-      const thing = getThingAll(musMatDS)[0]
-      const label = getStringNoLocale(thing, pref.rdfs + 'label')
-
-      return label
-    }, */
-
-    /* currentExtracts: state => {
-      return Object.keys(state.currentAnnot.extract)
-    }, */
 
     /**
      * returns the ID of the currently active thing by type
@@ -902,8 +1166,14 @@ export const solidModule = {
      * @return {[type]}       [description]
      */
     activeThingIDByType: (state) => (type) => {
-      if (type in bithTypes) {
-        return state.activated[type]
+      if (type === bithTypes.observation) {
+        return state.activated.observation
+      } else if (type === bithTypes.musicalMaterial) {
+        return state.activated.musicalMaterial
+      } else if (type === bithTypes.extract) {
+        return state.activated.extract
+      } else if (type === bithTypes.selection) {
+        return state.activated.selection
       } else {
         console.error('Unknown type ' + type)
         return null
@@ -916,8 +1186,14 @@ export const solidModule = {
      * @return {[type]}       [description]
      */
     currentThingByType: (state) => (type) => {
-      if (type in bithTypes) {
-        return state.currentAnnot[type][state.activated[type]]
+      if (type === bithTypes.observation) {
+        return state.currentThings[state.activated.observation]
+      } else if (type === bithTypes.musicalMaterial) {
+        return state.currentThings[state.activated.musicalMaterial]
+      } else if (type === bithTypes.extract) {
+        return state.currentThings[state.activated.extract]
+      } else if (type === bithTypes.selection) {
+        return state.currentThings[state.activated.selection]
       } else {
         console.error('Unknown type ' + type)
         return null
@@ -931,7 +1207,7 @@ export const solidModule = {
      */
     currentThingByTypeAndID: (state) => (type, id) => {
       if (type in bithTypes) {
-        return state.currentAnnot[type][id]
+        return state.currentThings[id]
       } else {
         console.error('Unknown type ' + type)
         return null
@@ -944,15 +1220,7 @@ export const solidModule = {
      * @return {[type]}       [description]
      */
     childrenByTypeAndID: (state) => (type, id) => {
-      if (type in bithTypes) {
-        const currentDS = state.currentAnnot[type][id]
-        const ds = currentDS !== undefined ? currentDS : state.annotStore[type][id]
-
-        return getChildren(state, ds, type)
-      } else {
-        console.error('Unknown type ' + type)
-        return []
-      }
+      return getChildren(state, id)
     },
 
     /**
@@ -960,115 +1228,175 @@ export const solidModule = {
      * @param  {[type]} state               [description]
      * @return {[type]}       [description]
      */
-    parentIDsByTypeAndId: (state) => (type, id) => {
-      if (type in bithTypes) {
-        const currentDS = state.currentAnnot[type][id]
-        const ds = currentDS !== undefined ? currentDS : state.annotStore[type][id]
-        const arr = []
-        getParents(state, ds, type).forEach(parentDS => {
-          arr.push(getPublicIdFromDataStructure(parentDS))
-        })
-        return arr
-      } else {
-        console.error('Unknown type ' + type)
-        return []
-      }
+    parentIDsByTypeAndId: (state, getters, rootState) => (type, id) => {
+      const userPodPath = rootState.user.solidUserPodPath
+      const parents = getParents(state, id)
+      const arr = []
+      parents.forEach(thing => {
+        arr.push(asUrl(thing, userPodPath))
+      })
+      return arr
     },
 
-    /* activeExtractObject: state => {
-      return state.currentAnnot.extract[state.currentExtract]
-    }, */
-
-    /* workingExtract: (state) => (extractId) => {
-      return state.currentAnnot.extract[extractId]
-    }, */
-    workingExtractLabel: (state) => (extractId) => {
-      const extractDS = state.currentAnnot.extract[extractId]
-      const thing = getThingAll(extractDS)[0]
+    /**
+     * retrieve label of current extract
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
+    workingExtractLabel: (state) => (id) => {
+      const thing = state.currentThings[id]
       const label = getStringNoLocale(thing, pref.rdfs + 'label')
 
       return label
     },
 
     /**
-     * returns whether the thing is listed in state.currentAnnot or not
+     * returns whether the thing is listed in state.currentThings or not
      * @param  {[type]} state               [description]
      * @return {[type]}       [description]
      */
     thingIsInModification: (state) => (thingId, thingType) => {
       if (thingType in bithTypes) {
-        return thingId in state.currentAnnot[thingType]
+        return thingId in state.currentThings
       } else {
         console.error('Unknown type: ' + thingType)
       }
     },
 
     /**
-     * returns if thing is in currentAnnot
+     * returns if thing is in currentThings
      * @param  {[type]} state               [description]
      * @return {[type]}       [description]
      */
     thingIsCurrentByTypeAndID: (state) => (thingType, thingId) => {
       if (thingType in bithTypes) {
-        return thingId in state.currentAnnot[thingType]
+        return thingId in state.currentThings
       } else {
         console.error('Unknown type: ' + thingType)
+        return false
       }
     },
 
+    /**
+     * if app is in selectionMode
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
     selectionModeActive: (state) => {
       return state.activated.selection !== null
     },
 
+    /**
+     * get all selections from currentThings
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
     currentSelections: state => {
-      return Object.values(state.currentAnnot.selection)
+      const arr = []
+
+      Object.values(state.currentThings).forEach(thing => {
+        const iteratedType = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
+
+        if (iteratedType === bithTypes.selection) {
+          arr.push(thing)
+        }
+      })
+
+      return arr
     },
 
+    /**
+     * retrieves all selections that select from a given resource uri
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
     allSelectionsForUri: (state) => (uri) => {
       const arr = []
-      Object.values(state.annotStore.selection).forEach(selectionDS => {
-        const thing = getThingAll(selectionDS)[0]
-        const urls = getUrlAll(thing, pref.frbr + 'part')
+      const map = new Map()
 
-        urls.forEach(idRef => {
-          if (idRef.startsWith(uri)) {
-            arr.push(idRef)
-          }
-        })
+      Object.entries(state.thingStore).forEach(entry => {
+        const iteratedType = (getUrl(entry[1], pref.rdf + 'type') !== null) ? getUrl(entry[1], pref.rdf + 'type') : getStringNoLocale(entry[1], pref.rdf + 'type')
+
+        if (iteratedType === bithTypes.selection) {
+          const urls = getUrlAll(entry[1], pref.frbr + 'part')
+
+          urls.forEach(idRef => {
+            if (idRef.startsWith(uri)) {
+              map.set(entry[0], entry[1])
+            }
+          })
+        }
       })
+
+      Object.entries(state.currentThings).forEach(entry => {
+        const iteratedType = (getUrl(entry[1], pref.rdf + 'type') !== null) ? getUrl(entry[1], pref.rdf + 'type') : getStringNoLocale(entry[1], pref.rdf + 'type')
+
+        if (iteratedType === bithTypes.selection) {
+          const urls = getUrlAll(entry[1], pref.frbr + 'part')
+
+          urls.forEach(idRef => {
+            if (idRef.startsWith(uri)) {
+              map.set(entry[0], entry[1])
+            }
+          })
+        }
+      })
+
+      map.forEach((thing, uri) => {
+        arr.push(uri)
+      })
+
       return arr
     },
+
+    /**
+     * retrieves all current selections affecting a given uri
+     * @param  {[type]} state               [description]
+     * @return {[type]}       [description]
+     */
     currentSelectionsForUri: (state) => (uri) => {
       const arr = []
-      Object.values(state.currentAnnot.selection).forEach(selectionDS => {
-        const thing = getThingAll(selectionDS)[0]
-        const urls = getUrlAll(thing, pref.frbr + 'part')
+      const map = new Map()
 
-        urls.forEach(idRef => {
-          if (idRef.startsWith(uri)) {
-            arr.push(idRef)
-          }
-        })
+      Object.entries(state.currentThings).forEach(entry => {
+        const iteratedType = (getUrl(entry[1], pref.rdf + 'type') !== null) ? getUrl(entry[1], pref.rdf + 'type') : getStringNoLocale(entry[1], pref.rdf + 'type')
+
+        if (iteratedType === bithTypes.selection) {
+          const urls = getUrlAll(entry[1], pref.frbr + 'part')
+
+          urls.forEach(idRef => {
+            if (idRef.startsWith(uri)) {
+              map.set(entry[0], entry[1])
+            }
+          })
+        }
       })
+
+      map.forEach((thing, uri) => {
+        arr.push(uri)
+      })
+
       return arr
     },
-    allSelectionsForCurrentMusMat: (state) => (uri) => {
+
+    // not used?
+    /* allSelectionsForCurrentMusMat: (state) => (uri) => {
       if (state.currentMusMat === null) {
         return []
       }
       const arr = []
       try {
-        const musMatDS = state.currentAnnot.musicalMaterial[state.currentMusMat]
+        const musMatDS = state.currentThings.musicalMaterial[state.currentMusMat]
         const musMatThing = getThingAll(musMatDS)[0]
 
         const extractIDs = getUrlAll(musMatThing, pref.frbr + 'embodiment')
         extractIDs.forEach(extractId => {
-          const extractDS = state.currentAnnot.extract[extractId]
+          const extractDS = state.currentThings.extract[extractId]
           const extractThing = getThingAll(extractDS)[0]
 
           const selectionIDs = getUrlAll(extractThing, pref.frbr + 'embodiment')
           selectionIDs.forEach(selectionId => {
-            const selectionDS = state.currentAnnot.selection[selectionId]
+            const selectionDS = state.currentThings.selection[selectionId]
             const selectionThing = getThingAll(selectionDS)[0]
 
             const parts = getUrlAll(selectionThing, pref.frbr + 'part')
@@ -1082,7 +1410,7 @@ export const solidModule = {
       } catch (err) {}
 
       return arr
-    },
+    }, */
 
     /**
      * retrieves all selection paths for the activated extract
@@ -1090,26 +1418,17 @@ export const solidModule = {
      * @return {[type]}       [description]
      */
     allSelectionsForActiveExtract: (state) => (uri) => {
-      if (state.activated[bithTypes.extract] === null) {
-        return []
-      }
       const arr = []
+
+      if (state.activated.extract === null) {
+        return arr
+      }
+
       try {
-        let extractDS = state.currentAnnot.extract[state.activated[bithTypes.extract]]
-        if (extractDS === undefined) {
-          extractDS = state.annotStore.extract[state.activated[bithTypes.extract]]
-        }
-        const extractThing = getThingAll(extractDS)[0]
+        const selections = getChildren(state, state.activated.extract)
 
-        const selectionIDs = getUrlAll(extractThing, pref.frbr + 'embodiment')
-        selectionIDs.forEach(selectionId => {
-          let selectionDS = state.currentAnnot.selection[selectionId]
-          if (selectionDS === undefined) {
-            selectionDS = state.annotStore.selection[selectionId]
-          }
-          const selectionThing = getThingAll(selectionDS)[0]
-
-          const parts = getUrlAll(selectionThing, pref.frbr + 'part')
+        selections.forEach(selection => {
+          const parts = getUrlAll(selection, pref.frbr + 'part')
           parts.forEach(idRef => {
             if (idRef.startsWith(uri)) {
               arr.push(idRef)
@@ -1122,23 +1441,21 @@ export const solidModule = {
     },
 
     /**
-     * retreives all selection paths for the activated selection
+     * retrieves all selection paths for the activated selection
      * @param  {[type]} state               [description]
      * @return {[type]}       [description]
      */
     allSelectionsForActiveSelection: (state) => (uri) => {
-      if (state.activated[bithTypes.selection] === null) {
-        return []
-      }
       const arr = []
-      try {
-        let selectionDS = state.currentAnnot.selection[state.activated[bithTypes.selection]]
-        if (selectionDS === undefined) {
-          selectionDS = state.annotStore.selection[state.activated[bithTypes.selection]]
-        }
-        const selectionThing = getThingAll(selectionDS)[0]
 
-        const parts = getUrlAll(selectionThing, pref.frbr + 'part')
+      if (state.activated.selection === null) {
+        return arr
+      }
+
+      try {
+        const thing = state.currentThings[state.activated.selection] !== undefined ? state.currentThings[state.activated.selection] : state.thingStore[state.activated.selection]
+
+        const parts = getUrlAll(thing, pref.frbr + 'part')
         parts.forEach(idRef => {
           if (idRef.startsWith(uri)) {
             arr.push(idRef)
@@ -1159,6 +1476,7 @@ export const solidModule = {
      * @return {[type]}           [description]
      */
     extractsForViewedArrangements: (state, getters, rootState) => {
+      const userPodPath = rootState.user.solidUserPodPath
       const views = rootState.app.views
       const arrangementUris = []
 
@@ -1178,62 +1496,63 @@ export const solidModule = {
         }
       })
 
-      const selections = {}
-      const extracts = {}
+      const arr = []
+      const selectionMap = new Map()
+      const extractMap = new Map()
 
-      // get all selections from annotStore
-      Object.values(state.annotStore.selection).forEach(selectionDS => {
-        const selectionID = getPublicIdFromDataStructure(selectionDS)
-        const thing = getThingAll(selectionDS)[0]
-        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
+      Object.entries(state.thingStore).forEach(object => {
+        const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
+        if (iteratedType === bithTypes.selection) {
+          const partUris = getUrlAll(object[1], pref.frbr + 'part')
 
-        selectionUrls.forEach(idRef => {
-          arrangementUris.forEach(arrangementUri => {
-            if (idRef.replace('http://', 'https://').startsWith(arrangementUri)) {
-              selections[selectionID] = selectionDS
-            }
+          partUris.forEach(idRef => {
+            arrangementUris.forEach(arrangementUri => {
+              if (idRef.replace('http://', 'https://').startsWith(arrangementUri)) {
+                selectionMap.set(object[0], object[1])
+              }
+            })
           })
-        })
-      })
-
-      // maybe overwrite with selections from currentAnnot
-      Object.values(state.currentAnnot.selection).forEach(selectionDS => {
-        const selectionID = getPublicIdFromDataStructure(selectionDS)
-        const thing = getThingAll(selectionDS)[0]
-        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
-
-        selectionUrls.forEach(idRef => {
-          arrangementUris.forEach(arrangementUri => {
-            if (idRef.replace('http://', 'https://').startsWith(arrangementUri)) {
-              selections[selectionID] = selectionDS
-            }
-          })
-        })
-      })
-
-      if (state.activated[bithTypes.extract] !== null) {
-        const storeDS = state.annotStore[bithTypes.extract][state.activated[bithTypes.extract]]
-        if (storeDS !== undefined) {
-          const storeId = getPublicIdFromDataStructure(storeDS)
-          extracts[storeId] = storeDS
         }
-        const currentDS = state.currentAnnot[bithTypes.extract][state.activated[bithTypes.extract]]
-        if (currentDS !== undefined) {
-          const currentId = getPublicIdFromDataStructure(currentDS)
-          extracts[currentId] = currentDS
+      })
+
+      Object.entries(state.currentThings).forEach(object => {
+        const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
+        if (iteratedType === bithTypes.selection) {
+          const partUris = getUrlAll(object[1], pref.frbr + 'part')
+          partUris.forEach(idRef => {
+            arrangementUris.forEach(arrangementUri => {
+              if (idRef.replace('http://', 'https://').startsWith(arrangementUri)) {
+                selectionMap.set(object[0], object[1])
+              }
+            })
+          })
+        }
+      })
+
+      if (state.activated.extract !== null) {
+        const storedThing = state.thingStore[state.activated.extract]
+        if (storedThing !== undefined) {
+          extractMap.set(state.activated.extract, storedThing)
+        }
+        const currentThing = state.currentThings[state.activated.extract]
+        if (currentThing !== undefined) {
+          extractMap.set(state.activated.extract, currentThing)
         }
       }
 
-      Object.values(selections).forEach(selection => {
-        const parentExtracts = getParents(state, selection, bithTypes.selection)
-        parentExtracts.forEach(parentExtract => {
-          const parentExtractID = getPublicIdFromDataStructure(parentExtract)
-          extracts[parentExtractID] = parentExtract
+      selectionMap.forEach((thing, uri) => {
+        const parents = getParents(state, uri)
+        parents.forEach(extract => {
+          const parentExtractID = asUrl(extract, userPodPath)
+          extractMap.set(parentExtractID, extract)
         })
       })
 
+      extractMap.forEach((extract, uri) => {
+        arr.push(extract)
+      })
+
       // order extracts
-      const arr = Object.values(extracts)
       /* arr.sort((a, b) => {
         const thingA = getThingAll(a)[0]
         const dateA = getDate(thingA, pref.dct + 'created')
@@ -1250,7 +1569,6 @@ export const solidModule = {
           return dateCompare
         }
      }) */
-
       return arr
     },
 
@@ -1260,6 +1578,7 @@ export const solidModule = {
      * @return {[type]}       [description]
      */
     facsimileSelectionsByViewIndex: (state, getters, rootState) => (index) => {
+      const userPodPath = rootState.user.solidUserPodPath
       const view = rootState.app.views[index]
       const uri = view?.state?.pageUri
 
@@ -1281,101 +1600,104 @@ export const solidModule = {
 
       // console.log('searching for ' + pageUri)
 
-      // get all selections from annotStore
-      Object.values(state.annotStore.selection).forEach(selectionDS => {
-        const selectionID = getPublicIdFromDataStructure(selectionDS)
-        const thing = getThingAll(selectionDS)[0]
-        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
+      Object.entries(state.thingStore).forEach(object => {
+        const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
 
-        selectionUrls.forEach((idRef, index) => {
-          const selectionUrl = idRef.replace('http://', 'https://')
-          if (selectionUrl.startsWith(pageUri)) {
-            const xywh = getXywh(selectionUrl)
-            const hit = {
-              id: selectionID,
-              uri: selectionUrl,
-              x: parseInt(xywh[0]),
-              y: parseInt(xywh[1]),
-              w: parseInt(xywh[2]),
-              h: parseInt(xywh[3]),
-              index,
-              classList: [],
-              extracts: {}
-            }
-            if (selectionID in foundSelections) {
-              foundSelections[selectionID].push(hit)
-            } else {
-              foundSelections[selectionID] = [hit]
-            }
+        if (iteratedType === bithTypes.selection) {
+          const selectionID = object[0]
+          const partUris = getUrlAll(object[1], pref.frbr + 'part')
 
-            if (state.activated.selection === selectionID) {
-              foundSelections[selectionID][index].classList.push('activeSelection')
-            }
-
-            const extracts = getParents(state, selectionDS, bithTypes.selection)
-            extracts.forEach(extractDS => {
-              const extractID = getPublicIdFromDataStructure(extractDS)
-              foundSelections[selectionID][index].extracts[extractID] = true
-              if (state.activated.extract === extractID) {
-                foundSelections[selectionID][index].classList.push('activeExtract')
+          partUris.forEach((idRef, index) => {
+            const selectionUrl = idRef.replace('http://', 'https://')
+            if (selectionUrl.startsWith(pageUri)) {
+              const xywh = getXywh(selectionUrl)
+              const hit = {
+                id: selectionID,
+                uri: selectionUrl,
+                x: parseInt(xywh[0]),
+                y: parseInt(xywh[1]),
+                w: parseInt(xywh[2]),
+                h: parseInt(xywh[3]),
+                index,
+                classList: [],
+                extracts: {}
               }
-            })
-          }
-        })
-      })
+              if (selectionID in foundSelections) {
+                foundSelections[selectionID].push(hit)
+              } else {
+                foundSelections[selectionID] = [hit]
+              }
 
-      // get all selections from currentAnnot
-      Object.values(state.currentAnnot.selection).forEach(selectionDS => {
-        const selectionID = getPublicIdFromDataStructure(selectionDS)
-        const thing = getThingAll(selectionDS)[0]
-        const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
+              if (state.activated.selection === selectionID) {
+                foundSelections[selectionID][index].classList.push('activeSelection')
+              }
 
-        selectionUrls.forEach((idRef, index) => {
-          const selectionUrl = idRef.replace('http://', 'https://')
-          if (selectionUrl.startsWith(pageUri)) {
-            if (foundSelections[selectionID] === undefined) {
-              foundSelections[selectionID] = [{
-                id: selectionID,
-                uri: selectionUrl,
-                index,
-                classList: [],
-                extracts: {}
-              }]
-            } else {
-              foundSelections[selectionID].push({
-                id: selectionID,
-                uri: selectionUrl,
-                index,
-                classList: [],
-                extracts: {}
+              const extracts = getParents(state, selectionID)
+              extracts.forEach(extract => {
+                const extractID = asUrl(extract, userPodPath)
+                foundSelections[selectionID][index].extracts[extractID] = true
+                if (state.activated.extract === extractID) {
+                  foundSelections[selectionID][index].classList.push('activeExtract')
+                }
               })
             }
-
-            const xywh = getXywh(selectionUrl)
-            foundSelections[selectionID][index].x = parseInt(xywh[0])
-            foundSelections[selectionID][index].y = parseInt(xywh[1])
-            foundSelections[selectionID][index].w = parseInt(xywh[2])
-            foundSelections[selectionID][index].h = parseInt(xywh[3])
-            foundSelections[selectionID][index].classList.push('current')
-
-            if (state.activeSelection === selectionID && foundSelections[selectionID][index].classList.indexOf('activeSelection') === -1) {
-              foundSelections[selectionID][index].classList.push('activeSelection')
-            }
-
-            const extracts = getParents(state, selectionDS, bithTypes.selection)
-            extracts.forEach(extractDS => {
-              const extractID = getPublicIdFromDataStructure(extractDS)
-              foundSelections[selectionID][index].extracts[extractID] = true
-              if (state.activated.extract === extractID) {
-                foundSelections[selectionID][index].classList.push('activeExtract')
-              }
-            })
-          }
-        })
+          })
+        }
       })
 
-      // console.log('foundSelections:')
-      // console.log(foundSelections)
+      // get all selections from currentThings
+      Object.entries(state.currentThings).forEach(object => {
+        const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
+
+        if (iteratedType === bithTypes.selection) {
+          const selectionID = object[0]
+          const partUris = getUrlAll(object[1], pref.frbr + 'part')
+
+          partUris.forEach((idRef, index) => {
+            const selectionUrl = idRef.replace('http://', 'https://')
+            if (selectionUrl.startsWith(pageUri)) {
+              if (foundSelections[selectionID] === undefined) {
+                foundSelections[selectionID] = [{
+                  id: selectionID,
+                  uri: selectionUrl,
+                  index,
+                  classList: [],
+                  extracts: {}
+                }]
+              } else {
+                foundSelections[selectionID].push({
+                  id: selectionID,
+                  uri: selectionUrl,
+                  index,
+                  classList: [],
+                  extracts: {}
+                })
+              }
+
+              const xywh = getXywh(selectionUrl)
+
+              foundSelections[selectionID][index].x = parseInt(xywh[0])
+              foundSelections[selectionID][index].y = parseInt(xywh[1])
+              foundSelections[selectionID][index].w = parseInt(xywh[2])
+              foundSelections[selectionID][index].h = parseInt(xywh[3])
+              foundSelections[selectionID][index].classList.push('current')
+
+              if (state.activeSelection === selectionID && foundSelections[selectionID][index].classList.indexOf('activeSelection') === -1) {
+                foundSelections[selectionID][index].classList.push('activeSelection')
+              }
+
+              const extracts = getParents(state, selectionID)
+              extracts.forEach(extract => {
+                const extractID = asUrl(extract, userPodPath)
+                foundSelections[selectionID][index].extracts[extractID] = true
+                if (state.activated.extract === extractID) {
+                  foundSelections[selectionID][index].classList.push('activeExtract')
+                }
+              })
+            }
+          })
+        }
+      })
 
       return Object.values(foundSelections)
     },
@@ -1388,6 +1710,7 @@ export const solidModule = {
      * @return {[type]}           [description]
      */
     allMeasureSelectionsOnCurrentFacsimilePage: (state, getters, rootState) => (index) => {
+      const userPodPath = rootState.user.solidUserPodPath
       const view = rootState.app.views[index]
 
       if (view === undefined || !('arrangement' in view)) {
@@ -1423,72 +1746,84 @@ export const solidModule = {
 
       const obj = {}
 
-      Object.values(state.annotStore.selection).forEach(selectionDS => {
-        const selectionId = getPublicIdFromDataStructure(selectionDS)
-        const thing = getThingAll(selectionDS)[0]
-        const urls = getUrlAll(thing, pref.frbr + 'part')
-        const isActivatedSelection = state.activated.selection === selectionId
-        let isActivatedExtract = false
+      Object.entries(state.thingStore).forEach(object => {
+        const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
 
-        const extracts = getParents(state, selectionDS, bithTypes.selection)
-        extracts.forEach(extractDS => {
-          const extractID = getPublicIdFromDataStructure(extractDS)
-          if (state.activated.extract === extractID) {
-            isActivatedExtract = true
-          }
-        })
+        if (iteratedType === bithTypes.selection && object[0] !== 'undefined') {
+          const selectionId = object[0]
+          const thing = object[1]
 
-        urls.forEach(idRef => {
-          if (measures.indexOf(idRef) !== -1) {
-            obj[idRef] = {}
-            obj[idRef][selectionId] = ['selection']
-            if (isActivatedSelection) {
-              obj[idRef][selectionId].push('activeSelection')
+          const urls = getUrlAll(thing, pref.frbr + 'part')
+          const isActivatedSelection = state.activated.selection === selectionId
+
+          let isActivatedExtract = false
+
+          const extracts = getParents(state, selectionId)
+          extracts.forEach(extract => {
+            const extractID = asUrl(extract, userPodPath)
+            if (state.activated.extract === extractID) {
+              isActivatedExtract = true
             }
-            if (isActivatedExtract) {
-              obj[idRef][selectionId].push('activeExtract')
+          })
+
+          urls.forEach(idRef => {
+            if (measures.indexOf(idRef) !== -1) {
+              obj[idRef] = {}
+              obj[idRef][selectionId] = ['selection']
+              if (isActivatedSelection) {
+                obj[idRef][selectionId].push('activeSelection')
+              }
+              if (isActivatedExtract) {
+                obj[idRef][selectionId].push('activeExtract')
+              }
             }
-          }
-        })
+          })
+        }
       })
 
-      Object.values(state.currentAnnot.selection).forEach(selectionDS => {
-        const selectionId = getPublicIdFromDataStructure(selectionDS)
-        const thing = getThingAll(selectionDS)[0]
-        const urls = getUrlAll(thing, pref.frbr + 'part')
-        const isActivatedSelection = state.activated.selection === selectionId
-        let isActivatedExtract = false
+      Object.entries(state.currentThings).forEach(object => {
+        try {
+          const iteratedType = (getUrl(object[1], pref.rdf + 'type') !== null) ? getUrl(object[1], pref.rdf + 'type') : getStringNoLocale(object[1], pref.rdf + 'type')
+          if (iteratedType === bithTypes.selection) {
+            const selectionId = object[0]
+            const thing = object[1]
+            const urls = getUrlAll(thing, pref.frbr + 'part')
+            const isActivatedSelection = state.activated.selection === selectionId
+            let isActivatedExtract = false
+            const extracts = getParents(state, selectionId)
+            extracts.forEach(extract => {
+              const extractID = asUrl(extract, userPodPath)
+              if (state.activated.extract === extractID) {
+                isActivatedExtract = true
+              }
+            })
 
-        const extracts = getParents(state, selectionDS, bithTypes.selection)
-        extracts.forEach(extractDS => {
-          const extractID = getPublicIdFromDataStructure(extractDS)
-          if (state.activated.extract === extractID) {
-            isActivatedExtract = true
+            urls.forEach(idRef => {
+              if (measures.indexOf(idRef) !== -1) {
+                if (obj[idRef] === undefined) {
+                  obj[idRef] = {}
+                  obj[idRef][selectionId] = ['current']
+                  if (isActivatedSelection) {
+                    obj[idRef][selectionId].push('activeSelection')
+                  }
+                  if (isActivatedExtract) {
+                    obj[idRef][selectionId].push('activeExtract')
+                  }
+                } else {
+                  obj[idRef][selectionId].push('current')
+                  if (isActivatedSelection) {
+                    obj[idRef][selectionId].push('activeSelection')
+                  }
+                  if (isActivatedExtract) {
+                    obj[idRef][selectionId].push('activeExtract')
+                  }
+                }
+              }
+            })
           }
-        })
+        } catch (err) {
 
-        urls.forEach(idRef => {
-          if (measures.indexOf(idRef) !== -1) {
-            if (obj[idRef] === undefined) {
-              obj[idRef] = {}
-              obj[idRef][selectionId] = ['current']
-              if (isActivatedSelection) {
-                obj[idRef][selectionId].push('activeSelection')
-              }
-              if (isActivatedExtract) {
-                obj[idRef][selectionId].push('activeExtract')
-              }
-            } else {
-              obj[idRef][selectionId].push('current')
-              if (isActivatedSelection) {
-                obj[idRef][selectionId].push('activeSelection')
-              }
-              if (isActivatedExtract) {
-                obj[idRef][selectionId].push('activeExtract')
-              }
-            }
-          }
-        })
+        }
       })
 
       return obj
@@ -1503,18 +1838,22 @@ export const solidModule = {
      * @param  {[type]} rootState               [description]
      * @return {[type]}           [description]
      */
-    arrangementByExtract: (state, getters, rootState) => (extractDS) => {
+    arrangementByExtract: (state, getters, rootState) => (extractID) => {
+      const userPodPath = rootState.user.solidUserPodPath
       const arrangements = rootState.graph.arrangements
       const tileSources = []
 
       arrangements.forEach(arr => {
-        tileSources.push(JSON.parse(JSON.stringify(arr.iiifTilesources)))
+        if (arr.tileSources) {
+          tileSources.push(JSON.parse(JSON.stringify(arr.iiifTilesources)))
+        }
       })
 
+      const extract = state.currentThings[extractID] !== undefined ? state.currentThings[extractID] : state.thingStore[extractID]
+
       const fileUrls = []
-      const selections = getChildren(state, extractDS, bithTypes.extract)
-      selections.forEach(selectionDS => {
-        const thing = getThingAll(selectionDS)[0]
+      const selections = getChildren(state, asUrl(extract, userPodPath))
+      selections.forEach(thing => {
         const selectionUrls = getUrlAll(thing, pref.frbr + 'part')
         selectionUrls.forEach(url => {
           if (url.indexOf('#') !== -1) {
@@ -1552,7 +1891,7 @@ export const solidModule = {
 
     /**
      * in annotationMode, returns arrays with IDs of things which are linked
-     * from the currentAnnot
+     * from the currentThings
      * @param  {[type]} state                   [description]
      * @param  {[type]} getters                 [description]
      * @param  {[type]} rootState               [description]
@@ -1566,17 +1905,17 @@ export const solidModule = {
 
       const current = []
       let type
-      Object.keys(state.currentAnnot.observation).forEach(id => {
-        current.push(id)
-        type = bithTypes.observation
-      })
-      Object.keys(state.currentAnnot.musicalMaterial).forEach(id => {
-        current.push(id)
-        type = bithTypes.musicalMaterial
-      })
-      Object.keys(state.currentAnnot.extract).forEach(id => {
-        current.push(id)
-        type = bithTypes.extract
+
+      Object.entries(state.currentThings).forEach(object => {
+        const uri = object[0]
+        const thing = object[1]
+
+        const iteratedType = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
+
+        if (iteratedType === bithTypes.observation || iteratedType === bithTypes.musicalMaterial || iteratedType === bithTypes.extract) {
+          current.push(uri)
+          type = iteratedType
+        }
       })
 
       // if there are too many or too few things, return empty arrays
@@ -1584,8 +1923,7 @@ export const solidModule = {
         return obj
       }
 
-      const mainDS = state.currentAnnot[type][current[0]]
-      const mainThing = getThingAll(mainDS)[0]
+      const mainThing = state.currentThings[current[0]]
 
       if (type === bithTypes.observation) {
         const predicate = getPredicateByType(type)
@@ -1594,14 +1932,15 @@ export const solidModule = {
 
         allTargets.forEach(target => {
           const type = getTypeById(state, target)
+
           if (type !== null) {
             // console.log('-- target ' + target + ' is of type ' + type)
-            obj[type].push(target)
+            // console.log(obj)
+            obj[simplifiedTypeByType(type)].push(target)
           } else {
             console.error('Unable to retrieve type of ' + target)
           }
         })
-        // console.log(58)
       } else if (type === bithTypes.musicalMaterial) {
         const predicate = getPredicateByType(type)
         // console.log(67)
@@ -1650,12 +1989,11 @@ export const solidModule = {
         return obj
       }
 
-      const mainDS = state.annotStore[type][current[0]]
+      const mainThing = state.thingStore[current[0]]
       // if this is a newly created thing, not yet stored to the Pod
-      if (mainDS === undefined) {
+      if (mainThing === undefined) {
         return obj
       }
-      const mainThing = getThingAll(mainDS)[0]
 
       if (type === bithTypes.observation) {
         const predicate = getPredicateByType(type)
@@ -1664,7 +2002,7 @@ export const solidModule = {
         allTargets.forEach(target => {
           const type = getTypeById(state, target)
           if (type !== null) {
-            obj[type].push(target)
+            obj[simplifiedTypeByType(type)].push(target)
           } else {
             console.error('Unable to retrieve type of ' + target)
           }
@@ -1692,17 +2030,17 @@ export const solidModule = {
 
       const current = []
       let type
-      Object.keys(state.currentAnnot.observation).forEach(id => {
-        current.push(id)
-        type = bithTypes.observation
-      })
-      Object.keys(state.currentAnnot.musicalMaterial).forEach(id => {
-        current.push(id)
-        type = bithTypes.musicalMaterial
-      })
-      Object.keys(state.currentAnnot.extract).forEach(id => {
-        current.push(id)
-        type = bithTypes.extract
+
+      Object.entries(state.currentThings).forEach(object => {
+        const uri = object[0]
+        const thing = object[1]
+
+        const iteratedType = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
+
+        if (iteratedType === bithTypes.observation || iteratedType === bithTypes.musicalMaterial || iteratedType === bithTypes.extract) {
+          current.push(uri)
+          type = iteratedType
+        }
       })
 
       // if there are too many or too few things, return empty arrays

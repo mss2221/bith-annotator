@@ -38,7 +38,7 @@
           <button class="btn btn-link" @click="newExtract">New Extract</button>
           <div class="solidBox">
             <div class="scrollable">
-              <GraphEntry v-for="(e, eI) in viewedExtracts" :key="eI" :file="e" :level="1" :type="bithTypes.extract"/>
+              <GraphEntry v-for="(e, eI) in viewedExtracts" :key="eI" :thing="e" :level="1" :type="bithTypes.extract"/>
             </div>
           </div>
         </template>
@@ -54,7 +54,7 @@
               <div class="scrollable">
                 <table class="table table-striped">
                   <tbody>
-                    <ObservationEntryDetailed v-for="(o, oI) in observations" :key="oI" :file="o" :level="1" :type="bithTypes.observation"/>
+                    <ObservationEntryDetailed v-for="(o, oI) in observations" :key="oI" :thing="o" :level="1" :type="bithTypes.observation"/>
                   </tbody>
                 </table>
               </div>
@@ -66,7 +66,7 @@
               <div class="scrollable">
                 <table class="table table-striped">
                   <tbody>
-                    <MusMatEntryDetailed v-for="(m, mI) in musicalMaterials" :key="mI" :file="m" :level="1" :type="bithTypes.musicalMaterial"/>
+                    <MusMatEntryDetailed v-for="(m, mI) in musicalMaterials" :key="mI" :thing="m" :level="1" :type="bithTypes.musicalMaterial"/>
                   </tbody>
                 </table>
               </div>
@@ -78,7 +78,7 @@
               <div class="scrollable">
                 <table class="table table-striped">
                   <tbody>
-                    <ExtractEntryDetailed v-for="(e, eI) in extracts" :key="eI" :file="e" :level="1" :type="bithTypes.extract"/>
+                    <ExtractEntryDetailed v-for="(e, eI) in extracts" :key="eI" :thing="e" :level="1" :type="bithTypes.extract"/>
                   </tbody>
                 </table>
               </div>

@@ -51,13 +51,15 @@
 
 <script>
 import {
-  getThingAll,
+  asUrl,
+  createSolidDataset,
+  setThing,
   getStringNoLocale,
   solidDatasetAsTurtle
 } from '@inrupt/solid-client'
 import { prefix as pref } from '@/meld/prefixes.js'
 import { getChildType } from '@/store/tools/solidHelpers.js'
-import { bithTypes } from '@/meld/constants.js'
+import { bithTypes, displayPrefixes } from '@/meld/constants.js'
 
 export default {
   name: 'MusMatEntryDetailed',
@@ -65,20 +67,15 @@ export default {
 
   },
   props: {
-    file: Object,
+    thing: Object,
     type: String,
     level: Number
   },
   computed: {
     id: function () {
-      const url = getThingAll(this.file)[0].url
-      if (url.indexOf('.well-known/sdk-local-node/') !== -1) {
-        return url.split('.well-known/sdk-local-node/')[1]
-      } else if (url.indexOf('#') !== -1) {
-        return url.split('#')[0]
-      } else {
-        return url
-      }
+      const baseUrl = this.$store.getters.dataBaseUrl
+      const url = asUrl(this.thing, baseUrl)
+      return url
     },
     activated: function () {
       return this.$store.getters.activeThingIDByType(this.type) === this.id
@@ -103,9 +100,7 @@ export default {
     },
     label: {
       get () {
-        const file = (this.isCurrent) ? this.$store.getters.currentThingByTypeAndID(this.type, this.id) : this.file
-        const thing = getThingAll(file)[0]
-        let label = getStringNoLocale(thing, pref.rdfs + 'label')
+        let label = getStringNoLocale(this.thing, pref.rdfs + 'label')
 
         if (label === '') {
           label = '[no label]'
@@ -116,7 +111,7 @@ export default {
       set (val) {
         this.$store.dispatch('changeCurrentDataObject', {
           type: this.type,
-          id: this.id,
+          uri: this.id,
           prop: pref.rdfs + 'label',
           method: 'setStringNoLocale',
           val
@@ -124,24 +119,22 @@ export default {
       }
     },
     resp: function () {
-      const file = (this.isCurrent) ? this.$store.getters.currentThingByTypeAndID(this.type, this.id) : this.file
-      const thing = getThingAll(file)[0]
-      const user = getStringNoLocale(thing, pref.dct + 'creator')
+      const user = getStringNoLocale(this.thing, pref.dct + 'creator')
       return user
     },
     affectedByCurrentAnnot: function () {
-      const affectedArr = this.$store.getters.affectedByCurrentAnnot[bithTypes.musicalMaterial]
+      const affectedArr = this.$store.getters.affectedByCurrentAnnot.musicalMaterial
       // console.log('allAffected:')
       // console.log(this.$store.getters.affectedByCurrentAnnot)
       return affectedArr.indexOf(this.id) !== -1
     },
     affectedByActiveAnnot: function () {
-      const affectedArr = this.$store.getters.affectedByActiveAnnot[bithTypes.musicalMaterial]
+      const affectedArr = this.$store.getters.affectedByActiveAnnot.musicalMaterial
       return affectedArr.indexOf(this.id) !== -1
     },
     ableToBeEdited: function () {
       const obj = this.$store.getters.ableToBeEdited
-      const bool = obj[bithTypes.musicalMaterial]
+      const bool = obj.musicalMaterial
       return bool
     }
   },
@@ -154,17 +147,17 @@ export default {
       }
 
       if (!this.activated) {
-        this.$store.dispatch('activateThing', { type: this.type, id: this.id })
+        this.$store.dispatch('activateThing', this.id)
       } else {
-        this.$store.dispatch('activateThing', { type: this.type, id: null })
+        this.$store.dispatch('deActivateThing', bithTypes.musicalMaterial)
       }
-      this.$store.dispatch('activateThing', { type: bithTypes.observation, id: null })
-      this.$store.dispatch('activateThing', { type: bithTypes.extract, id: null })
-      this.$store.dispatch('activateThing', { type: bithTypes.selection, id: null })
+      this.$store.dispatch('deActivateThing', bithTypes.observation)
+      this.$store.dispatch('deActivateThing', bithTypes.extract)
+      this.$store.dispatch('deActivateThing', bithTypes.selection)
     },
     startEditing: function () {
-      this.$store.dispatch('activateThing', { type: this.type, id: this.id })
-      this.$store.dispatch('makeCurrent', { type: this.type, object: this.file })
+      this.$store.dispatch('activateThing', this.id)
+      this.$store.dispatch('makeCurrent', this.thing) // { type: this.type, object: this.file })
     },
     saveChanges: function () {
       this.$store.dispatch('saveChanges')
@@ -174,14 +167,17 @@ export default {
     },
     add: function () {
       console.log('add this to current thing')
-      this.$store.dispatch('toggleUriAtCurrentThing', { target: this.id, operation: 'add' })
+      this.$store.dispatch('toggleUriAtCurrentThing', { uri: this.id, operation: 'add' })
     },
     remove: function () {
       console.log('remove this from current thing')
-      this.$store.dispatch('toggleUriAtCurrentThing', { target: this.id, operation: 'remove' })
+      this.$store.dispatch('toggleUriAtCurrentThing', { uri: this.id, operation: 'remove' })
     },
     showLD: async function (e) {
-      const ttl = await solidDatasetAsTurtle(this.file, { prefixes: pref })
+      let ds = createSolidDataset()
+      ds = setThing(ds, this.thing)
+
+      const ttl = await solidDatasetAsTurtle(ds, { prefixes: displayPrefixes })
       // console.log(this.id + ' (' + ttl.length + ')')
       this.$store.dispatch('setLdDetails', ttl)
     }

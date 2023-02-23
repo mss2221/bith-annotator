@@ -9,7 +9,7 @@
     <div class="modal-body">
       <div class="content">
         <pre>
-        {{ code }}
+{{ code }}
         </pre>
       </div>
     </div>
@@ -28,7 +28,8 @@ export default {
   },
   computed: {
     code: function () {
-      return this.$store.getters.ldDetails
+      const code = this.$store.getters.ldDetails
+      return code
     }
   },
   methods: {

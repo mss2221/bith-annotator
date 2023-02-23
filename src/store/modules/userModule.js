@@ -1,57 +1,46 @@
 import { prefix } from '@/meld/prefixes.js'
 
 import {
-  buildThing,
-  createThing,
+  // buildThing,
+  // createThing,
   createSolidDataset,
   getSolidDataset,
   getStringNoLocale,
   getThing,
   getThingAll,
-  getUrl,
-  getUrlAll,
-  saveSolidDatasetAt,
-  setThing
+  // getUrl,
+  // getUrlAll,
+  saveSolidDatasetAt //,
+  // setThing
 } from '@inrupt/solid-client'
 
 /**
- * [loadListing description]
- * @param  {[type]} listingPath               [description]
- * @param  {[type]} commit                    [description]
- * @return {[type]}             [description]
+ * loads the data from a given file
+ * @param  {[type]}  userPodPath               [description]
+ * @param  {[type]}  commit                    [description]
+ * @param  {[type]}  authFetch                 [description]
+ * @param  {Boolean} ownPod                [whether this is the users own Pod or not]
+ * @return {Promise}             [description]
  */
-const loadListing = async (listingPath, commit, authFetch) => {
-  const listing = await getSolidDataset(
-    listingPath, // File in Pod to Read
+export const loadPod = async (userPodPath, commit, authFetch, ownPod) => {
+  const userPod = await getSolidDataset(
+    userPodPath, // File in Pod to Read
     { fetch: authFetch } // fetch from authenticated session
   )
-  commit('SET_SOLID_FILE_LISTING', listing)
 
-  const thing = getThingAll(listing)[0]
-  const uris = getUrlAll(thing, prefix.ldp + 'contains')
-  console.log('Listing exists at ' + listingPath + ' exists. \nNeed to retrieve the following URIs:', uris)
+  // if loading foreign pods, don't empty local stuff
+  if (ownPod) {
+    // preserve userPod
+    commit('SET_USER_POD', userPod)
 
-  uris.forEach(async uri => {
-    const ds = await getSolidDataset(
-      uri, // File in Pod to Read
-      { fetch: authFetch } // fetch from authenticated session
-    )
-    const thing = getThingAll(ds)[0]
-    const type = getUrl(thing, prefix.rdf + 'type')
-    const annotType = getStringNoLocale(thing, prefix.rdf + 'type')
+    // empty any existing data (with every save, local data is updated from server)
+    commit('EMPTY_THINGSTORE')
+  }
 
-    // todo: no support for annotations yet
-    if (annotType === 'Annotation') {
-      commit('ADD_TO_ANNOTSTORE', { type: 'observation', object: ds })
-    } else if (type === prefix.bithTerms + 'MusicalMaterial') {
-      commit('ADD_TO_ANNOTSTORE', { type: 'musicalMaterial', object: ds })
-    } else if (type === prefix.bithTerms + 'Extract') {
-      commit('ADD_TO_ANNOTSTORE', { type: 'extract', object: ds })
-    } else if (type === prefix.bithTerms + 'Selection') {
-      commit('ADD_TO_ANNOTSTORE', { type: 'selection', object: ds })
-    } else {
-      // console.log('\n\n\nFound something strange: ', type, annotType, ds)
-    }
+  const things = getThingAll(userPod)
+
+  things.forEach(thing => {
+    commit('ADD_TO_THINGSTORE', { thing, userPodPath })
   })
 }
 
@@ -59,8 +48,8 @@ export const userModule = {
   state: () => ({
     solidSession: null,
     solidUser: null,
-    solidFileListung: null,
-    solidFileListingPath: null
+    solidUserPod: null,
+    solidUserPodPath: null
   }),
   mutations: {
     SET_SOLID_SESSION (state, session) {
@@ -69,11 +58,11 @@ export const userModule = {
     SET_SOLID_USERNAME (state, username) {
       state.solidUser = username
     },
-    SET_SOLID_FILE_LISTING (state, listing) {
-      state.solidFileListing = listing
+    SET_USER_POD (state, ds) {
+      state.solidUserPod = ds
     },
-    SET_SOLID_LISTING_PATH (state, listingPath) {
-      state.solidFileListingPath = listingPath
+    SET_USER_POD_PATH (state, path) {
+      state.solidUserPodPath = path
     }
   },
   actions: {
@@ -84,7 +73,7 @@ export const userModule = {
         const webId = session.info.webId
         const authFetch = session.fetch
 
-        async function getUserName () {
+        async function initialize () {
           const userCard = await getSolidDataset(
             webId, {
               fetch: authFetch
@@ -102,35 +91,36 @@ export const userModule = {
 
           commit('SET_SOLID_USERNAME', name)
 
-          const listingPath = webId.split('/profile/card')[0] + '/public/bith/listing.ttl'
-          commit('SET_SOLID_LISTING_PATH', listingPath)
+          const userPodPath = webId.split('/profile/card')[0] + '/public/bith.ttl'
+          commit('SET_USER_POD_PATH', userPodPath)
 
           try {
-            await loadListing(listingPath, commit, authFetch)
+            await loadPod(userPodPath, commit, authFetch, true)
           } catch (err) {
-            console.log('No listing available at ' + listingPath + '. Creating a new one. \nMessage: ' + err)
+            console.log('No userPod available at ' + userPodPath + '. Creating a new one. \nMessage: ' + err)
 
-            let ds = createSolidDataset()
+            const userPod = createSolidDataset()
 
-            const thing = buildThing(createThing({ name: listingPath }))
+            // global statement of the pod could go in here
+            /* const thing = buildThing(createThing({ name: userPodPath }))
               .addUrl(prefix.rdf + 'type', prefix.ldp + 'Container')
               .build()
 
-            ds = setThing(ds, thing)
+            ds = setThing(ds, thing) */
 
             saveSolidDatasetAt(
-              listingPath,
-              ds,
+              userPodPath,
+              userPod,
               {
                 fetch: authFetch
               }
             ).then(res => {
-              console.log('Initialized file listing at ' + listingPath, res)
-              commit('SET_SOLID_FILE_LISTING', ds)
+              console.log('Initialized userPod at ' + userPodPath, res)
+              commit('SET_SOLID_FILE_LISTING', userPod)
             })
           }
         }
-        getUserName()
+        initialize()
       } catch (err) {
         console.log('ERROR retrieving username: ' + err)
       }
@@ -146,6 +136,9 @@ export const userModule = {
       } else {
         return state.solidUser
       }
+    },
+    dataBaseUrl: state => {
+      return state.solidUserPodPath
     },
     solidId: state => {
       return state.solidSession?.info?.webId
