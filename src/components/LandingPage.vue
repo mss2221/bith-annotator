@@ -13,7 +13,6 @@
       <!-- The reason for this assumption is baked into UserManagement.vue -->
     <p>Open the App with the following button:</p>
     <button id="start" @click="startApp" class="btn btn-primary">Annotator</button>
-    <p></p>
   </div>
 </template>
 
