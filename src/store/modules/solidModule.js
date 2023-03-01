@@ -1202,7 +1202,6 @@ export const solidModule = {
      */
     allSelectionsForUri: (state) => (uri) => {
       const arr = []
-      const map = new Map()
 
       Object.entries(state.thingStore).forEach(entry => {
         const iteratedType = (getUrl(entry[1], pref.rdf + 'type') !== null) ? getUrl(entry[1], pref.rdf + 'type') : getStringNoLocale(entry[1], pref.rdf + 'type')
@@ -1211,8 +1210,8 @@ export const solidModule = {
           const urls = getUrlAll(entry[1], pref.frbr + 'part')
 
           urls.forEach(idRef => {
-            if (idRef.startsWith(uri)) {
-              map.set(entry[0], entry[1])
+            if (idRef.startsWith(uri) && arr.indexOf(idRef) === -1) {
+              arr.push(idRef)
             }
           })
         }
@@ -1225,15 +1224,11 @@ export const solidModule = {
           const urls = getUrlAll(entry[1], pref.frbr + 'part')
 
           urls.forEach(idRef => {
-            if (idRef.startsWith(uri)) {
-              map.set(entry[0], entry[1])
+            if (idRef.startsWith(uri) && arr.indexOf(idRef) === -1) {
+              arr.push(idRef)
             }
           })
         }
-      })
-
-      map.forEach((thing, uri) => {
-        arr.push(uri)
       })
 
       return arr
