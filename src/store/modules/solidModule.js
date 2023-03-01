@@ -6,13 +6,13 @@ import {
   buildThing,
   getDate,
   getStringNoLocale,
-  getThingAll,
+  // getThingAll,
   getUrl,
   getUrlAll,
   saveSolidDatasetAt,
   setThing,
-  getSolidDataset,
-  solidDatasetAsTurtle,
+  // getSolidDataset,
+  // solidDatasetAsTurtle,
   asUrl,
   createSolidDataset
   // isThing
@@ -835,116 +835,6 @@ export const solidModule = {
         }
       }
     }, */
-
-    // this is to explore multi uploads
-    testMultiUpload ({ commit, state, rootState }) {
-      const userState = rootState.user
-      const authFetch = userState.solidSession.fetch
-      const webId = userState.solidSession.info.webId
-
-      /* const uuidv4 = () => {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-          const r = Math.random() * 16 | 0
-          const v = c === 'x' ? r : (r & 0x3 | 0x8)
-          return v.toString(16)
-        })
-     } */
-
-      // const date = new Date()
-      // const date = d.toISOString()
-      // const plainId = uuidv4()
-
-      const uri = webId.split('/profile/')[0] + '/public/bith/test/multiFile.ttl'
-
-      getSolidDataset(
-        uri, // File in Pod to Read
-        { fetch: authFetch } // fetch from authenticated session
-      ).then(ds => {
-        const things = getThingAll(ds)
-        console.log('received ID thing1: ' + things[0].url)
-        console.log(things[0])
-
-        console.log('received ID thing2: ' + things[1].url)
-        console.log(things[1])
-
-        solidDatasetAsTurtle(ds, { prefixes: { local: 'https://kepper2.solidcommunity.net/public/bith/test/multiFile.ttl' } })
-          .then(ttl => {
-            console.log('\n\n' + typeof ttl)
-            console.log(ttl)
-          })
-      })
-
-      /* let ds = createSolidDataset()
-
-      const thing = buildThing(createThing({ name: 'firstThing', uri }))
-        .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
-        .addUrl(pref.dct + 'test', uri + '#secondThing')
-        // .addStringNoLocale(pref.rdfs + 'label', '')
-        .build()
-
-      console.log('received ID thing1: ' + thing.url)
-      console.log(thing)
-
-      const thing2 = buildThing(createThing({ name: 'secondThing', uri }))
-        .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
-        // .addDate(pref.dct + 'created', date)
-        // .addUrl(pref.dct + 'creator', webId)
-        .addUrl(pref.dct + 'test', thing)
-        // .addStringNoLocale(pref.rdfs + 'label', '')
-        .build()
-
-      console.log('received ID thing2: ' + thing2.url)
-      console.log(thing2)
-
-      ds = setThing(ds, thing)
-      ds = setThing(ds, thing2)
-      */
-
-      /*
-      saveSolidDatasetAt(
-        uri,
-        ds,
-        {
-          fetch: authFetch
-        }
-      ).then(res => {
-        console.log('successfully uploaded ' + uri)
-      })
-      */
-
-      // file 2
-      /* const uri2 = webId.split('/profile/')[0] + '/public/bith/test/multiFile2.ttl'
-
-      let ds2 = createSolidDataset()
-
-      const thing3 = buildThing(createThing({ name: 'third', uri2 }))
-        .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
-        .addUrl(pref.dct + 'test', thing)
-        // .addStringNoLocale(pref.rdfs + 'label', '')
-        .build()
-
-      const thing4 = buildThing(createThing({ name: 'fourth', uri2 }))
-        .addUrl(pref.rdf + 'type', pref.bithTerms + 'MusicalMaterial')
-        // .addDate(pref.dct + 'created', date)
-        // .addUrl(pref.dct + 'creator', webId)
-        .addUrl(pref.dct + 'test', thing3)
-        .addUrl(pref.dct + 'test', thing)
-        // .addStringNoLocale(pref.rdfs + 'label', '')
-        .build()
-
-      ds2 = setThing(ds2, thing3)
-      ds2 = setThing(ds2, thing4)
-
-      saveSolidDatasetAt(
-        uri2,
-        ds2,
-        {
-          fetch: authFetch
-        }
-      ).then(res => {
-        console.log('successfully uploaded ' + uri2)
-     }) */
-    },
 
     /**
      * adds or removes extracts, musMats or observations to either musMats or observations.
