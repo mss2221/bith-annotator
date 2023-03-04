@@ -247,11 +247,11 @@ export const getParentPredicateByType = (type) => {
  * @return {[type]}      [description]
  */
 export const getChildType = (type) => {
-  if (type === bithTypes.musicalMaterial) {
+  if (type === bithTypes.observation) {
+    return bithTypes.musicalMaterial
+  } else if (type === bithTypes.musicalMaterial) {
     return bithTypes.extract
-  }
-
-  if (type === bithTypes.extract) {
+  } else if (type === bithTypes.extract) {
     return bithTypes.selection
   }
 

@@ -20,6 +20,17 @@ export const vrvPresets = {
     footer: 'none',
     pageWidth: 1600,
     pageHeight: 600
+  },
+  annotationPreview: {
+    scale: 40,
+    breaks: 'none',
+    openControlEvents: true,
+    svgBoundingBoxes: true,
+    svgRemoveXlink: true,
+    svgHtml5: true,
+    header: 'none',
+    footer: 'none',
+    mnumInterval: 10
   }
 }
 

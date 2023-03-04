@@ -1853,20 +1853,20 @@ export const solidModule = {
       }
 
       const current = []
-      let type
+      // let type
       if (state.activated.observation !== null) {
         current.push(state.activated.observation)
-        type = bithTypes.observation
+        // type = bithTypes.observation
       }
 
       if (state.activated.musicalMaterial !== null) {
         current.push(state.activated.musicalMaterial)
-        type = bithTypes.musicalMaterial
+        // type = bithTypes.musicalMaterial
       }
 
       if (state.activated.extract !== null) {
         current.push(state.activated.extract)
-        type = bithTypes.extract
+        // type = bithTypes.extract
       }
 
       // if there are too many or too few things, return empty arrays
@@ -1880,24 +1880,64 @@ export const solidModule = {
         return obj
       }
 
-      if (type === bithTypes.observation) {
-        const predicate = getPredicateByType(type)
-        const allTargets = getUrlAll(mainThing, predicate)
+      const followLinks = (obj, thingUri) => {
+        const children = getChildren(state, thingUri)
+        children.forEach(childThing => {
+          const childId = asUrl(childThing, rootState.user.solidUserPodPath)
+          const type = getTypeById(state, childId)
+          const simpleType = simplifiedTypeByType(type)
 
-        allTargets.forEach(target => {
-          const type = getTypeById(state, target)
-          if (type !== null) {
-            obj[simplifiedTypeByType(type)].push(target)
-          } else {
-            console.error('Unable to retrieve type of ' + target)
-          }
+          obj[simpleType].push(childId)
+          followLinks(obj, childId)
         })
-      } else if (type === bithTypes.musicalMaterial) {
-        const predicate = getPredicateByType(type)
-        obj.extract = getUrlAll(mainThing, predicate)
       }
+      const simpleType = simplifiedTypeByType(getTypeById(state, current[0]))
+      obj[simpleType].push(current[0])
+      followLinks(obj, current[0])
 
       return obj
+    },
+
+    /**
+     * return previewItems for annotationView
+     * @param  {[type]} state                 [description]
+     * @param  {[type]} getters               [description]
+     * @return {[type]}         [description]
+     */
+    previewItems: (state, getters) => {
+      const selections = getters.affectedByActiveAnnot.selection
+      const arr = []
+
+      const parts = []
+
+      // retrieve all parts
+      selections.forEach(selection => {
+        const thing = state.currentThings[selection] !== undefined ? state.currentThings[selection] : state.thingStore[selection]
+        const urls = getUrlAll(thing, pref.frbr + 'part')
+
+        urls.forEach(part => parts.push({ part, selection }))
+      })
+
+      parts.forEach(obj => {
+        const fileURI = (obj.part.indexOf('#') !== -1) ? obj.part.split('#')[0] : obj.part
+
+        getters.arrangements.forEach(arrangement => {
+          if (arrangement.MEI === fileURI) {
+            obj.type = 'transcription'
+            obj.fileUri = fileURI
+            obj.arrangement = { label: arrangement.shortTitle, id: arrangement.id }
+          }
+
+          if (arrangement.iiifTilesources && arrangement.iiifTilesources.indexOf(fileURI) !== -1) {
+            obj.type = 'facsimile'
+            obj.pageIndex = arrangement.iiifTilesources.indexOf(fileURI)
+            obj.arrangement = { label: arrangement.shortTitle, id: arrangement.id }
+          }
+        })
+        arr.push(obj)
+      })
+
+      return arr
     },
 
     /**
