@@ -8,7 +8,7 @@
         <OverviewTool/>
       </pane>
       <pane v-if="showAnnotationTool" class="firstLevelPane">
-        Pane 3
+        <AnnotationTool/>
       </pane>
     </splitpanes>
   </div>
@@ -17,6 +17,7 @@
 <script>
 import SelectionTool from '@/components/SelectionTool/SelectionTool.vue'
 import OverviewTool from '@/components/OverviewTool/OverviewTool.vue'
+import AnnotationTool from '@/components/AnnotationTool/AnnotationTool.vue'
 
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
@@ -26,6 +27,7 @@ export default {
   components: {
     SelectionTool,
     OverviewTool,
+    AnnotationTool,
     Splitpanes,
     Pane
   },

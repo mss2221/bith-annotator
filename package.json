@@ -1,6 +1,6 @@
 {
-  "name": "bith-annotator-vue3",
-  "version": "0.1.0",
+  "name": "bith-annotator",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
