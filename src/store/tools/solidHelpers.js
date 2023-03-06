@@ -49,7 +49,7 @@ export const getAnnotThing = (user, userPodPath) => {
   const id = uuidv4()
 
   const thing = buildThing(createThing({ name: id, uri: userPodPath }))
-    .addStringNoLocale(pref.rdf + 'type', 'Annotation')
+    .addUrl(pref.rdf + 'type', pref.oa + 'Annotation')
     .addDate(pref.dct + 'created', date)
     .addUrl(pref.dct + 'creator', user)
     .addStringNoLocale(pref.oa + 'Motivation', 'describing')
