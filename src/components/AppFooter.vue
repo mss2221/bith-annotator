@@ -1,6 +1,6 @@
 <template>
   <footer>
-    © 2022
+    2023
   </footer>
 </template>
 
