@@ -1908,7 +1908,72 @@ export const solidModule = {
       const selections = getters.affectedByActiveAnnot.selection
       const arr = []
 
-      const parts = []
+      const selectionMap = new Map()
+
+      selections.forEach(selection => {
+        const thing = state.currentThings[selection] !== undefined ? state.currentThings[selection] : state.thingStore[selection]
+        const urls = getUrlAll(thing, pref.frbr + 'part')
+
+        const fileMap = selectionMap.has(selection) ? selectionMap.get(selection) : selectionMap.set(selection, new Map()).get(selection)
+
+        urls.forEach(part => {
+          const fileURI = (part.indexOf('#') !== -1) ? part.split('#')[0] : part
+
+          if (fileMap.has(fileURI)) {
+            fileMap.get(fileURI).push(part)
+          } else {
+            fileMap.set(fileURI, [part])
+          }
+        })
+
+        fileMap.forEach((partArray, fileUri) => {
+          const obj = { fileUri, selection, parts: partArray }
+
+          const iiifArrangement = getters.arrangements.find(arrangement => {
+            return arrangement.iiifTilesources && arrangement.iiifTilesources.indexOf(fileUri) !== -1
+          })
+          const transcriptionArrangement = getters.arrangements.find(arrangement => {
+            return arrangement.MEI === fileUri
+          })
+
+          if (iiifArrangement) {
+            obj.type = 'facsimile'
+            obj.arrangement = { label: iiifArrangement.shortTitle, id: iiifArrangement.id }
+          }
+          if (transcriptionArrangement) {
+            obj.type = 'transcription'
+            obj.arrangement = { label: transcriptionArrangement.shortTitle, id: transcriptionArrangement.id }
+          }
+
+          arr.push(obj)
+          /* getters.arrangements.forEach(arrangement => {
+            const objects = []
+
+            const iiifParts = partArray.filter(part => {
+
+            })
+
+            if (arrangement.iiifTilesources && arrangement.iiifTilesources.indexOf(fileURI) !== -1) {
+              obj.type = 'facsimile'
+              obj.pageIndex = arrangement.iiifTilesources.indexOf(fileURI)
+              obj.arrangement = { label: arrangement.shortTitle, id: arrangement.id }
+            }
+
+            if (arrangement.MEI === fileURI) {
+              obj.type = 'transcription'
+              obj.fileUri = fileURI
+              obj.arrangement = { label: arrangement.shortTitle, id: arrangement.id }
+            }
+            // replace content of fileMap with proper objects now
+            fileMap.set(fileUri, objects)
+          })
+          arr.push(obj)
+
+          // determine if iiif or transcript */
+        })
+      })
+
+      /* const parts = []
 
       // retrieve all parts
       selections.forEach(selection => {
@@ -1936,6 +2001,7 @@ export const solidModule = {
         })
         arr.push(obj)
       })
+      */
 
       return arr
     },

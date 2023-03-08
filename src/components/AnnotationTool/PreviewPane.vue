@@ -1,9 +1,16 @@
 <template>
-  <Pane class="basicPane">
-    <h1>{{ label }}</h1>
-    <PreviewFacsimile v-if="obj.type === 'facsimile'" :obj="obj" :index="index"/>
-    <PreviewTranscription v-if="obj.type === 'transcription'" :obj="obj" :index="index"/>
-  </Pane>
+  <template v-if="obj.type === 'facsimile'">
+    <Pane class="basicPane">
+      <PreviewFacsimile :obj="obj" :index="index"/>
+    </Pane>
+  </template>
+  <template v-else>
+    <Pane v-for="(preview, p) in transcriptionPreviews" :key="p" class="basicPane">
+      <PreviewTranscription :obj="obj" :index="index" :settings="preview"/>
+    </Pane>
+    <!--<div v-if="obj.type === 'transcription'">{{transcriptionPreviews}}</div>-->
+    <!--<PreviewTranscription v-if="obj.type === 'transcription'" :obj="obj" :index="index"/>-->
+  </template>
 </template>
 
 <script>
@@ -16,6 +23,8 @@ import 'splitpanes/dist/splitpanes.css'
 // eslint-disable-next-line
 import { bithTypes } from '@/meld/constants.js'
 
+const parser = new DOMParser()
+
 export default {
   name: 'PreviewPane',
   components: {
@@ -27,18 +36,69 @@ export default {
     obj: Object,
     index: Number
   },
+  created: function () {
+    this.$store.dispatch('loadMEI', this.obj.fileUri)
+  },
   computed: {
     bithTypes: function () {
       return bithTypes
     },
-    label: function () {
+    transcriptionPreviews: function () {
+      const previews = []
       if (this.obj.type === 'facsimile') {
-        return this.obj.arrangement.label + ', p.' + (this.obj.pageIndex + 1)
-      } else if (this.obj.type === 'transcription') {
-        return this.obj.arrangement.label + ', Transcription'
-      } else {
-        return this.obj.arrangement.label
+        return previews
       }
+      const mei = this.$store.getters.mei(this.obj.fileUri)
+      if (!mei) {
+        return previews
+      }
+      const meiDom = parser.parseFromString(mei, 'text/xml')
+
+      const partIDs = []
+      this.obj.parts.forEach(fullPart => {
+        partIDs.push(fullPart.split('#')[1])
+      })
+
+      const measures = [...meiDom.querySelectorAll('measure')]
+      const arr = []
+
+      partIDs.forEach(target => {
+        const elem = meiDom.querySelector('*[*|id="' + target + '"]')
+        const measure = elem.closest('measure')
+        const index = measures.indexOf(measure)
+
+        if (!arr[index]) {
+          arr[index] = [target]
+        } else {
+          arr[index].push(target)
+        }
+        // console.log('found in measure ' + index + ', id ' + measures[index].getAttribute('xml:id'))
+      })
+
+      let i = 0
+      let targetCounter = 0
+      while (i < arr.length) {
+        if (arr[i] === null || arr[i] === undefined) {
+          targetCounter = 0
+        } else {
+          if (targetCounter === 0) {
+            const startLabel = measures[i].hasAttribute('label') ? measures[i].getAttribute('label') : measures[i].getAttribute('n')
+            previews.push({ start: measures[i].getAttribute('xml:id'), end: measures[i].getAttribute('xml:id'), targets: arr[i], startLabel })
+            targetCounter++
+          } else {
+            const entry = previews[previews.length - 1]
+            const endLabel = measures[i].hasAttribute('label') ? measures[i].getAttribute('label') : measures[i].getAttribute('n')
+            entry.end = measures[i].getAttribute('xml:id')
+            entry.endLabel = endLabel
+            arr[i].forEach(target => {
+              entry.targets.push(target)
+            })
+          }
+        }
+        i++
+      }
+
+      return previews
     }
   }
 }
@@ -49,19 +109,5 @@ export default {
 @import '@/css/_variables.scss';
 .basicPane {
   position: relative;
-}
-
-h1 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 0.8rem;
-  font-weight: 500;
-  padding: .1rem .4rem .2rem;
-  background: #ffffff66;
-  display: inline-block;
-  backdrop-filter: blur(5px);
-  border-bottom-right-radius: 5px;
-  z-index: 10;
 }
 </style>
