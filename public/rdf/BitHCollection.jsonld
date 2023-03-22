@@ -33,7 +33,8 @@
 			{"@id": "https://api.domestic-beethoven.eu/lod/dbe44e4f-efed-4bcd-a3b5-a1cd841f91a4.nq"},
 			{"@id": "https://api.domestic-beethoven.eu/lod/c4e12227-9200-4781-9849-ffc5760aba80.nq"},
 
-			{"@id": "https://api.domestic-beethoven.eu/lod/mb4caff1f-1926-4206-b5d2-5df342b7753e.nq"}
+			{"@id": "https://api.domestic-beethoven.eu/lod/mb4caff1f-1926-4206-b5d2-5df342b7753e.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/cc7d48d2-bc4b-424b-8389-de6a13bf8d64.nq"}
 
 		]
 	}
