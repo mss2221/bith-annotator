@@ -22,7 +22,7 @@ export const vrvPresets = {
     pageHeight: 600
   },
   annotationPreview: {
-    scale: 35,
+    scale: 45,
     breaks: 'none',
     openControlEvents: true,
     svgBoundingBoxes: true,
