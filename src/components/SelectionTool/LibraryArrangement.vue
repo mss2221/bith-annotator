@@ -38,7 +38,18 @@ export default {
       return undefined
     },
     publisher: function () {
-      return this.arr.publisher[pref.rdfs + 'label']
+      if (this.arr.publisher) {
+        if (typeof this.arr.publisher === 'string') {
+          return this.arr.publisher
+        } else if (this.arr.publisher[pref.rdfs + 'label']) {
+          return this.arr.publisher[pref.rdfs + 'label']
+        } else if (this.arr.publisher['@id']) {
+          return this.arr.publisher['@id']
+        }
+        return undefined
+      }
+      return undefined
+      //      return this.arr.publisher[pref.rdfs + 'label']
     },
     date: function () {
       return this.arr.date

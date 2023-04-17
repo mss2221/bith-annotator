@@ -1,0 +1,52 @@
+{
+	"@context": {
+		"workset": "https://meld.linkedmusic.org/worksets/",
+		"annotation": "https://meld.linkedmusic.org/annotations/",
+		"meldterm": "https://meld.linkedmusic.org/terms/",
+		"compVocab": "https://meld.linkedmusic.org/companion/vocab/",
+		"mei": "https://meld.linkedmusic.org/mei/",
+		"oa": "http://www.w3.org/ns/oa#",
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"ldp": "http://www.w3.org/ns/ldp#"
+	},
+	"@graph": {
+		"@id": "workset:StarShiningBrightly",
+		"@type": [
+			"meldterm:workset",
+			"ldp:Container"
+		],
+		"ldp:contains": [
+			{"@id": "https://api.domestic-beethoven.eu/lod/tb3f3ff06-d1cd-4889-af26-6d064337e3ed.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t631b5f6a-4ad7-4d86-a16d-b7d2fb58ccc7.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t31eb6b86-a57b-40ca-8a17-dbd72fac768e.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/tbfcb377a-67b5-4096-9b27-36a43eb49a1e.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/tc8577096-53c4-44ff-b9a6-5268a745bd93.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/m571b10c-0ea5-48df-86cd-820af03fee48.nq"},
+
+			{"@id": "https://api.domestic-beethoven.eu/lod/tc5bc743c-bf05-48e9-8666-b38e8d52a25f.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t0da96e98-2e50-4d64-9ab7-8a195bdd7d16.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t54e4f616-df2b-4d65-adfb-56340bfcae16.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/me18b9e86-b7b6-47fe-9b66-0ad6f179b6a4.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/bf6941e0-4fa8-11ed-bdc3-0242ac120002.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/mf0c46e4e-c812-49ed-9452-7b9f4659b14c.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/dbe44e4f-efed-4bcd-a3b5-a1cd841f91a4.nq"},
+
+			{"@id": "http://localhost:8080/test93.nq"},
+
+			{"@id": "http://localhost:8080/rdf/pittman.nq"} ,
+			{"@id": "http://localhost:8080/rdf/silcherGesang.nq"} ,
+			{"@id": "http://localhost:8080/rdf/silcherNachtgesang.nq"},
+			{"@id": "http://localhost:8080/rdf/haslingerTrio93.nq"},
+			{"@id": "http://localhost:8080/rdf/haslingerTrio933.nq"},
+			{"@id": "http://localhost:8080/rdf/haslingerPianoArrOp9333.nq"},
+			{"@id": "http://localhost:8080/rdf/haslingerPianoArrOp933.nq"},
+			{"@id": "http://localhost:8080/rdf/haslingerPianoArrOp93.nq"},
+			{"@id": "http://localhost:8080/rdf/steinerQuintet93.nq"},
+			{"@id": "http://localhost:8080/rdf/test93.nq"},
+			{"@id": "http://localhost:8080/rdf/littrio.nq"},
+			{"@id": "http://localhost:8080/rdf/haslingerPianoArrOp933.nq"}
+
+		]
+	}
+}
