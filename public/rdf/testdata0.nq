@@ -1,0 +1,55 @@
+<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://purl.org/ontology/bibo/shortTitle> "Laura to her Aeolian Harp".
+<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon282> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon282> <http://purl.org/dc/elements/1.1/title> "Nocturne, NI JAMAIS, NI TOUJOURS, À DEUX VOIX, COMPOSÉ PAR MADAME GAIL, AVEC ACCOMPAGNEMENT DE PIANO-FORTE OU HARPE" .
+<https://api.domestic-beethoven.eu/id/Harmonicon282> <http://purl.org/ontology/bibo/shortTitle> "Ni Jamais, ni toujours" .
+<https://api.domestic-beethoven.eu/id/Harmonicon282> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28533> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28533> <http://purl.org/dc/elements/1.1/title> "Waltz, FOR THE PIANO-FORTE. COMPOSED AND PRESENTED TO THE HARMONICON; BY FR. LUDWIG, ESQ." .
+<https://api.domestic-beethoven.eu/id/Harmonicon28533> <http://purl.org/ontology/bibo/shortTitle> "Esquire Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28533> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon913> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon913> <http://purl.org/dc/elements/1.1/title> "Song, IN THE THIRD ACT OF THE SAME. (Originally sung by MRS. CROUCH.)" .
+<https://api.domestic-beethoven.eu/id/Harmonicon913> <http://purl.org/ontology/bibo/shortTitle> "As wrapt in sleep".
+<https://api.domestic-beethoven.eu/id/Harmonicon913> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://purl.org/dc/elements/1.1/title> "Trio, FOR TWO SOPRANOS AND A TENOR, OR BASE, IN THE THIRD ACT OF THE SAME. (Originally sung by Signora STORACE, MRS. BLAND, and Mr. KELLY.)".
+<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://purl.org/ontology/bibo/shortTitle> "WE the veil of fate".
+<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://purl.org/dc/elements/1.1/title> "Canzonetta, BY GAETANI DONIZETTI, A YOUNG COMPOSER, WHO IS BECOMING POPULAR IN ITALY.".
+<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://purl.org/ontology/bibo/shortTitle> "Non giova il sospirar".
+<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://purl.org/dc/elements/1.1/title> "Canzonet, 'PRETTY FAIRY!' THE WORDS WRITTEN. AND THE MUSIC COMPOSED. PURPOSELY FOR THIS WORK, BY MISS MARY LINWOOD.".
+<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://purl.org/ontology/bibo/shortTitle> "Pretty Fairy!".
+<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://purl.org/dc/elements/1.1/title> "Arietta, 'YES! WHY THE TRUTH DENY?' WITH ACCOMPANIMENT FOR THE PIANO-FORTE OR HARP, COMPOSED BY P. RODE.".
+<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://purl.org/ontology/bibo/shortTitle> "Yes! Why the truth deny?".
+<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289180> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289180>  <http://purl.org/dc/elements/1.1/title> "Catch, 'MY SILVIA WEARS A ROSY WREATH.' COMPOSED FOR THE HARMONICON, BY JOHN PARRY.".
+<https://api.domestic-beethoven.eu/id/Harmonicon289180>  <http://purl.org/ontology/bibo/shortTitle> "My Silvia wears a rosy wreath".
+<https://api.domestic-beethoven.eu/id/Harmonicon289180> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://purl.org/dc/elements/1.1/title> "The New Vienna Waltz, COMPOSED FOR THE PIANO-FORTE, BY J. N. HUMMEL.".
+<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://purl.org/ontology/bibo/shortTitle> "The New Vienna Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/dc/elements/1.1/title> "Der Tyroler Wildschütz und ich".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/ontology/bibo/shortTitle> "Der Tyroler Wildschütz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://rdaregistry.info/Elements/u/P60242> <https://domestic-beethoven.eu/works/harmonicon/27> .
+
+<https://domestic-beethoven.eu/works/harmonicon/27> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288x>.

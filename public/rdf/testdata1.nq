@@ -1,0 +1,280 @@
+<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://purl.org/dc/elements/1.1/title> "Canzonet Laura Harp Aeolian".
+<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://purl.org/ontology/bibo/shortTitle> "Laura to her Aeolian Harp".
+<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2882> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Nocturne, "NI JAMAIS, NI TOUJOURS," À DEUX VOIX, COMPOSÉ PAR MADAME GAIL, AVEC ACCOMPAGNEMENT DE PIANO-FORTE OU HARPE".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Ni Jamais, ni toujours".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2883> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Scottish Air, "JOCK O' HAZELDEAN." (FROM THOMSON'S GREAT NATIONAL WORK, "A SELECT COLLECTION OF SCOTTISH SONGS;" VOL 5.) THE POETRY BY SIR WALTER SCOTT; THE SYMPHONIES AND ACCOMPANIMENTS BY HUMMEL.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Jock O' Hazeldean".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon284> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Nuptial March, In MOZART'S NOZZE DI FIGARO; ARRANGED AS A PIANO FORTE DUET, BY W. WATTS.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Wedding March".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://rdaregistry.info/Elements/u/P60242>https://d-nb.info/gnd/300109903.
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2805> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Waltz, FOR THE PIANO-FORTE. COMPOSED AND PRESENTED TO THE HARMONICON; BY FR. LUDWIG, ESQ.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Waltz".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon286> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Pot=Pourri, FOR FLUTE AND PIANO-FORTE, COMPOSED BY TULOU. Op. 38.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Potpourri".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon287> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Allemand, COMPOSED FOR THE PIANO-FORTE, BY D. STEIBELT. OP. 38.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Allemand".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon288> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "THE GREEK MARCH OF Liberty, COMPOSED FOR THE PIANO-FORTE, BY CHARLES THIBAULT, (OF NEW YORK.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "The Greek March of Liberty".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Introduction et Variation, SUR UNE MARCHE FAVORITE POUR PIANO ET FLUTE, OU VIOLIN, PAR J. PAYER.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Introduction et Variation".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2810> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Minuet and Trio, COMPOSED FOR THE PIANO-FORTE, BY C. CZERNY. Op. 110.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Minuet and Trio".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2811> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Galopp=Waltzer, COMPOSED FOR THE PIANO-FORTE, BY LEIBLING.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Galopp-Waltzer".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2812> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Song, IN THE FIRST ACT OF THE PIRATES, COMPOSED BY STEPHEN STORACE. (Originally sung by Signora STORACE.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Peaceful slumb'ring".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2813> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Song, IN THE THIRD ACT OF THE SAME. (Originally sung by MRS. CROUCH.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "As wrapt in sleep".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2814> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Trio, FOR TWO SOPRANOS AND A TENOR, OR BASE, IN THE THIRD ACT OF THE SAME. (Originally sung by Signora STORACE, MRS. BLAND, and Mr. KELLY.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "WE the veil of fate".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2815> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Canzonetta, BY GAETANI DONIZETTI, A YOUNG COMPOSER, WHO IS BECOMING POPULAR IN ITALY.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Non giova il sospirar".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2816> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Canzonet, "PRETTY FAIRY!" THE WORDS WRITTEN. AND THE MUSIC COMPOSED. PURPOSELY FOR THIS WORK, BY MISS MARY LINWOOD.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Pretty fairy".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2817> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Arietta, "YES! WHY THE TRUTH DENY?" WITH ACCOMPANIMENT FOR THE PIANO-FORTE OR HARP, COMPOSED BY P. RODE.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Yes! Why the truth deny?".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2818> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Catch, "MY SILVIA WEARS A ROSY WREATH." COMPOSED FOR THE HARMONICON, BY JOHN PARRY.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "My Silvia wears a rosy wreath".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2819> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "The New Vienna Waltz, COMPOSED FOR THE PIANO-FORTE, BY J. N. HUMMEL.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "The New Vienna Waltz".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2820> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Nocturne, "NI JAMAIS, NI TOUJOURS," À DEUX VOIX, COMPOSÉ PAR MADAME GAIL, AVEC ACCOMPAGNEMENT DE PIANO-FORTE OU HARPE".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Ni Jamais, ni toujours".
+
+0
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2830> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Scottish Air, "JOCK O' HAZELDEAN." (FROM THOMSON'S GREAT NATIONAL WORK, "A SELECT COLLECTION OF SCOTTISH SONGS;" VOL 5.) THE POETRY BY SIR WALTER SCOTT; THE SYMPHONIES AND ACCOMPANIMENTS BY HUMMEL.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Jock O' Hazeldean".
+
+0
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2840> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Nuptial March, In MOZART'S NOZZE DI FIGARO; ARRANGED AS A PIANO FORTE DUET, BY W. WATTS.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Wedding March".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://rdaregistry.info/Elements/u/P60242>https://d-nb.info/gnd/300109903.
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2850> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Waltz, FOR THE PIANO-FORTE. COMPOSED AND PRESENTED TO THE HARMONICON; BY FR. LUDWIG, ESQ.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Waltz".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2860> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Pot=Pourri, FOR FLUTE AND PIANO-FORTE, COMPOSED BY TULOU. Op. 38.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Potpourri".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2870> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Allemand, COMPOSED FOR THE PIANO-FORTE, BY D. STEIBELT. OP. 38.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Allemand".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2880> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "THE GREEK MARCH OF Liberty, COMPOSED FOR THE PIANO-FORTE, BY CHARLES THIBAULT, (OF NEW YORK.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "The Greek March of Liberty".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2890> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Introduction et Variation, SUR UNE MARCHE FAVORITE POUR PIANO ET FLUTE, OU VIOLIN, PAR J. PAYER.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Introduction et Variation".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28100> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Minuet and Trio, COMPOSED FOR THE PIANO-FORTE, BY C. CZERNY. Op. 110.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Minuet and Trio".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28110> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Galopp=Waltzer, COMPOSED FOR THE PIANO-FORTE, BY LEIBLING.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Galopp-Waltzer".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28120> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Song, IN THE FIRST ACT OF THE PIRATES, COMPOSED BY STEPHEN STORACE. (Originally sung by Signora STORACE.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Peaceful slumb'ring".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28130> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Song, IN THE THIRD ACT OF THE SAME. (Originally sung by MRS. CROUCH.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "As wrapt in sleep".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28140> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Trio, FOR TWO SOPRANOS AND A TENOR, OR BASE, IN THE THIRD ACT OF THE SAME. (Originally sung by Signora STORACE, MRS. BLAND, and Mr. KELLY.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "WE the veil of fate".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28150> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Canzonetta, BY GAETANI DONIZETTI, A YOUNG COMPOSER, WHO IS BECOMING POPULAR IN ITALY.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Non giova il sospirar".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28160> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Canzonet, "PRETTY FAIRY!" THE WORDS WRITTEN. AND THE MUSIC COMPOSED. PURPOSELY FOR THIS WORK, BY MISS MARY LINWOOD.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Pretty fairy".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28170> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Arietta, "YES! WHY THE TRUTH DENY?" WITH ACCOMPANIMENT FOR THE PIANO-FORTE OR HARP, COMPOSED BY P. RODE.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Yes! Why the truth deny?".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28180> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Catch, "MY SILVIA WEARS A ROSY WREATH." COMPOSED FOR THE HARMONICON, BY JOHN PARRY.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "My Silvia wears a rosy wreath".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon281900> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "The New Vienna Waltz, COMPOSED FOR THE PIANO-FORTE, BY J. N. HUMMEL.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "The New Vienna Waltz".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon282000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Nocturne, "NI JAMAIS, NI TOUJOURS," À DEUX VOIX, COMPOSÉ PAR MADAME GAIL, AVEC ACCOMPAGNEMENT DE PIANO-FORTE OU HARPE".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Ni Jamais, ni toujours".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon283000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Scottish Air, "JOCK O' HAZELDEAN." (FROM THOMSON'S GREAT NATIONAL WORK, "A SELECT COLLECTION OF SCOTTISH SONGS;" VOL 5.) THE POETRY BY SIR WALTER SCOTT; THE SYMPHONIES AND ACCOMPANIMENTS BY HUMMEL.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Jock O' Hazeldean".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon284000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Nuptial March, In MOZART'S NOZZE DI FIGARO; ARRANGED AS A PIANO FORTE DUET, BY W. WATTS.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Wedding March".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://rdaregistry.info/Elements/u/P60242>https://d-nb.info/gnd/300109903.
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28500> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Waltz, FOR THE PIANO-FORTE. COMPOSED AND PRESENTED TO THE HARMONICON; BY FR. LUDWIG, ESQ.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Waltz".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28600> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Pot=Pourri, FOR FLUTE AND PIANO-FORTE, COMPOSED BY TULOU. Op. 38.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Potpourri".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon288700> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Allemand, COMPOSED FOR THE PIANO-FORTE, BY D. STEIBELT. OP. 38.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Allemand".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289800> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "THE GREEK MARCH OF Liberty, COMPOSED FOR THE PIANO-FORTE, BY CHARLES THIBAULT, (OF NEW YORK.)".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "The Greek March of Liberty".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289900> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Introduction et Variation, SUR UNE MARCHE FAVORITE POUR PIANO ET FLUTE, OU VIOLIN, PAR J. PAYER.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Introduction et Variation".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon2891000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Minuet and Trio, COMPOSED FOR THE PIANO-FORTE, BY C. CZERNY. Op. 110.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Minuet and Trio".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289110> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/dc/elements/1.1/title> "Galopp=Waltzer, COMPOSED FOR THE PIANO-FORTE, BY LEIBLING.".
+<https://api.domestic-beethoven.eu/id/tb3f3ff06-d1cd-4889-af26-6d064337e3ed> <http://purl.org/ontology/bibo/shortTitle> "Galopp-Waltzer".
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289120> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289120> <http://purl.org/dc/elements/1.1/title> "Song, IN THE FIRST ACT OF THE PIRATES, COMPOSED BY STEPHEN STORACE. (Originally sung by Signora STORACE.)".
+<https://api.domestic-beethoven.eu/id/Harmonicon289120> <http://purl.org/ontology/bibo/shortTitle> "Peaceful slumb'ring".
+<https://api.domestic-beethoven.eu/id/Harmonicon289120> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://purl.org/dc/elements/1.1/title> "Trio, FOR TWO SOPRANOS AND A TENOR, OR BASE, IN THE THIRD ACT OF THE SAME. (Originally sung by Signora STORACE, MRS. BLAND, and Mr. KELLY.)".
+<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://purl.org/ontology/bibo/shortTitle> "WE the veil of fate".
+<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289150>"Canzonetta, BY GAETANI DONIZETTI, A YOUNG COMPOSER, WHO IS BECOMING POPULAR IN ITALY.".
+<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://purl.org/ontology/bibo/shortTitle> "Non giova il sospirar".
+<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://purl.org/dc/elements/1.1/title> "Canzonet, "PRETTY FAIRY!" THE WORDS WRITTEN. AND THE MUSIC COMPOSED. PURPOSELY FOR THIS WORK, BY MISS MARY LINWOOD.".
+<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://purl.org/ontology/bibo/shortTitle> "Pretty Fairy!".
+<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://purl.org/dc/elements/1.1/title> "Arietta, "YES! WHY THE TRUTH DENY?" WITH ACCOMPANIMENT FOR THE PIANO-FORTE OR HARP, COMPOSED BY P. RODE.".
+<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://purl.org/ontology/bibo/shortTitle> "Yes! Why the truth deny?".
+<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon289180> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon289180>  <http://purl.org/dc/elements/1.1/title> "Catch, "MY SILVIA WEARS A ROSY WREATH." COMPOSED FOR THE HARMONICON, BY JOHN PARRY.".
+<https://api.domestic-beethoven.eu/id/Harmonicon289180>  <http://purl.org/ontology/bibo/shortTitle> "My Silvia wears a rosy wreath".
+<https://api.domestic-beethoven.eu/id/Harmonicon289180> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://purl.org/dc/elements/1.1/title> "The New Vienna Waltz, COMPOSED FOR THE PIANO-FORTE, BY J. N. HUMMEL.".
+<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://purl.org/ontology/bibo/shortTitle> "The New Vienna Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .

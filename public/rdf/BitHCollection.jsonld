@@ -16,7 +16,7 @@
 			"ldp:Container"
 		],
 		"ldp:contains": [
-			{"@id": "https://api.domestic-beethoven.eu/lod/tb3f3ff06-d1cd-4889-af26-6d064337e3ed.nq"},
+
 			{"@id": "https://api.domestic-beethoven.eu/lod/t631b5f6a-4ad7-4d86-a16d-b7d2fb58ccc7.nq"},
 			{"@id": "https://api.domestic-beethoven.eu/lod/t31eb6b86-a57b-40ca-8a17-dbd72fac768e.nq"},
 			{"@id": "https://api.domestic-beethoven.eu/lod/tbfcb377a-67b5-4096-9b27-36a43eb49a1e.nq"},
@@ -31,6 +31,8 @@
 			{"@id": "https://api.domestic-beethoven.eu/lod/mf0c46e4e-c812-49ed-9452-7b9f4659b14c.nq"},
 			{"@id": "https://api.domestic-beethoven.eu/lod/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d.nq"},
 			{"@id": "https://api.domestic-beethoven.eu/lod/dbe44e4f-efed-4bcd-a3b5-a1cd841f91a4.nq"},
+
+			{"@id": "http://localhost:8080/rdf/testdata0.nq"},
 
 			{"@id": "https://api.domestic-beethoven.eu/lod/cc7d48d2-bc4b-424b-8389-de6a13bf8d64.nq"}
 
