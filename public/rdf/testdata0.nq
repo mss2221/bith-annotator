@@ -51,5 +51,15 @@
 <https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/dc/elements/1.1/title> "Der Tyroler Wildschütz und ich".
 <https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/ontology/bibo/shortTitle> "Der Tyroler Wildschütz".
 <https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://rdaregistry.info/Elements/u/P60242> <https://domestic-beethoven.eu/works/harmonicon/27> .
-
 <https://domestic-beethoven.eu/works/harmonicon/27> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288x>.
+
+<https://domestic-beethoven.eu/works/harmonicon/27> <http://www.w3.org/2000/01/rdf-schema#label> "The Wild Tyrolean Gamekeeper" .
+<https://domestic-beethoven.eu/works/harmonicon/27> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "32" .
+<https://domestic-beethoven.eu/works/harmonicon/27> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "2001" .
+<http://d-nb.info/gnd/118508288x> <http://www.w3.org/2000/01/rdf-schema#label> "Karl von Holtei" .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/dc/elements/1.1/title> "Introduction and Chorus / Jessonda" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/ontology/bibo/shortTitle> "Introduction and Chorus / Jessonda" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#63> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#63> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288xx> .
