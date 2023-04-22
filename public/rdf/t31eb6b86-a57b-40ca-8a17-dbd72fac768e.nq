@@ -1,0 +1,24 @@
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <http://purl.org/dc/elements/1.1/title> "ALLEGRETTO DE LA VIIme SYMPHONIE DE L. VAN BEETHOVEN." .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <http://purl.org/ontology/bibo/shortTitle> "Op 92 / 2nd mov - Piano trio (Litolff)" .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <https://www.wikidata.org/prop/direct/P217> "D-BNba, C 92 / 12" .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <https://dbpedia.org/ontology/genre> <https://www.wikidata.org/wiki/Special:EntityData/Q379755> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015550> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015782> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <https://d-nb.info/standards/elementset/gnd#mediumOfPerformance> <https://id.loc.gov/authorities/performanceMediums/mp2013015120> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <http://rdaregistry.info/Elements/u/P60163> <https://www.wikidata.org/wiki/Special:EntityData/Q2773> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "not before 1894" .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <https://d-nb.info/standards/elementset/gnd#arranger> <https://www.wikidata.org/wiki/Q1065884> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <http://purl.org/dc/elements/1.1/publisher> <https://d-nb.info/dnbn/1027856756> .
+<https://d-nb.info/dnbn/1027856756> <http://www.w3.org/2000/01/rdf-schema#label> "Henry Litolff's Verlag" .
+<http://d-nb.info/gnd/300016417> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288> .
+<http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "1816" .
+<http://d-nb.info/gnd/300016417> <http://www.w3.org/2000/01/rdf-schema#label> "Sinfonien, Nr. 7, op. 92 (A-Dur)" .
+<http://d-nb.info/gnd/300016417> <http://purl.org/ontology/bibo/shortTitle> "7th Symphony" .
+<http://d-nb.info/gnd/118508288> <http://www.w3.org/2000/01/rdf-schema#label> "Ludwig van Beethoven" .
+<http://d-nb.info/gnd/300016417> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "92" .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <http://purl.org/vocab/frbr/core#embodiment> <https://api.domestic-beethoven.eu/file/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d.mei> .
+<https://api.domestic-beethoven.eu/file/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d.mei> <http://purl.org/dc/terms/format> <http://www.music-encoding.org/ns/mei> .
+<https://api.domestic-beethoven.eu/id/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d> <http://purl.org/vocab/frbr/core#embodiment> <https://api.domestic-beethoven.eu/iiif/document/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d/manifest.json> .
+<https://api.domestic-beethoven.eu/iiif/document/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d/manifest.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .

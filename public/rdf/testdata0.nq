@@ -1,65 +1,913 @@
-<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://purl.org/ontology/bibo/shortTitle> "Laura to her Aeolian Harp".
-<https://api.domestic-beethoven.eu/id/Harmonicon281> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/dc/elements/1.1/title> "Laura to her Aeolian Harp" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/ontology/bibo/shortTitle> "Laura to her Aeolian Harp".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#1> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#1> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#1> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon282> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon282> <http://purl.org/dc/elements/1.1/title> "Nocturne, NI JAMAIS, NI TOUJOURS, À DEUX VOIX, COMPOSÉ PAR MADAME GAIL, AVEC ACCOMPAGNEMENT DE PIANO-FORTE OU HARPE" .
-<https://api.domestic-beethoven.eu/id/Harmonicon282> <http://purl.org/ontology/bibo/shortTitle> "Ni Jamais, ni toujours" .
-<https://api.domestic-beethoven.eu/id/Harmonicon282> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#1>  <http://www.w3.org/2000/01/rdf-schema#label> "Rawlings, Thomas Augustus 1775-1850" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#2> <http://purl.org/dc/elements/1.1/title> "Ni Jamais, ni toujours" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#2> <http://purl.org/ontology/bibo/shortTitle> "Ni Jamais, ni toujours".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#2> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#2> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#2> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#2> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon28533> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon28533> <http://purl.org/dc/elements/1.1/title> "Waltz, FOR THE PIANO-FORTE. COMPOSED AND PRESENTED TO THE HARMONICON; BY FR. LUDWIG, ESQ." .
-<https://api.domestic-beethoven.eu/id/Harmonicon28533> <http://purl.org/ontology/bibo/shortTitle> "Esquire Waltz".
-<https://api.domestic-beethoven.eu/id/Harmonicon28533> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#2>  <http://www.w3.org/2000/01/rdf-schema#label> "Gail, Sophie 1775-1819" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#2> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#2> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#3> <http://purl.org/dc/elements/1.1/title> "Jock O' Hazeldean" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#3> <http://purl.org/ontology/bibo/shortTitle> "Jock O' Hazeldean".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#3> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#3> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#3> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#3> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon913> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon913> <http://purl.org/dc/elements/1.1/title> "Song, IN THE THIRD ACT OF THE SAME. (Originally sung by MRS. CROUCH.)" .
-<https://api.domestic-beethoven.eu/id/Harmonicon913> <http://purl.org/ontology/bibo/shortTitle> "As wrapt in sleep".
-<https://api.domestic-beethoven.eu/id/Harmonicon913> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016417> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#3>  <http://www.w3.org/2000/01/rdf-schema#label> "Hummel, Johann Nepomuk 1778-1837" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#3> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#3> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#4> <http://purl.org/dc/elements/1.1/title> "Wedding March" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#4> <http://purl.org/ontology/bibo/shortTitle> "Wedding March".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#4> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300109903> .
+<https://d-nb.info/gnd/300109903> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#4> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#4> <https://d-nb.info/standards/elementset/gnd#arranger> "Watts, William 1778-1859" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#4>  <http://www.w3.org/2000/01/rdf-schema#label> "Mozart, Wolfgang Amadeus 1756-1791" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#4> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#4> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#5> <http://purl.org/dc/elements/1.1/title> "Waltz" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#5> <http://purl.org/ontology/bibo/shortTitle> "Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#5> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#5> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#5> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#5> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://purl.org/dc/elements/1.1/title> "Trio, FOR TWO SOPRANOS AND A TENOR, OR BASE, IN THE THIRD ACT OF THE SAME. (Originally sung by Signora STORACE, MRS. BLAND, and Mr. KELLY.)".
-<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://purl.org/ontology/bibo/shortTitle> "WE the veil of fate".
-<https://api.domestic-beethoven.eu/id/Harmonicon289140> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#5>  <http://www.w3.org/2000/01/rdf-schema#label> "Ludwig, Fr." .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#5> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#5> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://purl.org/dc/elements/1.1/title> "Potpourri" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://purl.org/ontology/bibo/shortTitle> "Potpourri".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#6> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#6> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#6> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://purl.org/dc/elements/1.1/title> "Canzonetta, BY GAETANI DONIZETTI, A YOUNG COMPOSER, WHO IS BECOMING POPULAR IN ITALY.".
-<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://purl.org/ontology/bibo/shortTitle> "Non giova il sospirar".
-<https://api.domestic-beethoven.eu/id/Harmonicon289150> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#6>  <http://www.w3.org/2000/01/rdf-schema#label> "Tulou, Jean-Louis 1786-1865" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://purl.org/dc/elements/1.1/title> "Allemand" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://purl.org/ontology/bibo/shortTitle> "Allemand".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#7> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#7> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#7> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://purl.org/dc/elements/1.1/title> "Canzonet, 'PRETTY FAIRY!' THE WORDS WRITTEN. AND THE MUSIC COMPOSED. PURPOSELY FOR THIS WORK, BY MISS MARY LINWOOD.".
-<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://purl.org/ontology/bibo/shortTitle> "Pretty Fairy!".
-<https://api.domestic-beethoven.eu/id/Harmonicon28916> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#7>  <http://www.w3.org/2000/01/rdf-schema#label> "Steibelt, Daniel Gottlieb 1765-1823" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#8> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#8> <http://purl.org/dc/elements/1.1/title> "The Greek March of Liberty" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#8> <http://purl.org/ontology/bibo/shortTitle> "The Greek March of Liberty".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#8> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#8> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#8> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#8> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://purl.org/dc/elements/1.1/title> "Arietta, 'YES! WHY THE TRUTH DENY?' WITH ACCOMPANIMENT FOR THE PIANO-FORTE OR HARP, COMPOSED BY P. RODE.".
-<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://purl.org/ontology/bibo/shortTitle> "Yes! Why the truth deny?".
-<https://api.domestic-beethoven.eu/id/Harmonicon289170> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#8>  <http://www.w3.org/2000/01/rdf-schema#label> "Thibault, Charles 1792-1853" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#8> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#8> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#9> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#9> <http://purl.org/dc/elements/1.1/title> "Introduction et Variation" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#9> <http://purl.org/ontology/bibo/shortTitle> "Introduction et Variation".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#9> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#9> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#9> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#9> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon289180> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon289180>  <http://purl.org/dc/elements/1.1/title> "Catch, 'MY SILVIA WEARS A ROSY WREATH.' COMPOSED FOR THE HARMONICON, BY JOHN PARRY.".
-<https://api.domestic-beethoven.eu/id/Harmonicon289180>  <http://purl.org/ontology/bibo/shortTitle> "My Silvia wears a rosy wreath".
-<https://api.domestic-beethoven.eu/id/Harmonicon289180> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#9>  <http://www.w3.org/2000/01/rdf-schema#label> "Payer, Hieronymus 1787-1845" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#9> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#9> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#10> <http://purl.org/dc/elements/1.1/title> "Minuet and Trio" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#10> <http://purl.org/ontology/bibo/shortTitle> "Minuet and Trio".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#10> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#10> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#10> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#10> .
 
-<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://purl.org/dc/elements/1.1/title> "The New Vienna Waltz, COMPOSED FOR THE PIANO-FORTE, BY J. N. HUMMEL.".
-<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://purl.org/ontology/bibo/shortTitle> "The New Vienna Waltz".
-<https://api.domestic-beethoven.eu/id/Harmonicon288190> <http://rdaregistry.info/Elements/u/P60242> <http://d-nb.info/gnd/300016425> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#10>  <http://www.w3.org/2000/01/rdf-schema#label> "Czerny, Carl 1791-1857" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#10> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#10> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#11> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#11> <http://purl.org/dc/elements/1.1/title> "Galopp-Waltzer" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#11> <http://purl.org/ontology/bibo/shortTitle> "Galopp-Waltzer".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#11> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#11> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#11> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#11> .
 
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#11>  <http://www.w3.org/2000/01/rdf-schema#label> "Leibling" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#11> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#11> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#12> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#12> <http://purl.org/dc/elements/1.1/title> "Peaceful slumb'ring" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#12> <http://purl.org/ontology/bibo/shortTitle> "Peaceful slumb'ring".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#12> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#12> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#12> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#12> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#12>  <http://www.w3.org/2000/01/rdf-schema#label> "Storace, Stephen 1762-1796" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#12> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#12> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#13> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#13> <http://purl.org/dc/elements/1.1/title> "As wrapt in sleep" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#13> <http://purl.org/ontology/bibo/shortTitle> "As wrapt in sleep".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#13> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#13> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#13> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#13> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#13>  <http://www.w3.org/2000/01/rdf-schema#label> "Storace, Stephen 1762-1797" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#13> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#13> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#14> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#14> <http://purl.org/dc/elements/1.1/title> "WE the veil of fate" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#14> <http://purl.org/ontology/bibo/shortTitle> "WE the veil of fate".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#14> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#14> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#14> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#14> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#14>  <http://www.w3.org/2000/01/rdf-schema#label> "Storace, Stephen 1762-1798" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#14> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#14> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#15> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#15> <http://purl.org/dc/elements/1.1/title> "Non giova il sospirar" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#15> <http://purl.org/ontology/bibo/shortTitle> "Non giova il sospirar".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#15> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#15> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#15> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#15> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#15>  <http://www.w3.org/2000/01/rdf-schema#label> "Donizetti, Gaetano 1797-1848" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#15> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#15> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#16> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#16> <http://purl.org/dc/elements/1.1/title> "Pretty fairy" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#16> <http://purl.org/ontology/bibo/shortTitle> "Pretty fairy".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#16> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#16> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#16> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#16> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#16>  <http://www.w3.org/2000/01/rdf-schema#label> "Linwood, Mary 1755-1845" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#16> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#16> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#17> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#17> <http://purl.org/dc/elements/1.1/title> "Yes! Why the truth deny?" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#17> <http://purl.org/ontology/bibo/shortTitle> "Yes! Why the truth deny?".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#17> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#17> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#17> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#17> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#17>  <http://www.w3.org/2000/01/rdf-schema#label> "Rode, Pierre 1774-1830" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#17> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#17> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#18> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#18> <http://purl.org/dc/elements/1.1/title> "My Silvia wears a rosy wreath" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#18> <http://purl.org/ontology/bibo/shortTitle> "My Silvia wears a rosy wreath".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#18> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#18> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#18> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#18> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#18>  <http://www.w3.org/2000/01/rdf-schema#label> "Parry, John 1776-1851" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#18> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#18> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#19> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#19> <http://purl.org/dc/elements/1.1/title> "The New Vienna Waltz" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#19> <http://purl.org/ontology/bibo/shortTitle> "The New Vienna Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#19> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#19> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#19> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#19> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#19>  <http://www.w3.org/2000/01/rdf-schema#label> "Hummel, Johann Nepomuk 1778-1837" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#19> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#19> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#20> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#20> <http://purl.org/dc/elements/1.1/title> "Movements from La Bataille de Navarin" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#20> <http://purl.org/ontology/bibo/shortTitle> "Movements from La Bataille de Navarin".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#20> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#20> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#20> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#20> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#20>  <http://www.w3.org/2000/01/rdf-schema#label> "Payer, Hieronymus 1787-1845" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#20> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#20> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#21> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#21> <http://purl.org/dc/elements/1.1/title> "Minuet and Trio" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#21> <http://purl.org/ontology/bibo/shortTitle> "Minuet and Trio".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#21> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#21> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#21> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#21> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#21> <https://d-nb.info/standards/elementset/gnd#arranger> "Payer, Hieronymus 1787-1845" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#21>  <http://www.w3.org/2000/01/rdf-schema#label> "Haydn, Joseph 1732-1809" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#21> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#21> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#22> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#22> <http://purl.org/dc/elements/1.1/title> "Sarabande" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#22> <http://purl.org/ontology/bibo/shortTitle> "Sarabande".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#22> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#22> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#22> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#22> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#22>  <http://www.w3.org/2000/01/rdf-schema#label> "Händel, Georg Friedrich 1685-1759" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#22> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#22> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#23> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#23> <http://purl.org/dc/elements/1.1/title> "My Lucy's Eye" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#23> <http://purl.org/ontology/bibo/shortTitle> "My Lucy's Eye".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#23> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#23> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#23> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#23> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#23>  <http://www.w3.org/2000/01/rdf-schema#label> "Severn, T. H." .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#23> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#23> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#24> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#24> <http://purl.org/dc/elements/1.1/title> "As fades the morn" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#24> <http://purl.org/ontology/bibo/shortTitle> "As fades the morn".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#24> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#24> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#24> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#24> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#24> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#24> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#25> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#25> <http://purl.org/dc/elements/1.1/title> "Say, why did you force me" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#25> <http://purl.org/ontology/bibo/shortTitle> "Say, why did you force me".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#25> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#25> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#25> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#25> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#25>  <http://www.w3.org/2000/01/rdf-schema#label> "Marschner, Heinrich 1795-1861" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#25> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#25> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#26> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#26> <http://purl.org/dc/elements/1.1/title> "Minuet and Trio" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#26> <http://purl.org/ontology/bibo/shortTitle> "Minuet and Trio".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#26> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#26> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#26> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#26> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#26> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#26>  <http://www.w3.org/2000/01/rdf-schema#label> "Mozart, Wolfgang Amadeus 1756-1791" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#26> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#26> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
 <https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/dc/elements/1.1/title> "Der Tyroler Wildschütz und ich".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/dc/elements/1.1/title> "Der Tyroler Wildschütz" .
 <https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/ontology/bibo/shortTitle> "Der Tyroler Wildschütz".
-<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://rdaregistry.info/Elements/u/P60242> <https://domestic-beethoven.eu/works/harmonicon/27> .
-<https://domestic-beethoven.eu/works/harmonicon/27> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288x>.
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#27> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#27> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#27> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
 
-<https://domestic-beethoven.eu/works/harmonicon/27> <http://www.w3.org/2000/01/rdf-schema#label> "The Wild Tyrolean Gamekeeper" .
-<https://domestic-beethoven.eu/works/harmonicon/27> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "32" .
-<https://domestic-beethoven.eu/works/harmonicon/27> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "2001" .
-<http://d-nb.info/gnd/118508288x> <http://www.w3.org/2000/01/rdf-schema#label> "Karl von Holtei" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#28> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#28> <http://purl.org/dc/elements/1.1/title> "Rondoletto" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#28> <http://purl.org/ontology/bibo/shortTitle> "Rondoletto".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#28> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#28> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#28> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#28> .
 
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#28>  <http://www.w3.org/2000/01/rdf-schema#label> "Kuhlau, Friedrich 1786/87-1832" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#28> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#28> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#29> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#29> <http://purl.org/dc/elements/1.1/title> "Le Postillion" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#29> <http://purl.org/ontology/bibo/shortTitle> "Le Postillion".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#29> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#29> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#29> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#29> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#29> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#29> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#30> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#30> <http://purl.org/dc/elements/1.1/title> "L'adieu" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#30> <http://purl.org/ontology/bibo/shortTitle> "L'adieu".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#30> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#30> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#30> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#30> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#30>  <http://www.w3.org/2000/01/rdf-schema#label> "Thibault, Charles 1792-1853" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#30> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#30> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#31> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#31> <http://purl.org/dc/elements/1.1/title> "Air Autrichien" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#31> <http://purl.org/ontology/bibo/shortTitle> "Air Autrichien".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#31> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#31> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#31> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#31> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#31>  <http://www.w3.org/2000/01/rdf-schema#label> "Beethoven, Ludwig van 1770-1827" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#31> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#31> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#32> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#32> <http://purl.org/dc/elements/1.1/title> "Waltz" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#32> <http://purl.org/ontology/bibo/shortTitle> "Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#32> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#32> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#32> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#32> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#32>  <http://www.w3.org/2000/01/rdf-schema#label> "Hargreaves, George 1799-1869 " .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#32> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#32> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#33> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#33> <http://purl.org/dc/elements/1.1/title> "There is a smile" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#33> <http://purl.org/ontology/bibo/shortTitle> "There is a smile".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#33> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#33> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#33> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#33> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#33>  <http://www.w3.org/2000/01/rdf-schema#label> "McEwan, William" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#33> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#33> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#34> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#34> <http://purl.org/dc/elements/1.1/title> "Tell me not of dangers" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#34> <http://purl.org/ontology/bibo/shortTitle> "Tell me not of dangers".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#34> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#34> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#34> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#34> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#34>  <http://www.w3.org/2000/01/rdf-schema#label> "Smith, R. A." .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#34> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#34> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#35> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#35> <http://purl.org/dc/elements/1.1/title> "" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#35> <http://purl.org/ontology/bibo/shortTitle> "".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#35> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#35> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#35> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#35> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#35> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#35> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#36> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#36> <http://purl.org/dc/elements/1.1/title> "Sweet, lovely, chaste" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#36> <http://purl.org/ontology/bibo/shortTitle> "Sweet, lovely, chaste".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#36> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#36> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#36> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#36> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#36>  <http://www.w3.org/2000/01/rdf-schema#label> "Jones, William 1726-1800" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#36> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#36> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#37> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#37> <http://purl.org/dc/elements/1.1/title> "Let us hence!" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#37> <http://purl.org/ontology/bibo/shortTitle> "Let us hence!".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#37> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#37> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#37> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#37> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#37> <https://d-nb.info/standards/elementset/gnd#arranger> "Linwood, Mary 1755-1845" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#37>  <http://www.w3.org/2000/01/rdf-schema#label> "Plachy, Wenzel 1785-1858" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#37> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#37> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#38> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#38> <http://purl.org/dc/elements/1.1/title> "Air / Donna Del Lago" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#38> <http://purl.org/ontology/bibo/shortTitle> "Air / Donna Del Lago".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#38> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300132433> .
+<https://d-nb.info/gnd/300132433> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#38> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#38> <https://d-nb.info/standards/elementset/gnd#arranger> "Payer, Hieronymus 1787-1845" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#38>  <http://www.w3.org/2000/01/rdf-schema#label> "Rossini, Gioacchino 1792-1868" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#38> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#38> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#39> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#39> <http://purl.org/dc/elements/1.1/title> "La mia spada" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#39> <http://purl.org/ontology/bibo/shortTitle> "La mia spada".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#39> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300132434> .
+<https://d-nb.info/gnd/300132434> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#39> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#39> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#39>  <http://www.w3.org/2000/01/rdf-schema#label> "Rossini, Gioacchino 1792-1869" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#39> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#39> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#40> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#40> <http://purl.org/dc/elements/1.1/title> "Military Symphony" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#40> <http://purl.org/ontology/bibo/shortTitle> "Military Symphony".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#40> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300132435> .
+<https://d-nb.info/gnd/300132435> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#40> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#40> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#40>  <http://www.w3.org/2000/01/rdf-schema#label> "Rossini, Gioacchino 1792-1870" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#40> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#40> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#41> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#41> <http://purl.org/dc/elements/1.1/title> "The Danube Waltz" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#41> <http://purl.org/ontology/bibo/shortTitle> "The Danube Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#41> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#41> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#41> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#41> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#41>  <http://www.w3.org/2000/01/rdf-schema#label> "Schiedermair, Franz Xaver 1782-1832" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#41> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#41> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#42> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#42> <http://purl.org/dc/elements/1.1/title> "La Sentinelle" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#42> <http://purl.org/ontology/bibo/shortTitle> "La Sentinelle".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#42> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#42> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#42> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#42> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#42>  <http://www.w3.org/2000/01/rdf-schema#label> "Choron, Alexandre 1771/72-1834" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#42> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#42> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#43> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#43> <http://purl.org/dc/elements/1.1/title> "Comely swain" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#43> <http://purl.org/ontology/bibo/shortTitle> "Comely swain".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#43> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#43> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#43> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#43> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#43> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#43>  <http://www.w3.org/2000/01/rdf-schema#label> "Playford, John 1623-ca. 1686" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#43> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#43> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#44> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#44> <http://purl.org/dc/elements/1.1/title> "The Laird and the Minstrel" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#44> <http://purl.org/ontology/bibo/shortTitle> "The Laird and the Minstrel".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#44> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#44> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#44> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#44> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#44>  <http://www.w3.org/2000/01/rdf-schema#label> "Barnett, John 1802-1890" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#44> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#44> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#45> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#45> <http://purl.org/dc/elements/1.1/title> "Il Sorriso" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#45> <http://purl.org/ontology/bibo/shortTitle> "Il Sorriso".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#45> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#45> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#45> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#45> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#45>  <http://www.w3.org/2000/01/rdf-schema#label> "Bassi, N." .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#45> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#45> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#46> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#46> <http://purl.org/dc/elements/1.1/title> "Min fils est là" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#46> <http://purl.org/ontology/bibo/shortTitle> "Min fils est là".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#46> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#46> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#46> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#46> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#46>  <http://www.w3.org/2000/01/rdf-schema#label> "Zimmerman, M." .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#46> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#46> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#47> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#47> <http://purl.org/dc/elements/1.1/title> "Theme / Masaniello" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#47> <http://purl.org/ontology/bibo/shortTitle> "Theme / Masaniello".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#47> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/1121536077> .
+<https://d-nb.info/gnd/1121536077> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#47> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#47> <https://d-nb.info/standards/elementset/gnd#arranger> "Herz, Henri 1803-1888" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#47>  <http://www.w3.org/2000/01/rdf-schema#label> "Carafa, Michele 1787-1872" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#47> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#47> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#48> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#48> <http://purl.org/dc/elements/1.1/title> "Air" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#48> <http://purl.org/ontology/bibo/shortTitle> "Air".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#48> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#48> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#48> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#48> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#48> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#48>  <http://www.w3.org/2000/01/rdf-schema#label> "Rode, Pierre 1774-1830" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#48> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#48> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#49> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#49> <http://purl.org/dc/elements/1.1/title> "Alla Polacca" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#49> <http://purl.org/ontology/bibo/shortTitle> "Alla Polacca".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#49> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#49> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#49> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#49> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#49> <https://d-nb.info/standards/elementset/gnd#arranger> "Payer, Hieronymus 1787-1845" .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#49> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#49> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#50> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#50> <http://purl.org/dc/elements/1.1/title> "The Stuttgard Waltz" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#50> <http://purl.org/ontology/bibo/shortTitle> "The Stuttgard Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#50> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#50> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#50> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#50> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#50> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#50> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#51> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#51> <http://purl.org/dc/elements/1.1/title> "Overture / Die Schweizer-Familie" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#51> <http://purl.org/ontology/bibo/shortTitle> "Overture / Die Schweizer-Familie".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#51> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300299451> .
+<https://d-nb.info/gnd/300299451> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#51> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#51> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#51>  <http://www.w3.org/2000/01/rdf-schema#label> "Weigl, Joseph 1766-1846" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#51> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#51> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#52> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#52> <http://purl.org/dc/elements/1.1/title> "Whene'er I meet / Die Schweizer-Familie" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#52> <http://purl.org/ontology/bibo/shortTitle> "Whene'er I meet / Die Schweizer-Familie".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#52> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300299452> .
+<https://d-nb.info/gnd/300299452> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#52> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#52> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#52>  <http://www.w3.org/2000/01/rdf-schema#label> "Weigl, Joseph 1766-1846" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#52> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#52> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#53> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#53> <http://purl.org/dc/elements/1.1/title> "Dearest father / Die Schweizer-Familie" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#53> <http://purl.org/ontology/bibo/shortTitle> "Dearest father / Die Schweizer-Familie".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#53> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300299453> .
+<https://d-nb.info/gnd/300299453> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#53> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#53> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#53>  <http://www.w3.org/2000/01/rdf-schema#label> "Weigl, Joseph 1766-1846" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#53> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#53> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#54> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#54> <http://purl.org/dc/elements/1.1/title> "I come from distant Switzerland / Die Schweizer-Familie" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#54> <http://purl.org/ontology/bibo/shortTitle> "I come from distant Switzerland / Die Schweizer-Familie".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#54> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300299454> .
+<https://d-nb.info/gnd/300299454> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#54> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#54> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#54>  <http://www.w3.org/2000/01/rdf-schema#label> "Weigl, Joseph 1766-1846" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#54> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#54> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#55> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#55> <http://purl.org/dc/elements/1.1/title> "Coronation March" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#55> <http://purl.org/ontology/bibo/shortTitle> "Coronation March".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#55> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/1193188946> .
+<https://d-nb.info/gnd/1193188946> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#55> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#55>  <http://www.w3.org/2000/01/rdf-schema#label> "Czerny, Carl 1791-1857" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#55> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#55> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#56> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#56> <http://purl.org/dc/elements/1.1/title> "Original Theme" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#56> <http://purl.org/ontology/bibo/shortTitle> "Original Theme".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#56> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#56> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#56> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#56> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#56>  <http://www.w3.org/2000/01/rdf-schema#label> "Gabussi, Vincenzo 1800-1846" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#56> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#56> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#57> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#57> <http://purl.org/dc/elements/1.1/title> "Minuet and Trio" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#57> <http://purl.org/ontology/bibo/shortTitle> "Minuet and Trio".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#57> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#57> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#57> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#57> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#57> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#57>  <http://www.w3.org/2000/01/rdf-schema#label> "Haydn, Joseph 1732-1809" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#57> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#57> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#58> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#58> <http://purl.org/dc/elements/1.1/title> "À la Sontag" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#58> <http://purl.org/ontology/bibo/shortTitle> "À la Sontag".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#58> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#58> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#58> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#58> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#58>  <http://www.w3.org/2000/01/rdf-schema#label> "Hummel, Johann Nepomuk 1778-1837" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#58> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#58> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#59> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#59> <http://purl.org/dc/elements/1.1/title> "Mi lagnerò tacendo" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#59> <http://purl.org/ontology/bibo/shortTitle> "Mi lagnerò tacendo".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#59> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#59> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#59> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#59> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#59>  <http://www.w3.org/2000/01/rdf-schema#label> "Torre, Carlo della" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#59> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#59> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#60> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#60> <http://purl.org/dc/elements/1.1/title> "As I saw fair Clora" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#60> <http://purl.org/ontology/bibo/shortTitle> "As I saw fair Clora".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#60> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#60> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#60> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#60> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#60>  <http://www.w3.org/2000/01/rdf-schema#label> "Heyden, George" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#60> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#60> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#61> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#61> <http://purl.org/dc/elements/1.1/title> "My Home" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#61> <http://purl.org/ontology/bibo/shortTitle> "My Home".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#61> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#61> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#61> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#61> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#61>  <http://www.w3.org/2000/01/rdf-schema#label> "Taws, Joseph C. 1797-1832" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#61> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#61> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#62> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#62> <http://purl.org/dc/elements/1.1/title> "Rondoletto" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#62> <http://purl.org/ontology/bibo/shortTitle> "Rondoletto".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#62> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#62> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#62> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#62> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#62>  <http://www.w3.org/2000/01/rdf-schema#label> "Hünten, Franz 1792/93-1878" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#62> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#62> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
 <https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
 <https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/dc/elements/1.1/title> "Introduction and Chorus / Jessonda" .
-<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/ontology/bibo/shortTitle> "Introduction and Chorus / Jessonda" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/ontology/bibo/shortTitle> "Introduction and Chorus / Jessonda".
 <https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#63> .
-<https://api.domestic-beethoven.eu/id/Harmonicon28Work#63> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288xx> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#63> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#63> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#63>  <http://www.w3.org/2000/01/rdf-schema#label> "Spohr, Louis 1784-1859" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://purl.org/dc/elements/1.1/title> "Il ciel che minaccia / L'amor marinaro" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://purl.org/ontology/bibo/shortTitle> "Il ciel che minaccia / L'amor marinaro".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/4746024-6> .
+<https://d-nb.info/gnd/4746024-6> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#64> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#64>  <http://www.w3.org/2000/01/rdf-schema#label> "Weigl, Joseph 1766-1846" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#65> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#65> <http://purl.org/dc/elements/1.1/title> "Pria ch'io l'impegno / L'amor marinaro" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#65> <http://purl.org/ontology/bibo/shortTitle> "Pria ch'io l'impegno / L'amor marinaro".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#65> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/4746024-7> .
+<https://d-nb.info/gnd/4746024-7> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#65> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#65> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#65>  <http://www.w3.org/2000/01/rdf-schema#label> "Weigl, Joseph 1766-1846" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#65> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#65> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#66> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#66> <http://purl.org/dc/elements/1.1/title> "Ah! Spiegarti / L'amor marinaro" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#66> <http://purl.org/ontology/bibo/shortTitle> "Ah! Spiegarti / L'amor marinaro".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#66> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/4746024-8> .
+<https://d-nb.info/gnd/4746024-8> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#66> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#66>  <http://www.w3.org/2000/01/rdf-schema#label> "Weigl, Joseph 1766-1846" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#66> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#66> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#67> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#67> <http://purl.org/dc/elements/1.1/title> "Grand Waltz" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#67> <http://purl.org/ontology/bibo/shortTitle> "Grand Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#67> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#67> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#67> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#67> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#67>  <http://www.w3.org/2000/01/rdf-schema#label> "Reißiger, Carl Gottlieb 1798-1859" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#67> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#67> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#68> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#68> <http://purl.org/dc/elements/1.1/title> "Thema" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#68> <http://purl.org/ontology/bibo/shortTitle> "Thema".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#68> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#68> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#68> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#68> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#68>  <http://www.w3.org/2000/01/rdf-schema#label> "Czerny, Carl 1791-1857" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#68> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#68> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#69> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#69> <http://purl.org/dc/elements/1.1/title> "Mazürka" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#69> <http://purl.org/ontology/bibo/shortTitle> "Mazürka".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#69> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#69> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#69> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#69> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#69>  <http://www.w3.org/2000/01/rdf-schema#label> "Thomson, John 1805-1841" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#69> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#69> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#70> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#70> <http://purl.org/dc/elements/1.1/title> "Oh che gusto" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#70> <http://purl.org/ontology/bibo/shortTitle> "Oh che gusto".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#70> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#70> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#70> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#70> .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#70> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#70> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#71> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#71> <http://purl.org/dc/elements/1.1/title> "Tis o'er! but never from my heart" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#71> <http://purl.org/ontology/bibo/shortTitle> "Tis o'er! but never from my heart".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#71> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#71> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#71> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#71> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#71>  <http://www.w3.org/2000/01/rdf-schema#label> "Gauntlett, Henry John 1805-1876" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#71> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#71> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#72> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#72> <http://purl.org/dc/elements/1.1/title> "Rondoletto" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#72> <http://purl.org/ontology/bibo/shortTitle> "Rondoletto".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#72> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#72> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#72> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#72> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#72>  <http://www.w3.org/2000/01/rdf-schema#label> "Hummel, Johann Nepomuk 1778-1837" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#72> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#72> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#73> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#73> <http://purl.org/dc/elements/1.1/title> "L'esperance" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#73> <http://purl.org/ontology/bibo/shortTitle> "L'esperance".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#73> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#73> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#73> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#73> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#73> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#73>  <http://www.w3.org/2000/01/rdf-schema#label> "Thibault, Charles 1792-1853" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#73> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#73> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#74> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#74> <http://purl.org/dc/elements/1.1/title> "Tu t'en repentiras, Colin" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#74> <http://purl.org/ontology/bibo/shortTitle> "Tu t'en repentiras, Colin".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#74> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#74> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#74> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#74> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#74> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#74> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#74> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#75> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#75> <http://purl.org/dc/elements/1.1/title> "Tom Truelove's knell" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#75> <http://purl.org/ontology/bibo/shortTitle> "Tom Truelove's knell".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#75> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#75> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#75> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#75> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#75>  <http://www.w3.org/2000/01/rdf-schema#label> "Dibdin, Charles, 1745-1814" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#75> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#75> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#76> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#76> <http://purl.org/dc/elements/1.1/title> "Divertimento / Cosi fan tutte" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#76> <http://purl.org/ontology/bibo/shortTitle> "Divertimento / Cosi fan tutte".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#76> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300107331> .
+<https://d-nb.info/gnd/300107331> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#76> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#76> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#76>  <http://www.w3.org/2000/01/rdf-schema#label> "Mozart, Wolfgang Amadeus 1756-1791" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#76> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#76> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#77> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#77> <http://purl.org/dc/elements/1.1/title> "The Farewell!" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#77> <http://purl.org/ontology/bibo/shortTitle> "The Farewell!".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#77> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#77> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#77> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#77> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#77>  <http://www.w3.org/2000/01/rdf-schema#label> "Cooke, Robert 1768-1814" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#77> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#77> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#78> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#78> <http://purl.org/dc/elements/1.1/title> "Amis, la matinée est belle / La muette de portici" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#78> <http://purl.org/ontology/bibo/shortTitle> "Amis, la matinée est belle / La muette de portici".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#78> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#78> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#78> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#78> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#78> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#78>  <http://www.w3.org/2000/01/rdf-schema#label> "Auber, Daniel François Esprit 1782-1871" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#78> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#78> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#79> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#79> <http://purl.org/dc/elements/1.1/title> "What makes this poor bosom" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#79> <http://purl.org/ontology/bibo/shortTitle> "What makes this poor bosom".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#79> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#79> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#79> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#79> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#79> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#79>  <http://www.w3.org/2000/01/rdf-schema#label> "Spohr, Louis 1784-1859" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#79> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#79> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#80> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#80> <http://purl.org/dc/elements/1.1/title> "On the barcarole in Herold's French opera Marie" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#80> <http://purl.org/ontology/bibo/shortTitle> "On the barcarole in Herold's French opera Marie".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#80> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/1235854493> .
+<https://d-nb.info/gnd/1235854493> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#80> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#80> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#80>  <http://www.w3.org/2000/01/rdf-schema#label> "Herz, Henri 1803-1888" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#80> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#80> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#81> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#81> <http://purl.org/dc/elements/1.1/title> "Minuet and Trio" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#81> <http://purl.org/ontology/bibo/shortTitle> "Minuet and Trio".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#81> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/300111150> .
+<https://d-nb.info/gnd/300111150> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#81> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#81> <https://d-nb.info/standards/elementset/gnd#arranger> "anonymous" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#81>  <http://www.w3.org/2000/01/rdf-schema#label> "Mozart, Wolfgang Amadeus 1756-1791" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#81> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#81> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#82> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#82> <http://purl.org/dc/elements/1.1/title> "Rondino" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#82> <http://purl.org/ontology/bibo/shortTitle> "Rondino".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#82> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#82> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#82> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#82> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#82>  <http://www.w3.org/2000/01/rdf-schema#label> "Hünten, Franz 1792/93-1878" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#82> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#82> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#83> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#83> <http://purl.org/dc/elements/1.1/title> "Weber’s Last Waltz" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#83> <http://purl.org/ontology/bibo/shortTitle> "Weber’s Last Waltz".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#83> <http://rdaregistry.info/Elements/u/P60242> <https://d-nb.info/gnd/4674301-7> .
+<https://d-nb.info/gnd/4674301-7> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#83> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#83>  <http://www.w3.org/2000/01/rdf-schema#label> "Reißiger, Carl Gottlieb 1798-1859" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#83> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .
+<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "Harmonicon 1828" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#83> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .

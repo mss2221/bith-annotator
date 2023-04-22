@@ -56,3 +56,53 @@
 <https://domestic-beethoven.eu/works/harmonicon/27> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "32" .
 <https://domestic-beethoven.eu/works/harmonicon/27> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "2001" .
 <http://d-nb.info/gnd/118508288x> <http://www.w3.org/2000/01/rdf-schema#label> "Karl von Holtei" .
+
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/dc/elements/1.1/title> "Introduction and Chorus / Jessonda" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/ontology/bibo/shortTitle> "Introduction and Chorus / Jessonda".
+<https://domestic-beethoven.eu/works/harmonicon28#63> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#63>.
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://purl.org/dc/elements/1.1/title>"Duet, IN WEIGL'S OPERA, L'AMOR MARINARO, PERFORMED AT THE ENGLISH OPERA-HOUSE, UNDER THE TITLE OF THE PIRATE OF GENOA.".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://purl.org/ontology/bibo/shortTitle>"Il ciel che minaccia / L'amor marinaro.
+<https://api.domestic-beethoven.eu/id/Harmonicon28#64> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#64>.
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/dc/elements/1.1/title> "Der Tyroler Wildschütz und ich" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://purl.org/ontology/bibo/shortTitle> "Der Tyroler Wildschütz" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#27> <http://rdaregistry.info/Elements/u/P60242> <https://domestic-beethoven.eu/works/harmonicon/27> .
+<https://domestic-beethoven.eu/works/harmonicon/27> <http://rdaregistry.info/Elements/u/P60426> <http://d-nb.info/gnd/118508288x>.
+
+<http://d-nb.info/gnd/118508288x> <http://www.w3.org/2000/01/rdf-schema#label> "Karl von Holtei" .
+<https://domestic-beethoven.eu/works/harmonicon/27> <http://www.w3.org/2000/01/rdf-schema#label> "The Tyrolean Gamekeeper" .
+<https://domestic-beethoven.eu/works/harmonicon/27> <https://d-nb.info/standards/elementset/gnd#opusNumericDesignationOfMusicalWork> "32" .
+<https://domestic-beethoven.eu/works/harmonicon/27> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "2001" .
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/dc/elements/1.1/title> "Introduction and Chorus / Jessonda" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/ontology/bibo/shortTitle> "Introduction and Chorus / Jessonda" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#63> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/vocab/frbr/core#embodiment> <https://api.domestic-beethoven.eu/file/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d.mei> .
+<https://api.domestic-beethoven.eu/file/ecdd1cdd-5bd2-4349-a3ad-cd25461cfe2d.mei> <http://purl.org/dc/terms/format> <http://www.music-encoding.org/ns/mei> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#63> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<http://d-nb.info/gnd/118508288xx> <http://www.w3.org/2000/01/rdf-schema#label> "Tulou, Jean-Louis 1786-1865" .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://purl.org/dc/elements/1.1/title> "Potpourri" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://purl.org/ontology/bibo/shortTitle> "Potpourri" .
+<https://domestic-beethoven.eu/works/harmonicon28#6> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#6> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#6> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://purl.org/dc/elements/1.1/title> "Allemand" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://purl.org/ontology/bibo/shortTitle> "Allemand" .
+<https://domestic-beethoven.eu/works/harmonicon28#7> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#7> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#7> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
