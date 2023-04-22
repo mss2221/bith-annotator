@@ -5,11 +5,39 @@
 IF(ISBLANK(H2),CONCATENATE("<https://api.domestic-beethoven.eu/id/Harmonicon28Work#",ROW(B2)-1,"> ."),CONCATENATE("<", (H2), "> .")),CHAR(10),
 IF(ISBLANK(H2),CONCATENATE("<https://api.domestic-beethoven.eu/id/Harmonicon28Work#",ROW(B2)-1,"> "), CONCATENATE("<", (H2), "> ")),
 "<http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#",ROW(B2)-1,"> .",CHAR(10),
-IF(ISBLANK(F2),"",CONCATENATE((AA2),(W2))),CHAR(10),IF(ISBLANK(D2),"",CONCATENATE("<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#",ROW(B2)-1,"> "," <http://www.w3.org/2000/01/rdf-schema#label> " ,"""",(D2),""""," ." )),CHAR(10),"<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <http://purl.org/dc/elements/1.1/publisher> <https://domestic-beethoven.eu/id/Harmonicon28Publisher> .",CHAR(10),"<https://domestic-beethoven.eu/id/Harmonicon28Publisher> <http://www.w3.org/2000/01/rdf-schema#label> ","""Harmonicon 1828"""," .",CHAR(10),
-"<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+IF(ISBLANK(F2),"",CONCATENATE((AA2),(W2))),CHAR(10),IF(ISBLANK(D2),"",CONCATENATE("<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#",ROW(B2)-1,"> "," <http://www.w3.org/2000/01/rdf-schema#label> " ,"""",(D2),""""," ." )),CHAR(10),"<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <http://purl.org/dc/elements/1.1/publisher> <https://d-nb.info/gnd/100367542> .",CHAR(10),"<https://d-nb.info/gnd/100367542> <http://www.w3.org/2000/01/rdf-schema#label> ","""Samuel Leigh""",  ".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> ","""1828"""," .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
 <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> ."
 )
 A
 G arranger URI
 F arranger Name
 D composer name
+
+7 pages - Allegretto scherzando: from Symphony no. 8
+https://digital.bodleian.ox.ac.uk/objects/644ee314-14a2-4006-9fe6-80eea1258a17/surfaces/02ce9afd-6f49-4890-906c-035d56a90caf/
+
+52 pages - Beethoven’s 8th symphony, in F.: Arranged for two performers
+https://digital.bodleian.ox.ac.uk/objects/fd6b91da-b3df-4564-b807-650c495d82f6/surfaces/fed4bfcf-6041-40b3-9b74-85680fff2592/
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/dc/elements/1.1/publisher> <https://d-nb.info/gnd/100367542> .
+<https://d-nb.info/gnd/10036754> <http://www.w3.org/2000/01/rdf-schema#label> "Samuel Leigh" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> "1828"
+
+
+
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/dc/elements/1.1/title> ""Laura to her Aeolian Harp"" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/ontology/bibo/shortTitle> ""Laura to her Aeolian Harp"".
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://rdaregistry.info/Elements/u/P60242> <https://api.domestic-beethoven.eu/id/Harmonicon28Work#1> .
+<https://api.domestic-beethoven.eu/id/Harmonicon28Work#1> <http://rdaregistry.info/Elements/u/P60426> <https://api.domestic-beethoven.eu/id/Harmonicon28Composer#1> .
+
+<https://api.domestic-beethoven.eu/id/Harmonicon28Composer#1>  <http://www.w3.org/2000/01/rdf-schema#label> ""Rawlings, Thomas Augustus 1775-1850"" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/dc/elements/1.1/publisher> <https://d-nb.info/gnd/100367542> .
+<https://d-nb.info/gnd/10036754> <http://www.w3.org/2000/01/rdf-schema#label> ""Samuel Leigh"" .
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <https://d-nb.info/standards/elementset/gnd#dateOfPublication> ""1828""
+<https://api.domestic-beethoven.eu/id/Harmonicon28#1> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
+<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .

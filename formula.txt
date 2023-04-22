@@ -1,8 +1,0 @@
-=CONCATENATE("
-<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://vivoweb.org/ontology/core#Score> .
-<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <http://purl.org/dc/elements/1.1/title> ",CHAR(34), SUBSTITUTE(B2, """", "\" & CHAR(34)),CHAR(34), " .
-<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <http://purl.org/ontology/bibo/shortTitle> ",CHAR(34), B2,CHAR(34), ".
-<https://api.domestic-beethoven.eu/works/harmonicon28#",ROW(B2)-1,"> <http://rdaregistry.info/Elements/u/P60242> ",
-IF(ISBLANK(H2),CONCATENATE("<https://api.domestic-beethoven.eu/id/Harmonicon28Work#",ROW(B2)-1,"> ."), CONCATENATE("<", (H2), "> .")),"
-<https://api.domestic-beethoven.eu/id/Harmonicon28#",ROW(B2)-1,"> <http://purl.org/vocab/frbr/core#embodiment> <https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> .
-<https://iiif.bodleian.ox.ac.uk/iiif/manifest/60fc39aa-d390-48cb-b4ae-06d067002c87.json> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .")
