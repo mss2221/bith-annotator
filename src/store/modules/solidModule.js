@@ -371,10 +371,10 @@ export const solidModule = {
      * @param {[type]} uri  [description]
      */
     ACTIVATE_THING (state, uri) {
-      console.log('ACTIVATE_THING with uri ' + typeof uri + ': ' + uri)
-      console.log(uri)
+      // console.log('ACTIVATE_THING with uri ' + typeof uri + ': ' + uri)
+      // console.log(uri)
       const thing = state.currentThings[uri] !== undefined ? state.currentThings[uri] : state.thingStore[uri]
-      console.log(thing)
+      // console.log(thing)
       // console.log(state.currentThings)
       // console.log(state.thingStore)
       const type = (getUrl(thing, pref.rdf + 'type') !== null) ? getUrl(thing, pref.rdf + 'type') : getStringNoLocale(thing, pref.rdf + 'type')
@@ -561,7 +561,7 @@ export const solidModule = {
      * @return {[type]}        [description]
      */
     activateThing ({ commit }, uri) {
-      console.log('activating ', uri)
+      // console.log('activating ', uri)
       commit('ACTIVATE_THING', uri)
     },
 
