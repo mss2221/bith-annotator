@@ -38,7 +38,10 @@ export default {
       return undefined
     },
     publisher: function () {
-      return this.arr.publisher[pref.rdfs + 'label']
+      if (this.arr.publisher) {
+        return this.arr.publisher[pref.rdfs + 'label']
+      }
+      return undefined
     },
     date: function () {
       return this.arr.date

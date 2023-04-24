@@ -1,5 +1,5 @@
 <template>
-  <tr class="extractEntryDetailed" :class="{'affectedCurrent': affectedByCurrentAnnot, 'affectedActive': affectedByActiveAnnot}" :data-level="this.level" :title="type + ': ' + id" :data-id="id">
+  <tr class="extractEntryDetailed" @click="activateThing" :class="{'affectedCurrent': affectedByCurrentAnnot, 'affectedActive': affectedByActiveAnnot}" :data-level="this.level" :title="type + ': ' + id" :data-id="id">
     <td class="thingLabel">
       <!-- <template v-if="isCurrent && activated">
         <input type="text" v-model.trim="label"/>
@@ -55,9 +55,8 @@ import {
   asUrl
 } from '@inrupt/solid-client'
 import { prefix as pref } from '@/meld/prefixes.js'
-import { displayPrefixes } from '@/meld/constants.js'
 import { getChildType } from '@/store/tools/solidHelpers.js'
-// import { bithTypes } from '@/meld/constants.js'
+import { bithTypes, displayPrefixes } from '@/meld/constants.js'
 
 export default {
   name: 'ExtractEntryDetailed',
@@ -75,9 +74,9 @@ export default {
       const url = asUrl(this.thing, baseUrl)
       return url
     },
-    /* activated: function () {
+    activated: function () {
       return this.$store.getters.activeThingIDByType(this.type) === this.id
-    }, */
+    },
     currentThing: function () {
       const thing = this.$store.getters.currentThingByTypeAndID(this.type, this.id)
 
@@ -149,11 +148,23 @@ export default {
     }
   },
   methods: {
-    /* activateThing: function () {
-      console.log('activating ' + this.type + ' ' + this.id)
-      this.$store.dispatch('activateThing', { type: this.type, id: this.id })
+    activateThing: function (e) {
+      // console.log('activating ' + this.type + ' ' + this.id)
+      if (e.target.localName === 'textarea') {
+        return
+      }
+
+      if (!this.activated) {
+        this.$store.dispatch('activateThing', this.id)
+      } else {
+        this.$store.dispatch('deActivateThing', bithTypes.extract)
+      }
+      this.$store.dispatch('deActivateThing', bithTypes.observation)
+      this.$store.dispatch('deActivateThing', bithTypes.musicalMaterial)
+      // this.$store.dispatch('deActivateThing', bithTypes.extract)
+      this.$store.dispatch('deActivateThing', bithTypes.selection)
     },
-    deactivateThing: function () {
+    /* deactivateThing: function () {
       if (this.activated) {
         this.$store.dispatch('activateThing', { type: this.type, id: null })
       }

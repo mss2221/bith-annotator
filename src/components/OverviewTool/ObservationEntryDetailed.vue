@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     activateThing: function (e) {
-      console.log('activating ' + this.type + ' ' + this.uri, e)
+      // console.log('activating ' + this.type + ' ' + this.uri, e)
       if (e.target.localName === 'textarea') {
         return
       }
