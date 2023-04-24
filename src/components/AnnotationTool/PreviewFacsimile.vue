@@ -64,6 +64,16 @@ export default {
       return arr
     }
   },
+  beforeUpdate: function () {
+    // console.log('updating PreviewFacsimile')
+    const newUri = this.imageUri
+    const oldUri = this.viewer.world.getItemAt(0).source['@id']
+
+    if (oldUri !== undefined && oldUri !== null && newUri !== oldUri) {
+      // console.log('Something needs to be done to load ' + newUri)
+      this.viewer.open(newUri)
+    }
+  },
   mounted: function () {
     /**
      * Settings for OpenSeadragon.
@@ -94,19 +104,13 @@ export default {
 
     if (this.rects.length > 0) {
       const loadOverlay = () => {
+        console.log('CALLING LOADOVERLAY')
+
         this.rects.forEach(xywh => {
           const elem = document.createElement('div')
           elem.classList.add('iiifMediaFragmentPreview')
 
-          const worldX = this.viewer.world._contentSize.x
-          const worldY = this.viewer.world._contentSize.y
-
-          const x = xywh.x / worldX
-          const y = xywh.y / worldY
-          const w = xywh.w / worldX
-          const h = xywh.h / worldY
-
-          const rect = new OpenSeadragon.Rect(x, y, w, h)
+          const rect = this.viewer.viewport.imageToViewportRectangle(xywh.x, xywh.y, xywh.w, xywh.h)
 
           this.viewer.addOverlay({
             element: elem,
