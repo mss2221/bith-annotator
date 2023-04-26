@@ -1,7 +1,7 @@
 <template>
   <div class="previewBox">
     <h1 class="previewHeading">{{ label }} <i class="icon icon-search" title="Show Selection" @click="showSelection"></i></h1>
-    <div :id="containerID" class="previewContent transcription" ref="mei">
+    <div :id="containerID" class="previewContent transcription meiContainer" ref="mei">
 
     </div>
   </div>
@@ -12,9 +12,11 @@
 import verovio from 'verovio'
 import { vrvPresets } from '@/config/verovio.config.js'
 import { bithTypes, displayPrefixes } from '@/meld/constants.js'
+import { prefix as pref } from '@/meld/prefixes'
 import {
   createSolidDataset,
   setThing,
+  getUrlAll,
   solidDatasetAsTurtle
 } from '@inrupt/solid-client'
 
@@ -64,6 +66,19 @@ export default {
         const svg = vrvToolkit.renderToSVG(1, {})
 
         this.$refs.mei.innerHTML = svg
+
+        const thing = this.$store.getters.thingByTypeAndID(bithTypes.selection, this.obj.selection)
+        const parts = getUrlAll(thing, pref.frbr + 'part')
+        const ids = []
+        parts.forEach(part => {
+          ids.push(part.split('#')[1])
+        })
+        ids.forEach(id => {
+          const elem = this.$refs.mei.querySelector('*[data-id=' + id + ']')
+          if (elem) {
+            elem.classList.add('selected')
+          }
+        })
       })
   }
 }
