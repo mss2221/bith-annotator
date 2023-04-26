@@ -40,8 +40,6 @@ export const vrvSelectables = [
   'syl',
   'rest',
   'beam',
-  'artic',
-  'accid',
   'clef',
   'slur',
   'dynam',
