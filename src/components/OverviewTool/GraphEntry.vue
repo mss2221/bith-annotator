@@ -7,7 +7,7 @@
           <i class="icon icon-cross" @click.stop="discardChanges" title="cancel changes"></i>
           <i class="icon icon-check" @click.stop="saveChanges" title="save changes"></i>
         </template>
-        <template v-if="!isCurrent && activated && this.level === 1">
+        <template v-if="!isCurrent && activated && this.level === 1 && usersOwnThing">
           <i class="icon icon-edit" @click.stop="startEditing"></i>
         </template>
         <i class="icon icon-search" @click.stop="showLD"></i>
@@ -32,6 +32,7 @@ import {
   getStringNoLocale,
   createSolidDataset,
   setThing,
+  getUrl,
   // isThing,
   // isThingLocal,
   solidDatasetAsTurtle,
@@ -57,6 +58,11 @@ export default {
       const baseUrl = this.$store.getters.dataBaseUrl
       const url = asUrl(this.thing, baseUrl)
       return url
+    },
+    usersOwnThing: function () {
+      const creator = getUrl(this.thing, pref.dct + 'creator')
+      const user = this.$store.getters.solidId
+      return creator === user
     },
     activated: function () {
       return this.$store.getters.activeThingIDByType(this.type) === this.id

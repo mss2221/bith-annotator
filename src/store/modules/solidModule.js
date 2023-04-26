@@ -755,7 +755,7 @@ export const solidModule = {
      */
     async saveChanges ({ commit, state, dispatch, rootState }) {
       const userState = rootState.user
-      // const user = userState.solidSession.info.webId
+      const user = userState.solidSession.info.webId
       // const userPod = userState.solidUserPod // this could be used instead
       const userPodPath = userState.solidUserPodPath
       const authFetch = userState.solidSession.fetch
@@ -763,11 +763,18 @@ export const solidModule = {
       const allThings = new Map()
       let ds = createSolidDataset()
 
+      // TODO: suppress stuff from different creator…
       Object.entries(state.thingStore).forEach(object => {
-        allThings.set(object[0], object[1])
+        const creator = getUrl(object[1], pref.dct + 'creator')
+        if (creator === user) {
+          allThings.set(object[0], object[1])
+        }
       })
       Object.entries(state.currentThings).forEach(object => {
-        allThings.set(object[0], object[1])
+        const creator = getUrl(object[1], pref.dct + 'creator')
+        if (creator === user) {
+          allThings.set(object[0], object[1])
+        }
       })
 
       allThings.forEach((thing, uri) => {
@@ -785,6 +792,7 @@ export const solidModule = {
 
           // if successful, retrieve updated data and replace local info
           // (as recommended by https://docs.inrupt.com/developer-tools/api/javascript/solid-client/modules/resource_solidDataset.html#savesoliddatasetat)
+          loadPod('https://digmusicscholar.solidcommunity.net/public/bith.ttl', commit, authFetch, false)
           loadPod(userPodPath, commit, authFetch, true)
           commit('EMPTY_CURRENT_THINGS')
           console.log('storing data complete')

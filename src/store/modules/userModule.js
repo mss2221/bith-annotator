@@ -23,6 +23,7 @@ import {
  * @return {Promise}             [description]
  */
 export const loadPod = async (userPodPath, commit, authFetch, ownPod) => {
+  console.log('trying to load data from ' + userPodPath)
   const userPod = await getSolidDataset(
     userPodPath, // File in Pod to Read
     { fetch: authFetch } // fetch from authenticated session
@@ -34,7 +35,9 @@ export const loadPod = async (userPodPath, commit, authFetch, ownPod) => {
     commit('SET_USER_POD', userPod)
 
     // empty any existing data (with every save, local data is updated from server)
-    commit('EMPTY_THINGSTORE')
+    // TODO: This was included to avoid problems with deleting things, but this isn't supported anyway.
+    // Removing this commit will allow multiple pods to be loaded.
+    // commit('EMPTY_THINGSTORE')
   }
 
   const things = getThingAll(userPod)
@@ -95,6 +98,7 @@ export const userModule = {
           commit('SET_USER_POD_PATH', userPodPath)
 
           try {
+            await loadPod('https://digmusicscholar.solidcommunity.net/public/bith.ttl', commit, authFetch, false)
             await loadPod(userPodPath, commit, authFetch, true)
           } catch (err) {
             console.log('No userPod available at ' + userPodPath + '. Creating a new one. \nMessage: ' + err)

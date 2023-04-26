@@ -19,7 +19,7 @@
       <i class="icon icon-minus" v-if="ableToBeEdited && affectedByCurrentAnnot" @click.stop="remove" title="remove"></i>
     </td>
     <td class="resp" :title="resp">
-      <i class="icon icon-people"></i>
+      <i v-if="usersOwnThing" class="icon icon-people"></i>
     </td>
     <td class="showDetails">
       <i class="icon icon-search" @click.stop="showLD"></i>
@@ -49,6 +49,7 @@
 <script>
 import {
   setThing,
+  getUrl,
   createSolidDataset,
   getStringNoLocale,
   solidDatasetAsTurtle,
@@ -73,6 +74,11 @@ export default {
       const baseUrl = this.$store.getters.dataBaseUrl
       const url = asUrl(this.thing, baseUrl)
       return url
+    },
+    usersOwnThing: function () {
+      const creator = getUrl(this.thing, pref.dct + 'creator')
+      const user = this.$store.getters.solidId
+      return creator === user
     },
     activated: function () {
       return this.$store.getters.activeThingIDByType(this.type) === this.id
