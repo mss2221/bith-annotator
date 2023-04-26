@@ -31,6 +31,8 @@ export const transformArrangement = (graphObject) => {
     obj.arranger = arr
   } else if ('label' in arr) {
     obj.arranger = arr.label
+  } else if (prefix.rdfs + 'label' in arr) {
+    obj.arranger = arr[prefix.rdfs + 'label']
   } else if (arr['@id']) {
     obj.arranger = arr['@id']
   } else {
