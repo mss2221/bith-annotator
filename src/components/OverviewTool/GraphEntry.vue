@@ -118,6 +118,7 @@ export default {
       }
     },
     saveChanges: function () {
+      // console.debug('saving')
       this.$store.dispatch('saveChanges')
     },
     discardChanges: function () {

@@ -354,8 +354,6 @@ export const solidModule = {
     ADD_OBSERVATION (state, { user, userPodPath }) {
       const observation = getAnnotThing(user, userPodPath)
       const uri = asUrl(observation, userPodPath)
-      console.log('\nHERE')
-      console.log(observation)
 
       emptyCurrentThings(state)
       resetActivations(state)
@@ -740,9 +738,9 @@ export const solidModule = {
      * @return {[type]}         [description]
      */
     changeCurrentDataObject ({ commit, state }, payload) {
-      console.log('changeCurrentDataObject', payload)
+      // console.log('changeCurrentDataObject', payload)
       if (payload.type in bithTypes && payload.uri && payload.prop && payload.method && payload.val) {
-        console.log('committing')
+        // console.log('committing')
         commit('CHANGE_CURRENT_THING', payload)
       }
     },
@@ -1946,62 +1944,8 @@ export const solidModule = {
           }
 
           arr.push(obj)
-          /* getters.arrangements.forEach(arrangement => {
-            const objects = []
-
-            const iiifParts = partArray.filter(part => {
-
-            })
-
-            if (arrangement.iiifTilesources && arrangement.iiifTilesources.indexOf(fileURI) !== -1) {
-              obj.type = 'facsimile'
-              obj.pageIndex = arrangement.iiifTilesources.indexOf(fileURI)
-              obj.arrangement = { label: arrangement.shortTitle, id: arrangement.id }
-            }
-
-            if (arrangement.MEI === fileURI) {
-              obj.type = 'transcription'
-              obj.fileUri = fileURI
-              obj.arrangement = { label: arrangement.shortTitle, id: arrangement.id }
-            }
-            // replace content of fileMap with proper objects now
-            fileMap.set(fileUri, objects)
-          })
-          arr.push(obj)
-
-          // determine if iiif or transcript */
         })
       })
-
-      /* const parts = []
-
-      // retrieve all parts
-      selections.forEach(selection => {
-        const thing = state.currentThings[selection] !== undefined ? state.currentThings[selection] : state.thingStore[selection]
-        const urls = getUrlAll(thing, pref.frbr + 'part')
-
-        urls.forEach(part => parts.push({ part, selection }))
-      })
-
-      parts.forEach(obj => {
-        const fileURI = (obj.part.indexOf('#') !== -1) ? obj.part.split('#')[0] : obj.part
-
-        getters.arrangements.forEach(arrangement => {
-          if (arrangement.MEI === fileURI) {
-            obj.type = 'transcription'
-            obj.fileUri = fileURI
-            obj.arrangement = { label: arrangement.shortTitle, id: arrangement.id }
-          }
-
-          if (arrangement.iiifTilesources && arrangement.iiifTilesources.indexOf(fileURI) !== -1) {
-            obj.type = 'facsimile'
-            obj.pageIndex = arrangement.iiifTilesources.indexOf(fileURI)
-            obj.arrangement = { label: arrangement.shortTitle, id: arrangement.id }
-          }
-        })
-        arr.push(obj)
-      })
-      */
 
       return arr
     },
