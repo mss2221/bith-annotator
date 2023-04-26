@@ -76,7 +76,7 @@ export default {
         ids.forEach(id => {
           const elem = this.$refs.mei.querySelector('*[data-id=' + id + ']')
           if (elem) {
-            elem.classList.add('selected')
+            elem.classList.add('selected', 'activeExtract')
           }
         })
       })
