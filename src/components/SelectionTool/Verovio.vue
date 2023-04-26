@@ -224,6 +224,35 @@ export default {
           this.unwatchers.push(
             this.$store.watch(
               (state, getters) => getters.allSelectionsForActiveExtract(this.uri), (newSel, oldSel) => {
+                // scroll to elements in question
+                const targets = []
+                newSel.forEach(sel => {
+                  targets.push(sel.split('#')[1])
+                })
+                const offsets = []
+
+                const svgPixelWidth = parseInt(this.$refs.mei.querySelector('svg').getAttribute('width'))
+                const svgViewBoxWidth = parseInt(this.$refs.mei.querySelector('svg svg').getAttribute('viewBox').split(' ')[2])
+
+                targets.forEach(id => {
+                  if (!id.startsWith('xywh=')) {
+                    try {
+                      const elem = this.$refs.mei.querySelector('*[data-id=' + id + ']')
+                      if (elem) {
+                        offsets.push(elem.getBBox().x)
+                      }
+                    } catch (err) {
+                      console.warn('ERROR: ' + err)
+                    }
+                  }
+                })
+                // when something was found, horizontally move to that location
+                if (offsets.length > 0) {
+                  const min = Math.min(...offsets)
+                  const pixMin = svgPixelWidth * min / svgViewBoxWidth
+                  this.$refs.mei.scrollLeft = pixMin
+                }
+
                 this.highlightSelections(newSel, oldSel, 'activeExtract')
               }
             )

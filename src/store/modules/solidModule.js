@@ -1304,7 +1304,8 @@ export const solidModule = {
     }, */
 
     /**
-     * retrieves all selection paths for the activated extract
+     * retrieves all selection paths for the activated extract. If uri is given, it will
+     * retrieve only those selections that are part of the specified resource.
      * @param  {[type]} state               [description]
      * @return {[type]}       [description]
      */
@@ -1321,7 +1322,9 @@ export const solidModule = {
         selections.forEach(selection => {
           const parts = getUrlAll(selection, pref.frbr + 'part')
           parts.forEach(idRef => {
-            if (idRef.startsWith(uri)) {
+            if (uri && idRef.startsWith(uri)) {
+              arr.push(idRef)
+            } else {
               arr.push(idRef)
             }
           })

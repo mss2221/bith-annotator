@@ -634,6 +634,35 @@ export default {
             this.preparePage()
           })
 
+        this.unwatchActiveExtractListener = this.$store.watch((state, getters) => getters.allSelectionsForActiveExtract(),
+          (newSel, oldSel) => {
+            const currentPage = this.viewer.currentPage()
+            // const currentImageUri = this.facsimileInfo[currentPage].imageUri.replace('/info.json', '')
+
+            const pageUris = []
+            this.facsimileInfo.forEach(page => {
+              const pageUri = page.imageUri.replace('/info.json', '')
+              pageUris.push(pageUri)
+            })
+
+            const indexes = []
+            newSel.forEach(sel => {
+              const pageUri = sel.split('#')[0]
+              const index = pageUris.indexOf(pageUri)
+              if (index !== -1) {
+                indexes.push(index)
+              }
+            })
+
+            if (indexes.indexOf(currentPage) === -1) {
+              console.log('need to open page ' + indexes[0])
+              this.viewer.goToPage(indexes[0])
+            }
+
+            // console.log('new selections for this.uri: ')
+            // console.log(newSel)
+          })
+
         const currentPage = this.viewer.currentPage()
         this.currentImageUri = this.facsimileInfo[currentPage].imageUri.replace('/info.json', '')
         this.$store.dispatch('announceCurrentPage', { viewIndex: this.index, pageUri: this.currentImageUri, pageN: currentPage })
@@ -646,6 +675,7 @@ export default {
     try {
       this.unwatchSelectionsOnPage()
       this.unwatchAllMeasureSelectionsOnCurrentFacsimilePage()
+      this.unwatchActiveExtractListener()
     } catch (err) {
       console.log('Unable to properly unmount: ' + err)
     }
