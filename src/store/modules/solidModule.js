@@ -323,7 +323,7 @@ export const solidModule = {
      * @param {[type]} state  [description]
      * @param {[type]} uri    [description]
      */
-    TOGGLE_SELECTION (state, uri) {
+    TOGGLE_SELECTION (state, { uri, arrangements, meiCache }) {
       const selectionThingUri = state.activated.selection
       let selectionThing = state.currentThings[selectionThingUri]
 
@@ -338,7 +338,84 @@ export const solidModule = {
           .removeUrl(pref.frbr + 'part', uri)
           .build()
       }
+      try {
+        // check if selection label needs to be adjusted
+        const type = getUrl(selectionThing, pref.rdf + 'type')
+        if (type === bithTypes.selection) {
+          const label = getStringNoLocale(selectionThing, pref.rdfs + 'label')
+          if (label.startsWith('[') && label.endsWith(']')) {
+            const urls = getUrlAll(selectionThing, pref.frbr + 'part')
 
+            const arrMap = new Map()
+
+            urls.forEach(url => {
+              const file = url.split('#')[0]
+
+              arrangements.forEach(arrangement => {
+                const id = arrangement.id
+                if (arrangement.MEI === file) {
+                  if (arrMap.has(id)) {
+                    arrMap.get(id).mei.push(url.split('#')[1])
+                  } else {
+                    arrMap.set(id, { label: arrangement.shortTitle, mei: [url.split('#')[1]], pages: [] })
+                  }
+                } else if (arrangement.iiifTilesources && arrangement.iiifTilesources.indexOf(file) !== -1) {
+                  const index = arrangement.iiifTilesources.indexOf(file) + 1
+                  if (arrMap.has(id)) {
+                    if (arrMap.get(id).pages.indexOf(index) === -1) {
+                      arrMap.get(id).pages.push(index)
+                    }
+                  } else {
+                    arrMap.set(id, { label: arrangement.shortTitle, mei: [], pages: [index] })
+                  }
+                }
+              })
+            })
+            const results = []
+            arrMap.forEach((arrangement, id) => {
+              let out = arrangement.label + ': '
+              if (arrangement.pages.length > 0) {
+                out += 'rect. on p.' + arrangement.pages.join(', p.')
+
+                if (arrangement.mei.length > 0) {
+                  out += ', '
+                }
+              }
+              if (arrangement.mei.length > 0) {
+                const meiString = meiCache[arrangements.find(a => a.id === id).MEI]
+                const meiDom = parser.parseFromString(meiString, 'text/xml')
+
+                const measures = [...meiDom.querySelectorAll('measure')]
+                const arr = []
+
+                arrangement.mei.forEach(target => {
+                  const elem = meiDom.querySelector('*[*|id="' + target + '"]')
+                  if (elem) {
+                    const measure = elem.closest('measure')
+                    const index = measures.indexOf(measure) + 1
+
+                    if (arr.indexOf(index) === -1) {
+                      arr.push(index)
+                    }
+                  }
+                })
+
+                const compareNumbers = (a, b) => { return a - b }
+                arr.sort(compareNumbers)
+
+                out += 'music from m.' + arr.join(', ')
+              }
+              results.push(out)
+            })
+
+            selectionThing = buildThing(selectionThing)
+              .setStringNoLocale(pref.rdfs + 'label', '[' + results.join('; ') + ']')
+              .build()
+          }
+        }
+      } catch (err) {
+        console.log(err)
+      }
       state.currentThings[selectionThingUri] = selectionThing
     }
 
@@ -540,7 +617,7 @@ export const solidModule = {
           commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', { user, userPodPath })
         }
       }
-      commit('TOGGLE_SELECTION', id)
+      commit('TOGGLE_SELECTION', { uri: id, arrangements: rootState.graph.arrangements, meiCache: rootState.app.meiCache })
       // console.log('selectionToggle for ' + id)
     },
 
@@ -556,7 +633,7 @@ export const solidModule = {
       // const webId = userState.solidSession.info.webId
       // const podPath = userState.solidUserPodPath
       // commit('ADD_NEW_SELECTION_TO_CURRENT_EXTRACT', { webId, podPath })
-      commit('TOGGLE_SELECTION', uri)
+      commit('TOGGLE_SELECTION', { uri, arrangements: rootState.graph.arrangements, meiCache: rootState.app.meiCache })
       // commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
     },
 
@@ -571,7 +648,7 @@ export const solidModule = {
     clickMeasure ({ commit, state, rootState }, uri) {
       if (state.activated.selection !== null && state.currentThings[state.activated.selection] !== undefined) {
         // console.log('toggle measure selection')
-        commit('TOGGLE_SELECTION', uri)
+        commit('TOGGLE_SELECTION', { uri, arrangements: rootState.graph.arrangements, meiCache: rootState.app.meiCache })
         // commit('TOGGLE_FACSIMILE_URI_AT_ACTIVATED_SELECTION', uri)
       } else {
         console.log('ignoring measure click')

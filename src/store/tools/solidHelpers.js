@@ -107,7 +107,7 @@ export const getExtractThing = (user, userPodPath) => {
     .addUrl(pref.rdf + 'type', pref.bithTerms + 'Extract')
     .addDate(pref.dct + 'created', date)
     .addUrl(pref.dct + 'creator', user)
-    .addStringNoLocale(pref.rdfs + 'label', '[new extract]')
+    .addStringNoLocale(pref.rdfs + 'label', '[enter extract label]')
     .build()
 
   return thing
@@ -140,7 +140,7 @@ export const getSelectionThing = (user, userPodPath) => {
     .addUrl(pref.rdf + 'type', pref.bithTerms + 'Selection')
     .addDate(pref.dct + 'created', date)
     .addUrl(pref.dct + 'creator', user)
-    .addStringNoLocale(pref.rdfs + 'label', '[new selection]')
+    .addStringNoLocale(pref.rdfs + 'label', '[auto-generated]')
     .build()
 
   return thing
