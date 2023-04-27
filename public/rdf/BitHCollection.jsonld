@@ -33,7 +33,17 @@
 			{"@id": "https://api.domestic-beethoven.eu/lod/dbe44e4f-efed-4bcd-a3b5-a1cd841f91a4.nq"},
 			{"@id": "https://api.domestic-beethoven.eu/lod/tdee81d52-8107-4a11-a95a-9c84f17bb759.nq"},
 
-			{"@id": "https://api.domestic-beethoven.eu/lod/cc7d48d2-bc4b-424b-8389-de6a13bf8d64.nq"}
+			{"@id": "https://api.domestic-beethoven.eu/lod/cc7d48d2-bc4b-424b-8389-de6a13bf8d64.nq"},
+
+			{"@id": "https://api.domestic-beethoven.eu/lod/mb4caff1f-1926-4206-b5d2-5df342b7753e.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/a532195b-0e46-4e36-8469-65555652efaa.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/b4de1450-a66e-4c00-8455-cdfd52c2f60c.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/f4074846-7e59-483d-8e12-0c64a5c6d733.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/c4e12227-9200-4781-9849-ffc5760aba80.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t7379da05-03e9-4f08-8b22-48b40fd3a209.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/e1bd5c9d-20da-4565-95d7-7020644f25b8.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/e82610d7-976d-465c-af5d-2544e66913e3.nq"},
+			{"@id": "https://api.domestic-beethoven.eu/lod/t7a8ad946-cb40-4393-8c68-b5eb268e5ef8.nq"}
 
 		]
 	}
