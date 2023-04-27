@@ -154,111 +154,6 @@ export const solidModule = {
       state.currentThings[uri] = thing
     },
 
-    // TODO: Is this used at all?
-    /* SET_EDITING (state, mode, solidUserPodPath) {
-      console.log('\n\nIS THIS USED AT ALL???')
-      // already there
-      if (state.editing === mode) {
-        return true
-      }
-
-      if (mode === null) {
-        emptyCurrentThings(state)
-        resetActivations(state)
-      } else if (mode === 'parallelPassage') {
-        // starting new parallel passage
-        if (state.activated.musicalMaterial === null) {
-          const ds = getMusMatThing(state)
-          const id = getPublicIdFromDataStructure(ds)
-
-          const musMat = {}
-          musMat[id] = ds
-
-          makeThingsCurrent(state, {}, musMat, {}, {})
-          populateActivations(state, null, id, null, null)
-        } else {
-          // opening existing parallel passage
-          const mm = {}
-          const ex = {}
-          const sel = {}
-
-          const id = state.activated.musicalMaterial
-          const ds = state.thingStore.musicalMaterial[id]
-
-          mm[id] = ds
-
-          const thing = getThingAll(ds)[0]
-          const extracts = getUrlAll(thing, pref.frbr + 'embodiment')
-
-          extracts.forEach(extractId => {
-            const extract = state.thingStore.extract[extractId]
-
-            ex[extractId] = extract
-
-            const exThing = getThingAll(extract)[0]
-            const selections = getUrlAll(exThing, pref.frbr + 'embodiment')
-
-            selections.forEach(selectionId => {
-              const selection = state.thingStore.selection[selectionId]
-              sel[selectionId] = selection
-            })
-          })
-
-          makeThingsCurrent(state, {}, mm, ex, sel)
-          populateActivations(state, null, id, null, null)
-        }
-      } else if (mode === 'observation') {
-        // starting new observation
-        if (state.currentObservation === null) {
-          const ds = getAnnotThing(state)
-          const id = getPublicIdFromDataStructure(ds)
-
-          const observation = {}
-          observation[id] = ds
-
-          makeThingsCurrent(state, observation, {}, {}, {})
-          populateActivations(state, id, null, null, null)
-        } else {
-          // opening existing observation
-          const ob = {}
-          const mm = {}
-          const ex = {}
-          const sel = {}
-
-          const id = state.activated.observation
-          const ds = state.thingStore.observation[id]
-
-          ob[id] = ds
-
-          const thing = getThingAll(ds)[0]
-
-          const musMatId = getUrl(thing, pref.oa + 'hasTarget')
-          const musMat = state.thingStore.musicalMaterial[musMatId]
-
-          mm[musMatId] = musMat
-          const mmThing = getThingAll(musMat)[0]
-          const extracts = getUrlAll(mmThing, pref.frbr + 'embodiment')
-
-          extracts.forEach(extractId => {
-            const extract = state.thingStore.extract[extractId]
-
-            ex[extractId] = extract
-
-            const exThing = getThingAll(extract)[0]
-            const selections = getUrlAll(exThing, pref.frbr + 'embodiment')
-
-            selections.forEach(selectionId => {
-              const selection = state.thingStore.selection[selectionId]
-              sel[selectionId] = selection
-            })
-          })
-
-          makeThingsCurrent(state, ob, mm, ex, sel)
-          populateActivations(state, id, null, null, null)
-        }
-      }
-    }, */
-
     /**
      * start editing with one specific object and all its children
      * @param {[type]} state        [description]
@@ -617,53 +512,6 @@ export const solidModule = {
       commit('MOVE_TO_CURRENT_THINGS', { thing, userPodPath })
     },
 
-    // not used
-    /* setAnnotationTarget ({ commit, state, dispatch }, id) {
-      const observations = Object.values(state.currentThings.observation)
-      if (observations.length === 0) {
-        return null
-      }
-      const currentObservationId = Object.keys(state.currentThings.observation)[0]
-
-      const observationDS = observations[0]
-      const thing = getThingAll(observationDS)[0]
-      const existingMusMat = getUrl(thing, pref.oa + 'hasTarget')
-
-      // console.log('Found existing ' + existingMusMat)
-
-      // the current one is supposed to be added, so nothing needs to be done
-      if (existingMusMat === id) {
-        return null
-      }
-
-      if (existingMusMat !== null) {
-        // remove old one
-        dispatch('changeCurrentDataObject', {
-          type: 'observation',
-          id: currentObservationId,
-          prop: pref.oa + 'hasTarget',
-          method: 'removeUrl',
-          val: existingMusMat
-        })
-        dispatch('removeCurrentDataObject', {
-          type: 'musicalMaterial',
-          object: state.currentThings.musicalMaterial[existingMusMat]
-        })
-      }
-      // add new one
-      dispatch('changeCurrentDataObject', {
-        type: 'observation',
-        id: currentObservationId,
-        prop: pref.oa + 'hasTarget',
-        method: 'setUrl',
-        val: id
-      })
-      dispatch('addCurrentDataObject', {
-        type: 'musicalMaterial',
-        object: state.thingStore.musicalMaterial[id]
-      })
-    }, */
-
     /**
      * used by Verovio to toggle selections
      * @param  {[type]} commit                  [description]
@@ -812,35 +660,6 @@ export const solidModule = {
     discardChanges ({ commit }) {
       commit('EMPTY_CURRENT_THINGS')
     },
-
-    // unused
-    /* createDataObject ({ commit, state, rootState }, payload) {
-      const userState = rootState.user
-
-      if (payload.type in state.thingStore && payload.object) {
-        const authFetch = userState.solidSession.fetch
-        const ds = payload.object
-        // const uri = getThingAll(ds)[0].url
-        const uri = getPublicIdFromDataStructure(ds)
-
-        // console.log('trying to create object: ', payload.object)
-        try {
-          saveSolidDatasetAt(
-            uri,
-            ds,
-            {
-              fetch: authFetch
-            }
-          ).then(res => {
-            console.log('successfully uploaded ' + uri)
-            // after upload to SolidPod store in Vuex
-            commit('ADD_TO_THINGSTORE', payload)
-          })
-        } catch (err) {
-          console.error('could not upload to ' + uri, err)
-        }
-      }
-    }, */
 
     /**
      * adds or removes extracts, musMats or observations to either musMats or observations.
