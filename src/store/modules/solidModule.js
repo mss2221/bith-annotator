@@ -1634,8 +1634,10 @@ export const solidModule = {
       zones.forEach(zone => {
         const zoneId = zone.getAttribute('xml:id')
         const elem = mei.querySelector('measure[facs~="#' + zoneId + '"]')
-        const measureUri = meiUri + '#' + elem.getAttribute('xml:id')
-        measures.push(measureUri)
+        if (elem !== null) {
+          const measureUri = meiUri + '#' + elem.getAttribute('xml:id')
+          measures.push(measureUri)
+        }
       })
 
       const obj = {}
