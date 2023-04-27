@@ -11,7 +11,7 @@
       <div class="navigationButtons buttonRow">
         <div class="dropdown movementSelection">
           <div class="btn-group">
-            <a href="#" class="btn btn-link dropdown-toggle facsButton" tabindex="0"><i class="icon icon-message"></i></a>
+            <a href="#" class="btn btn-link dropdown-toggle facsButton" tabindex="0" v-if="isLoggedIn"><i class="icon icon-message"></i></a>
             <!-- menu component -->
             <ul ref="movementList" class="menu"></ul>
           </div>
