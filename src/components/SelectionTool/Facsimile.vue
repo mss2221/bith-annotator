@@ -240,53 +240,57 @@ export default {
                 zones.forEach(zone => {
                   const zoneId = zone.getAttribute('xml:id')
                   const measure = mei.querySelector('measure[facs~="#' + zoneId + '"]')
-                  const measureId = measure.getAttribute('xml:id')
-                  const label = measure.hasAttribute('label') ? measure.getAttribute('label') : measure.getAttribute('n')
+                  try {
+                    const measureId = measure.getAttribute('xml:id')
+                    const label = measure.hasAttribute('label') ? measure.getAttribute('label') : measure.getAttribute('n')
 
-                  const elem = document.createElement('div')
-                  // elem.setAttribute('data-zone-id', zoneId)
-                  elem.setAttribute('data-measure-id', measureId)
-                  elem.setAttribute('data-mei-uri', meiUri)
-                  // elem.setAttribute('data-manifest', this.uri)
-                  elem.setAttribute('title', label)
+                    const elem = document.createElement('div')
+                    // elem.setAttribute('data-zone-id', zoneId)
+                    elem.setAttribute('data-measure-id', measureId)
+                    elem.setAttribute('data-mei-uri', meiUri)
+                    // elem.setAttribute('data-manifest', this.uri)
+                    elem.setAttribute('title', label)
 
-                  elem.classList.add('overlay')
-                  elem.classList.add('measure')
+                    elem.classList.add('overlay')
+                    elem.classList.add('measure')
 
-                  if (allSelectedMeasures[meiUri + '#' + measureId] !== undefined) {
-                    const obj = allSelectedMeasures[meiUri + '#' + measureId]
-                    elem.setAttribute('data-selections', Object.keys(obj).join(' '))
+                    if (allSelectedMeasures[meiUri + '#' + measureId] !== undefined) {
+                      const obj = allSelectedMeasures[meiUri + '#' + measureId]
+                      elem.setAttribute('data-selections', Object.keys(obj).join(' '))
 
-                    Object.values(obj).forEach(classes => {
-                      classes.forEach(cl => elem.classList.add(cl))
+                      Object.values(obj).forEach(classes => {
+                        classes.forEach(cl => elem.classList.add(cl))
+                      })
+                    }
+
+                    const labelContainer = document.createElement('div')
+                    labelContainer.classList.add('lc')
+
+                    const labelElem = document.createElement('label')
+                    labelElem.classList.add('measureNum')
+                    labelElem.textContent = label
+
+                    labelContainer.append(labelElem)
+                    elem.append(labelContainer)
+                    labelElem.addEventListener('click', this.measureClickListener)
+
+                    const x = parseInt(zone.getAttribute('ulx'))
+                    const y = parseInt(zone.getAttribute('uly'))
+                    const w = parseInt(zone.getAttribute('lrx')) - parseInt(zone.getAttribute('ulx'))
+                    const h = parseInt(zone.getAttribute('lry')) - parseInt(zone.getAttribute('uly'))
+
+                    // elem.addEventListener('click', this.overlayClickListener)
+
+                    const rect = new OpenSeadragon.Rect(x, y, w, h)
+
+                    // append the new element as overlay, apply scaling factor to dimensions
+                    this.viewer.addOverlay({
+                      element: elem,
+                      location: rect
                     })
+                  } catch (err) {
+
                   }
-
-                  const labelContainer = document.createElement('div')
-                  labelContainer.classList.add('lc')
-
-                  const labelElem = document.createElement('label')
-                  labelElem.classList.add('measureNum')
-                  labelElem.textContent = label
-
-                  labelContainer.append(labelElem)
-                  elem.append(labelContainer)
-                  labelElem.addEventListener('click', this.measureClickListener)
-
-                  const x = parseInt(zone.getAttribute('ulx'))
-                  const y = parseInt(zone.getAttribute('uly'))
-                  const w = parseInt(zone.getAttribute('lrx')) - parseInt(zone.getAttribute('ulx'))
-                  const h = parseInt(zone.getAttribute('lry')) - parseInt(zone.getAttribute('uly'))
-
-                  // elem.addEventListener('click', this.overlayClickListener)
-
-                  const rect = new OpenSeadragon.Rect(x, y, w, h)
-
-                  // append the new element as overlay, apply scaling factor to dimensions
-                  this.viewer.addOverlay({
-                    element: elem,
-                    location: rect
-                  })
                 })
               } else {
                 console.log('no surface')
