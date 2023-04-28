@@ -1,7 +1,16 @@
 {
   "name": "bith-annotator",
   "version": "0.9.0",
-  "private": true,
+  "license": "AGPL-3.0",
+  "author": "Johannes Kepper",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DomesticBeethoven/bith-annotator.git"
+  },
+  "homepage": "https://github.com/DomesticBeethoven/bith-annotator#readme",
+  "bugs": {
+    "url": "https://github.com/DomesticBeethoven/bith-annotator/issues"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
