@@ -1,0 +1,39 @@
+$appHeaderHeight: 42px;
+$appFooterHeight: 20px;
+
+$mainBackgroundColor: #e5e5e5;
+$darkBackgroundColor: #444444;
+
+$lightFontColor: #e5e5e5;
+$darkFontColor: #333333;
+
+$lightBorder: .5px solid #666666;
+
+$selectionToolHeaderHeight: 32px;
+
+$uiHighlightColor: #4240d4;
+
+$measureHighlightColor: rgba(#eb1d1d, 0.1);
+
+$svgHighlightColor: #f1810c;
+$svgCurrentHighlightColor: #4240d4;
+
+$svgSelection: desaturate(lighten($svgHighlightColor, 10%), 25%);
+$svgSelectionEvents : $svgSelection;
+$svgSelectionStaves : lighten($svgSelection, 10%);
+$svgSelectionMeasures : lighten($svgSelection, 20%);
+
+$svgActiveSelection: lighten($svgHighlightColor, 0%);
+$svgActiveSelectionEvents: $svgActiveSelection;
+$svgActiveSelectionStaves: lighten($svgActiveSelection, 10%);
+$svgActiveSelectionMeasures : lighten($svgActiveSelection, 20%);
+
+$svgCurrentExtract: desaturate(lighten($svgCurrentHighlightColor, 10%), 25%);
+$svgCurrentExtractEvents: $svgCurrentExtract;
+$svgCurrentExtractStaves: lighten($svgCurrentExtract, 10%);
+$svgCurrentExtractMeasures: lighten($svgCurrentExtract, 20%);
+
+$svgCurrentSelection: lighten($svgCurrentHighlightColor, 0%);
+$svgCurrentSelectionEvents: $svgCurrentSelection;
+$svgCurrentSelectionStaves: lighten($svgCurrentSelection, 10%);
+$svgCurrentSelectionMeasures: lighten($svgCurrentSelection, 20%);

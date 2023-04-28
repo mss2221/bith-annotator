@@ -28,5 +28,7 @@ export const prefix = {
   dbpedia: 'https://dbpedia.org/ontology/',
   rdau: 'http://rdaregistry.info/Elements/u/',
   wdt: 'https://www.wikidata.org/prop/direct/',
-  foaf: 'http://xmlns.com/foaf/0.1/'
+  foaf: 'http://xmlns.com/foaf/0.1/',
+  iiif2: 'http://iiif.io/api/presentation/2#',
+  sioc: 'http://rdfs.org/sioc/services#'
 }

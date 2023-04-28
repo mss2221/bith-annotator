@@ -1,65 +1,62 @@
 <template>
-  <div id="app">
+  <div class="">
     <AppHeader/>
-    <LandingPage v-if="showLandingPage"/>
-    <Library v-if="showLibrary"/>
-    <Workbench v-if="showWorkbench"/>
-    <DebugOverlay v-if="showDebugOverlay"/>
+    <template v-if="landingPageVisible">
+      <LandingPage/>
+    </template>
+    <template v-else>
+      <WorkBench/>
+    </template>
+    <AppFooter/>
+    <LibraryModal/>
+    <LdDetailOverlay/>
+    <InitialLoading/>
   </div>
 </template>
 
 <script>
-import AppHeader from './components/AppHeader.vue'
-import LandingPage from './components/LandingPage.vue'
-import Library from './components/Library.vue'
-import Workbench from './components/Workbench.vue'
-import DebugOverlay from './components/DebugOverlay.vue'
+import AppHeader from '@/components/AppHeader.vue'
+import LandingPage from '@/components/LandingPage.vue'
+import WorkBench from '@/components/WorkBench.vue'
+import AppFooter from '@/components/AppFooter.vue'
+import LibraryModal from '@/components/SelectionTool/LibraryModal.vue'
+import LdDetailOverlay from '@/components/LdDetailOverlay.vue'
+import InitialLoading from '@/components/InitialLoading.vue'
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    Library,
     LandingPage,
-    Workbench,
-    DebugOverlay
+    WorkBench,
+    AppFooter,
+    LibraryModal,
+    LdDetailOverlay,
+    InitialLoading
   },
   computed: {
-    showLandingPage: function() {
-      return this.$store.getters.showLandingPage
-    },
-    showLibrary: function() {
-      return this.$store.getters.showLibrary
-    },
-    showWorkbench: function() {
-      return this.$store.getters.showWorkbench
-    },
-    showDebugOverlay: function() {
-      return this.$store.getters.debugOverlayVisible
+    landingPageVisible: function () {
+      return this.$store.getters.landingPageVisible
     }
-  },
-  created: function () {
-    // this.$store.dispatch('initMeld')
-    // this.$store.dispatch('setTraversalObjectives')
-    // this.$store.dispatch('traverseGraph')
   }
 }
 </script>
 
 <style lang="scss">
+@import '@/css/_variables.scss';
+
 body {
   margin: 0;
   padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $mainBackgroundColor;
 }
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-.splitpanes {
 
-
+.splitpanes.default-theme .splitpanes__splitter {
+  background-color: #cccccc;
 }
 </style>
