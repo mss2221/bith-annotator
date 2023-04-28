@@ -1,4 +1,5 @@
 import { prefix } from '@/meld/prefixes.js'
+import { publicPodPath } from '@/config/traversal.config.js'
 
 import {
   // buildThing,
@@ -98,7 +99,9 @@ export const userModule = {
           commit('SET_USER_POD_PATH', userPodPath)
 
           try {
-            await loadPod('https://digmusicscholar.solidcommunity.net/public/bith.ttl', commit, authFetch, false)
+            if (userPodPath !== publicPodPath) {
+              await loadPod(publicPodPath, commit, authFetch, false)
+            }
             await loadPod(userPodPath, commit, authFetch, true)
           } catch (err) {
             console.log('No userPod available at ' + userPodPath + '. Creating a new one. \nMessage: ' + err)

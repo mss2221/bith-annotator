@@ -1,5 +1,6 @@
 import { prefix as pref } from '@/meld/prefixes' // 'meld-clients-core/lib/library/prefixes'
 import { bithTypes } from '@/meld/constants.js'
+import { publicPodPath } from '@/config/traversal.config.js'
 
 import {
   // addUrl,
@@ -717,7 +718,9 @@ export const solidModule = {
 
           // if successful, retrieve updated data and replace local info
           // (as recommended by https://docs.inrupt.com/developer-tools/api/javascript/solid-client/modules/resource_solidDataset.html#savesoliddatasetat)
-          loadPod('https://digmusicscholar.solidcommunity.net/public/bith.ttl', commit, authFetch, false)
+          if (userPodPath !== publicPodPath) {
+            loadPod(publicPodPath, commit, authFetch, false)
+          }
           loadPod(userPodPath, commit, authFetch, true)
           commit('EMPTY_CURRENT_THINGS')
           console.log('storing data complete')
