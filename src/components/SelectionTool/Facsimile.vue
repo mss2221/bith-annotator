@@ -79,46 +79,82 @@ export default {
      *      width: the pixel width of the current page
      *      height: the pixel height of the current page
      */
-    parseManifest: function (manifest) {
+    parseManifest: async function (manifest) {
       // create an empty array that will hold details for every page
       const arr = []
-      // iterate over the manifest canvas sequence. This is simplifying, in that it makes rather assumptions on the manifest. Probably ok for our own manifests, though.
-      manifest.sequences[0].canvases.forEach((canvas, ci) => {
-        // get link to IIIF Image API info.json file. If necessary, append '/info.json'
-        let imageUri = canvas.images[0].resource.service['@id']
-        imageUri = imageUri.endsWith('/info.json') ? imageUri : imageUri + '/info.json'
 
-        // get otherContent prop and retrieve link to measure zones. This makes _very_ strong assumptions!
-        /* const otherContent = canvas.otherContent
-        let measuresUri = null
-        if (otherContent !== undefined) {
-          measuresUri = otherContent.find(item => {
-            const ocId = item?.within['@id']
-            const endsWith = (ocId === undefined) ? false : ocId.endsWith('/measureZones')
-            return endsWith
-          })
-          if (typeof measuresUri !== 'undefined') {
-            measuresUri = measuresUri['@id']
+      if (manifest['@type'].endsWith(':Manifest')) {
+        // iterate over the manifest canvas sequence. This is simplifying, in that it makes rather assumptions on the manifest. Probably ok for our own manifests, though.
+        manifest.sequences[0].canvases.forEach((canvas, ci) => {
+          // get link to IIIF Image API info.json file. If necessary, append '/info.json'
+          let imageUri = canvas.images[0].resource.service['@id']
+          imageUri = imageUri.endsWith('/info.json') ? imageUri : imageUri + '/info.json'
+
+          // get otherContent prop and retrieve link to measure zones. This makes _very_ strong assumptions!
+          /* const otherContent = canvas.otherContent
+          let measuresUri = null
+          if (otherContent !== undefined) {
+            measuresUri = otherContent.find(item => {
+              const ocId = item?.within['@id']
+              const endsWith = (ocId === undefined) ? false : ocId.endsWith('/measureZones')
+              return endsWith
+            })
+            if (typeof measuresUri !== 'undefined') {
+              measuresUri = measuresUri['@id']
+            }
+          } */
+
+          // retrieve some basic props for each page
+          const label = canvas.label
+          const width = canvas.images[0].resource.width
+          const height = canvas.images[0].resource.height
+
+          // create an object with all the retrieved infos
+          const obj = {
+            imageUri,
+            // measuresUri,
+            label,
+            width,
+            height
           }
-        } */
 
-        // retrieve some basic props for each page
-        const label = canvas.label
-        const width = canvas.images[0].resource.width
-        const height = canvas.images[0].resource.height
+          // push the object to the array
+          arr.push(obj)
+        })
+      } else if (manifest['@type'].endsWith(':Range')) {
+        const canvases = manifest.canvases
+        try {
+          const responses = await Promise.all(canvases.map(url => fetch(url)))
+          const data = await Promise.all(responses.map(response => response.json()))
+          console.log('received the following data: ', data)
 
-        // create an object with all the retrieved infos
-        const obj = {
-          imageUri,
-          // measuresUri,
-          label,
-          width,
-          height
+          data.forEach((canvas, ci) => {
+            // get link to IIIF Image API info.json file. If necessary, append '/info.json'
+            let imageUri = canvas.images[0].resource.service['@id']
+            imageUri = imageUri.endsWith('/info.json') ? imageUri : imageUri + '/info.json'
+
+            // retrieve some basic props for each page
+            const label = canvas.label
+            const width = canvas.width
+            const height = canvas.height
+
+            // create an object with all the retrieved infos
+            const obj = {
+              imageUri,
+              // measuresUri,
+              label,
+              width,
+              height
+            }
+
+            // push the object to the array
+            arr.push(obj)
+          })
+        } catch (error) {
+          console.error('Error fetching data: ', error)
         }
+      }
 
-        // push the object to the array
-        arr.push(obj)
-      })
       // return the array
       return arr
     },
@@ -532,10 +568,10 @@ export default {
   mounted: function () {
     fetch(this.uri)
       .then(res => res.json())
-      .then(manifest => {
+      .then(async (manifest) => {
         // parse IIIF manifest with parseManifest() function, store results in facsimileInfo1
         this.manifest = manifest
-        this.facsimileInfo = this.parseManifest(manifest)
+        this.facsimileInfo = await this.parseManifest(manifest)
 
         const tileSources = []
         this.facsimileInfo.forEach(page => {

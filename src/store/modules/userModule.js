@@ -102,6 +102,29 @@ export const userModule = {
             if (userPodPath !== publicPodPath) {
               await loadPod(publicPodPath, commit, authFetch, false)
             }
+
+            // load additional pods if requested
+            const uriParams = new URLSearchParams(window.location.search)
+            const extraPods = uriParams.get('pods')
+            console.log('extraPods: ', extraPods)
+            if (extraPods !== null) {
+              const extraPodsDecoded = decodeURIComponent(extraPods)
+              const extraPodsArray = extraPodsDecoded.split(',')
+              console.log('requested to load external pod(s): ', extraPodsArray)
+
+              extraPodsArray.forEach(async podUri => {
+                try {
+                  if (podUri !== publicPodPath && podUri !== userPodPath) {
+                    await loadPod(podUri, commit, authFetch, false)
+                  }
+                } catch (err) {
+                  console.error('ERROR loading additional SolidPod from ' + podUri + ': ' + err)
+                }
+              })
+            } else {
+              console.log('no additional pod(s) requested')
+            }
+
             await loadPod(userPodPath, commit, authFetch, true)
           } catch (err) {
             console.log('No userPod available at ' + userPodPath + '. Creating a new one. \nMessage: ' + err)

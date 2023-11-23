@@ -721,6 +721,28 @@ export const solidModule = {
           if (userPodPath !== publicPodPath) {
             loadPod(publicPodPath, commit, authFetch, false)
           }
+
+          // load additional pods if requested
+          const uriParams = new URLSearchParams(window.location.search)
+          const extraPods = uriParams.get('pods')
+          if (extraPods !== null) {
+            const extraPodsDecoded = decodeURIComponent(extraPods)
+            const extraPodsArray = extraPodsDecoded.split(',')
+            console.log('requested to load external pod(s): ', extraPodsArray)
+
+            extraPodsArray.forEach(podUri => {
+              try {
+                if (podUri !== publicPodPath && podUri !== userPodPath) {
+                  loadPod(podUri, commit, authFetch, false)
+                }
+              } catch (err) {
+                console.error('ERROR loading additional SolidPod from ' + podUri + ': ' + err)
+              }
+            })
+          } else {
+            console.log('no additional pod(s) requested')
+          }
+
           loadPod(userPodPath, commit, authFetch, true)
           commit('EMPTY_CURRENT_THINGS')
           console.log('storing data complete')
@@ -1853,6 +1875,10 @@ export const solidModule = {
           if (transcriptionArrangement) {
             obj.type = 'transcription'
             obj.arrangement = { label: transcriptionArrangement.shortTitle, id: transcriptionArrangement.id }
+          }
+
+          if (!obj.type) {
+            console.warn('\n\nunable to resolve the following arrangement: ', obj)
           }
 
           arr.push(obj)

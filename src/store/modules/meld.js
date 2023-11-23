@@ -67,6 +67,16 @@ export const transformArrangement = (graphObject) => {
         iiif = emb['@id']
         manifest = emb
       }
+
+      if ('@type' in emb && emb['@type'] === prefix.iiif2 + 'Range' && '@id' in emb) {
+        iiif = emb['@id']
+        manifest = emb
+      }
+
+      if (prefix.rdf + 'type' in emb && emb[prefix.rdf + 'type'] === prefix.iiif2 + 'Range' && '@id' in embodiments) {
+        iiif = emb['@id']
+        manifest = emb
+      }
     })
   } else if (typeof embodiments === 'object') {
     // an single qualified object is given
@@ -84,6 +94,16 @@ export const transformArrangement = (graphObject) => {
       iiif = embodiments['@id']
       manifest = embodiments
     }
+
+    if ('@type' in embodiments && embodiments['@type'] === prefix.iiif2 + 'Range' && '@id' in embodiments) {
+      iiif = embodiments['@id']
+      manifest = embodiments
+    }
+
+    if (prefix.rdf + 'type' in embodiments && embodiments[prefix.rdf + 'type'] === prefix.iiif2 + 'Range' && '@id' in embodiments) {
+      iiif = embodiments['@id']
+      manifest = embodiments
+    }
   } else if (typeof embodiments === 'string') {
     // not supported…
   }
@@ -93,14 +113,33 @@ export const transformArrangement = (graphObject) => {
 
   if (manifest !== null) {
     try {
-      const tileSources = []
-      // const sequence1 =
-      const canvases = manifest[prefix.iiif2 + 'hasSequences']['@list'][0][prefix.iiif2 + 'hasCanvases']['@list']
-      canvases.forEach(canvas => {
-        const infoJsonUri = canvas[prefix.iiif2 + 'hasImageAnnotations']['@list'][0][prefix.oa + 'hasBody'][prefix.sioc + 'has_service']['@id']
-        tileSources.push(infoJsonUri)
-      })
-      obj.iiifTilesources = tileSources
+      if (manifest['@type'] === prefix.iiif2 + 'Manifest') {
+        const tileSources = []
+        // const sequence1 =
+        const canvases = manifest[prefix.iiif2 + 'hasSequences']['@list'][0][prefix.iiif2 + 'hasCanvases']['@list']
+        canvases.forEach(canvas => {
+          const infoJsonUri = canvas[prefix.iiif2 + 'hasImageAnnotations']['@list'][0][prefix.oa + 'hasBody'][prefix.sioc + 'has_service']['@id']
+          tileSources.push(infoJsonUri)
+        })
+        obj.iiifTilesources = tileSources
+      } else if (manifest['@type'] === prefix.iiif2 + 'Range') {
+        try {
+          const tileSources = []
+          const canvases = manifest[prefix.iiif2 + 'hasCanvases']['@list']
+          // console.log('Need to resolve ', canvases, manifest)
+          canvases.forEach(canvasObj => {
+            const uri = canvasObj['@id']
+            // TODO: this is quite dirty
+            const imageUri = uri.replace('https://iiif.bodleian.ox.ac.uk/iiif/canvas/', 'https://iiif.bodleian.ox.ac.uk/iiif/image/').replace('.json', '')
+            tileSources.push(imageUri)
+            // console.log('URI: ' + uri)
+          })
+          // console.log('tilesources: ', tileSources)
+          obj.iiifTilesources = tileSources
+        } catch (rangeErr) {
+          console.error('something went wrong with parsing the array: ' + rangeErr)
+        }
+      }
     } catch (err) {
       console.error('something went wrong: ' + err)
     }
@@ -110,7 +149,7 @@ export const transformArrangement = (graphObject) => {
   // obj.catNumber = pref.wdt+"P217" in graph ? graph[pref.wdt+"P217"]['@id'] : false;
   obj.catNumber = graphObject[prefix.wdt + 'P217']
   obj.work = graphObject[prefix.rdau + 'P60242']
-  // console.log("Processed a ", graph, " into a ", obj);
+  // console.log("Processed a ", graphObject, " into a ", obj)
   return obj
 }
 

@@ -62,7 +62,28 @@ export const graphModule = {
       // console.log('starting traverseGraph()')
       const res = this.meldStore.dispatch(registerTraversal(graphURI, params))
       const newParams = res.payload.params // meldStore.getState().traversalPool.pool[graphURI]
-      this.meldStore.dispatch(traverse(graphURI, newParams))// newParams))
+      this.meldStore.dispatch(traverse(graphURI, newParams))
+
+      const uriParams = new URLSearchParams(window.location.search)
+      const workset = uriParams.get('workset')
+      const storageWorkset = sessionStorage.getItem('workset')
+      if (workset !== null || storageWorkset !== null) {
+        const externalUris = workset !== null ? decodeURIComponent(workset) : storageWorkset
+        const externalUriArray = externalUris.split(',')
+        console.log('requested to load workset(s): ', externalUriArray)
+
+        externalUriArray.forEach(externalUri => {
+          try {
+            const res2 = this.meldStore.dispatch(registerTraversal(externalUri, params))
+            const newParams2 = res2.payload.params
+            this.meldStore.dispatch(traverse(externalUri, newParams2))
+          } catch (err) {
+            console.error('ERROR loading workset from ' + externalUri + ': ' + err)
+          }
+        })
+      } else {
+        console.log('no additional workset requested')
+      }
     }
   },
   getters: {
